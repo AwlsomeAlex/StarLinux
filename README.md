@@ -9,8 +9,11 @@ StarLinux is an idea I had a long time ago, originally to be made as an Ubuntu-B
 
 ## How to Compile:
 Resolve the following Ubuntu Dependencies:
+
 `sudo apt install build-essential wget make gawk gcc bc syslinux genisoimage texinfo`
+
 Run the following Script:
+
 `./starbuilder.sh`
 
 ## Credits:
