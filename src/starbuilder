@@ -1,0 +1,38 @@
+#!/bin/bash
+
+################################
+#------------------------------#
+# StarBuilder Execution Script #
+#------------------------------#
+################################
+# Made by AwlsomeAlex [GPLv3]  #
+################################
+
+
+######################
+# Pre-Execution Test #
+######################
+clear
+
+## Attempt to Locate StarBuilder Library ##
+if [ -f /lib/starbuilder.lib ]; then
+	LIBRARY=/lib/
+	. /lib/starbuilder.lib
+	echo "StarBuilder Library Found at $LIBRARY."
+elif [ -f /usr/lib/starbuilder.lib ]; then
+	LIBRARY=/usr/lib/
+	. /usr/lib/starbuilder.lib
+	echo "StarBuilder Library Found ay $LIBRARY."
+elif [ -f starbuilder.lib ]; then
+	LIBRARY=$(pwd)/
+	. ./starbuilder.lib
+	echo "StarBuilder Library Locally Loaded at $LIBRARY."
+else
+	echo "StarBuilder Library Not Found! Exitting..."
+	# Automatic Downloader/Updater TO-BE-ADDED!
+	exit 0
+fi
+
+## Test StarBuilder Library ##
+check_lib
+echo $CHECK

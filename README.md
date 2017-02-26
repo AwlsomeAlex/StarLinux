@@ -14,7 +14,7 @@ Resolve the following Ubuntu Dependencies:
 
 Run the following Script:
 
-`./starbuilder.sh-install`
+`./starbuilder-install.sh`
 
 ## Credits:
 * AwlsomeAlex (Creator of StarLinux)

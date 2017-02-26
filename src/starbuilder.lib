@@ -1,0 +1,14 @@
+################################
+#------------------------------#
+# StarBuilder Function Library #
+#------------------------------#
+################################
+# Made by AwlsomeAlex [GPLv3]  #
+################################
+
+##########################
+# Check Library Function # check_lib
+##########################
+check_lib () {
+CHECK="StarBuilder Library Fully Functional." 
+}
