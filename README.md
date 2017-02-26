@@ -7,14 +7,14 @@ StarLinux is an idea I had a long time ago, originally to be made as an Ubuntu-B
 ## What's Included with StarLinux?
 * Nothing at the Moment.
 
-## How to Compile:
+## How to Install:
 Resolve the following Ubuntu Dependencies:
 
 `sudo apt install build-essential wget make gawk gcc bc syslinux genisoimage texinfo`
 
 Run the following Script:
 
-`./starbuilder.sh`
+`./starbuilder.sh-install`
 
 ## Credits:
 * AwlsomeAlex (Creator of StarLinux)
