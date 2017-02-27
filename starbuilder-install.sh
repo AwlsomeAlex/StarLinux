@@ -79,6 +79,74 @@ confirm() {
 }
 
 
+install () {
+	if [ "$CHOICE" == "1" ]; then
+		source_check
+		install_starbuilder
+
+	elif [ "$CHOICE" == "2" ]; then
+		install_location
+		file_location
+		variable_sorting
+		confirm
+		install
+	else
+		exit 1
+	fi	
+
+}
+
+
+source_check () {
+	star_logo
+	if [ "$FILE_LOCATION" == "local" ]; then
+		if [ -d src ]; then
+			echo "Source Directory Located."
+			echo $FILE_LOCATION
+		else
+			echo "Source Directory Not Found. Defaulting to Online Download..."
+			FILE_LOCATION="online"
+			echo $FILE_LOCATION
+		fi
+	elif [ "$FILE_LOCATION" == "online" ]; then
+		star_logo
+		echo "Download Latest StarBuilder Source..."
+		mkdir /tmp/starbuilder_temp
+		cd /tmp/starbuilder_temp
+		wget -c --progress=bar:force https://github.com/AwlsomeAlex/StarLinux/archive/master.zip
+		unzip master.zip
+	fi
+}
+
+
+install_starbuilder () {
+	star_logo
+	echo "StarBuilder will now be Installed."
+	echo "WARNING! StarBuilder Installation WILL Require SUDO/ROOT Access!"
+	
+	if [ "$FILE_LOCATION" == "local" ]; then
+		cd src
+		sudo cp starbuilder $INSTALL_LOCATION/bin
+		sudo mkdir $INSTALL_LOCATION/lib/starbuilder
+		sudo cp starbuilder.lib $INSTALL_LOCATION/lib/starbuilder
+		echo ""
+		echo "If you saw no errors, StarBuilder has been successfully Installed!"
+		echo ""
+		exit 1
+	elif [ "$FILE_LOCATION" == "online" ]; then
+		cd /tmp/starbuilder_temp/StarLinux-master/src
+		sudo cp starbuilder $INSTALL_LOCATION/bin
+		sudo mkdir $INSTALL_LOCATION/lib/starbuilder
+		sudo cp starbuilder.lib $INSTALL_LOCATION/lib/starbuilder
+		echo ""
+		echo "If you saw no errors, StarBuilder has been sucessfully Installed!"
+		echo ""
+		rm -rf /tmp/starbuilder_temp
+		exit 1
+	fi
+}
+
+
 #############
 # Execution #
 #############
@@ -86,14 +154,4 @@ install_location
 file_location
 variable_sorting
 confirm
-
-if [ "$CHOICE" == "1" ]; then
-	echo "Code Goes Here."
-elif [ "$CHOICE" == "2" ]; then
-	install_location
-	file_location
-	variable_sorting
-	confirm
-else
-	exit 1
-fi
+install

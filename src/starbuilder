@@ -15,13 +15,13 @@
 clear
 
 ## Attempt to Locate StarBuilder Library ##
-if [ -f /lib/starbuilder.lib ]; then
-	LIBRARY=/lib/
-	. /lib/starbuilder.lib
+if [ -f /lib/starbuilder/starbuilder.lib ]; then
+	LIBRARY=/lib/starbuilder/
+	. /lib/starbuilder/starbuilder.lib
 	echo "StarBuilder Library Found at $LIBRARY."
-elif [ -f /usr/lib/starbuilder.lib ]; then
-	LIBRARY=/usr/lib/
-	. /usr/lib/starbuilder.lib
+elif [ -f /usr/lib/starbuilder/starbuilder.lib ]; then
+	LIBRARY=/usr/lib/starbuilder/
+	. /usr/lib/starbuilder/starbuilder.lib
 	echo "StarBuilder Library Found ay $LIBRARY."
 elif [ -f starbuilder.lib ]; then
 	LIBRARY=$(pwd)/
