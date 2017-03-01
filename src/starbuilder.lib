@@ -10,6 +10,22 @@
 ##########################
 # Check Library Function # check_lib
 ##########################
-check_lib () {
+function check_lib (){
 CHECK="StarBuilder Library Fully Functional." 
+}
+
+
+##########################
+# Delete Temporary Files # deltemp
+##########################
+function deltemp (){
+    rm -r /tmp/*.$$
+}
+
+
+#################
+# Master Script # master
+#################
+function master (){
+    
 }

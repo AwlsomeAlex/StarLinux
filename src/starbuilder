@@ -9,6 +9,14 @@
 ################################
 
 
+## Color Pattern ##
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+
 ######################
 # Pre-Execution Test #
 ######################
@@ -18,21 +26,27 @@ clear
 if [ -f /lib/starbuilder/starbuilder.lib ]; then
 	LIBRARY=/lib/starbuilder/
 	. /lib/starbuilder/starbuilder.lib
-	echo "StarBuilder Library Found at $LIBRARY."
+	echo -e "${GREEN}PASS:${NC} StarBuilder Library Found at $LIBRARY."
 elif [ -f /usr/lib/starbuilder/starbuilder.lib ]; then
 	LIBRARY=/usr/lib/starbuilder/
 	. /usr/lib/starbuilder/starbuilder.lib
-	echo "StarBuilder Library Found ay $LIBRARY."
+	echo -e "${GREEN}PASS:${NC} StarBuilder Library Found ay $LIBRARY."
 elif [ -f starbuilder.lib ]; then
 	LIBRARY=$(pwd)/
 	. ./starbuilder.lib
-	echo "StarBuilder Library Locally Loaded at $LIBRARY."
+	echo -e "${GREEN}PASS:${NC} StarBuilder Library Locally Loaded at $LIBRARY."
 else
-	echo "StarBuilder Library Not Found! Exitting..."
+	echo -e "${RED}WARNING:${NC} StarBuilder Library Not Found! Exitting..."
 	# Automatic Downloader/Updater TO-BE-ADDED!
 	exit 0
 fi
 
-## Test StarBuilder Library ##
+## Test StarBuilder Library ## (DEBUG)
 check_lib
-echo $CHECK
+echo -e  "${YELLOW}DEBUG:${NC} $CHECK"
+
+
+#################
+# Master Script #
+#################
+master
