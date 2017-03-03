@@ -23,9 +23,42 @@ function deltemp (){
 }
 
 
-#################
-# Master Script # master
-#################
+###################
+# Master Function # master
+###################
 function master (){
     
+    #trap 'deltemp'  EXIT # Calls 'deltemp' on exit.
+    
+    while :
+    do
+        dialog --clear --backtitle "StarBuilder (StarLinux Builder)" --title "Main Menu:" \
+        --menu "Please Select an Option using the [UP/DOWN] keys." 15 95 6 \
+        "COMPILE_STARLINUX"     "Compile Core StarLinux Componients including Filesystem, Kernel, etc." \
+        "LOAD_OVERLAYS"         "Load Additional Overlay Libraries to be compiled into StarLinux." \
+        "BUILD_IMAGE"           "Package StarLinux and Additional Overlays into a Disk Image." \
+        "PACKAGE_SOURCE"        "Package StarLinux and Additional Overlays into an TAR Archive." \
+        "ABOUT"                 "Shows License and Additional Information of StarLinux and StarBuilder." \
+        "EXIT"                  "Exit StarBuilder and Delete Temporary Files" 2> /tmp/menuchoice.$$
+        
+        retopt=$?
+        choice='cat menuchoice.$$'
+        
+        case $retopt in
+        
+            0) case $choice in
+            
+                    COMPILE_STARLINUX)      compile_starlinux ;;
+                    LOAD_OVERLAYS)          load_overlays ;;
+                    BUILD_IMAGE)            build_image ;;
+                    PACKAGE_SOURCE)         package_source ;;
+                    ABOUT)                  about ;;
+                    EXIT)                   clear ; exit 0 ;;
+            
+                esac ;;
+        
+            *)clear ; exit ;;
+    esac
+    
+done
 }
