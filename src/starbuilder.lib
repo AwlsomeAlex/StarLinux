@@ -4,8 +4,19 @@
 #------------------------------#
 ################################
 # Made by AwlsomeAlex [GPLv3]  #
-#       Version: 0.0.1a        #
+#       Version: 0.0.2a        #
 ################################
+
+
+###############
+# Color Codes #
+###############
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
 
 ##########################
 # Check Library Function # check_lib
@@ -16,10 +27,10 @@ CHECK="StarBuilder Library Fully Functional."
 
 
 ##########################
-# Delete Temporary Files # deltemp
+# Delete Temporary Files # deltempfile
 ##########################
-function deltemp (){
-    rm -r /tmp/*.$$
+function deltempfile (){
+    rm -r /tmp/menuchoice.$$
 }
 
 
@@ -28,10 +39,11 @@ function deltemp (){
 ###################
 function master (){
     
-    #trap 'deltemp'  EXIT # Calls 'deltemp' on exit.
+    trap 'deltempfile'  EXIT # Calls 'deltemp' on exit.
     
     while :
     do
+    
         dialog --clear --backtitle "StarBuilder (StarLinux Builder)" --title "Main Menu:" \
         --menu "Please Select an Option using the [UP/DOWN] keys." 15 95 6 \
         "COMPILE_STARLINUX"     "Compile Core StarLinux Componients including Filesystem, Kernel, etc." \
@@ -42,7 +54,7 @@ function master (){
         "EXIT"                  "Exit StarBuilder and Delete Temporary Files" 2> /tmp/menuchoice.$$
         
         retopt=$?
-        choice='cat menuchoice.$$'
+        choice=`cat /tmp/menuchoice.$$`
         
         case $retopt in
         
