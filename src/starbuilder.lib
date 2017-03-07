@@ -74,3 +74,58 @@ function master (){
     
 done
 }
+
+
+#####################
+#                   #
+# Compile StarLinux # compile_starlinux
+#                   #
+#####################
+function compile_starlinux (){
+    echo "Compile StarLinux"
+    exit 1
+}
+
+
+#################
+#               #
+# Load Overlays # load_overlays
+#               #
+#################
+function load_overlays (){
+    echo "Load Overlays"
+    exit 1
+}
+
+
+###############
+#             #
+# Build Image # build_image
+#             #
+###############
+function build_image (){
+    echo "Build Image"
+    exit 1
+}
+
+
+##################
+#                #
+# Package Source # package_source
+#                #
+##################
+function package_source (){
+    echo "Package Source"
+    exit 1
+}
+
+
+################
+#              #
+# About Dialog # about
+#              #
+################
+function about (){
+    echo "About Dialog"
+    exit 1
+}
