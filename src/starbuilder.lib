@@ -8,6 +8,41 @@
 ################################
 
 
+#############################
+#                           #
+# StarBuilder Configuration #
+#                           #
+#############################
+
+
+###############
+# Source List #
+###############
+LINUX_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.9.13.tar.xz
+GLIBC_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.25.tar.bz2
+BUSYBOX_URL=http://busybox.net/downloads/busybox-1.26.2.tar.bz2
+SYSLINUX_URL=http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
+
+
+################
+# Archive List #
+################
+LINUX_ARCHIVE=${LINUX_URL##*/}
+GLIBC_ARCHIVE=${GLIBC_URL##*/}
+BUSYBOX_ARCHIVE=${BUSYBOX_URL##*/}
+SYSLINUX_ARCHIVE=${SYSLINUX_URL##*/}
+
+
+#########################
+# StarBuilder Variables #
+#########################
+WORK_DIR=/tmp/starbuilder
+IMAGE_DIR=/home/$USER/Desktop # Set User Directory
+JOB_FACTOR=1
+NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
+NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
+
+
 ###############
 # Color Codes #
 ###############
@@ -16,6 +51,13 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+
+
+#########################
+#                       #
+# StarBuilder Functions #
+#                       #
+#########################
 
 
 ##########################
