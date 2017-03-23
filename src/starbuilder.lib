@@ -67,7 +67,7 @@ NC='\033[0m'
 function update_library (){
 	touch /tmp/starver.txt
 	echo $VERSION >> /tmp/starver.txt
-	wget http://github.com/awlsomealex/starbuilder/version.txt
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/master/version.txt
 	STAR_VER_OLD=$(cat /tmp/starver.txt)
 	STAR_VER_NEW=$(cat ../version.txt)
 	if [ $STAR_VER_OLD == $STAR_VER_NEW ]; then
@@ -75,6 +75,8 @@ function update_library (){
 		menu
 	else
 		echo "StarBuilder has to be updated."
+		rm -rf version.txt
+		rm -rf /tmp/starver.txt
 		exit 0
 	fi
 }
