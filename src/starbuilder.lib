@@ -41,6 +41,7 @@ IMAGE_DIR=/home/$USER/Desktop # Set User Directory
 JOB_FACTOR=1
 NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
 NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
+VERSION=0.0.2
 
 
 ###############
@@ -58,6 +59,25 @@ NC='\033[0m'
 # StarBuilder Functions #
 #                       #
 #########################
+
+
+##############################
+# Update StarBuilder Library # update_library
+##############################
+function update_library (){
+	touch /tmp/starver.txt
+	echo $VERSION >> /tmp/starver.txt
+	wget http://github.com/awlsomealex/starbuilder/version.txt
+	STAR_VER_OLD=$(cat /tmp/starver.txt)
+	STAR_VER_NEW=$(cat ../version.txt)
+	if [ $STAR_VER_OLD == $STAR_VER_NEW ]; then
+		echo "StarBuilder is up-to-date."
+		menu
+	else
+		echo "StarBuilder has to be updated."
+		exit 0
+	fi
+}
 
 
 ##########################
@@ -80,6 +100,15 @@ function deltempfile (){
 # Master Function # master
 ###################
 function master (){
+	update_library
+	menu
+}
+
+
+#################
+# Menu Function # menu
+#################
+function menu (){
     
     trap 'deltempfile'  EXIT # Calls 'deltemp' on exit.
     
