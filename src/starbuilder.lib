@@ -69,7 +69,7 @@ function update_library (){
 	echo $VERSION >> /tmp/starver.txt
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/master/version.txt
 	STAR_VER_OLD=$(cat /tmp/starver.txt)
-	STAR_VER_NEW=$(cat ../version.txt)
+	STAR_VER_NEW=$(cat version.txt)
 	if [ $STAR_VER_OLD == $STAR_VER_NEW ]; then
 		echo "StarBuilder is up-to-date."
 		menu
@@ -78,6 +78,7 @@ function update_library (){
 		rm -rf version.txt
 		rm -rf /tmp/starver.txt
 		exit 0
+		# More Functionality (Like Library Updating) will be added at another time.
 	fi
 }
 
