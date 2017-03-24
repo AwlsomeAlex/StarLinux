@@ -4,7 +4,7 @@
 #------------------------------#
 ################################
 # Made by AwlsomeAlex [GPLv3]  #
-#       Version: 0.0.2a        #
+#       Version: 0.0.4a        #
 ################################
 
 
@@ -65,12 +65,9 @@ NC='\033[0m'
 # Update StarBuilder Library # update_library
 ##############################
 function update_library (){
-	touch /tmp/starver.txt
-	echo $VERSION >> /tmp/starver.txt
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/master/version.txt
-	STAR_VER_OLD=$(cat /tmp/starver.txt)
 	STAR_VER_NEW=$(cat version.txt)
-	if [ $STAR_VER_OLD == $STAR_VER_NEW ]; then
+	if [ $VERSION == $STAR_VER_NEW ]; then
 		echo "StarBuilder is up-to-date."
 		menu
 	else
