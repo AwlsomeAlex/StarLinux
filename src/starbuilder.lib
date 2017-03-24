@@ -41,7 +41,7 @@ IMAGE_DIR=/home/$USER/Desktop # Set User Directory
 JOB_FACTOR=1
 NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
 NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
-VERSION=0.0.2
+VERSION=0.0.4
 
 
 ###############
@@ -54,6 +54,25 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 
+####################
+# StarBuilder Logo #
+####################
+function star_logo() {
+    clear
+    echo ""
+    echo "========================================"
+    echo "|                                      |"
+    echo "| StarBuilder - StarLinux Build Script |"
+    echo "|                                      |"
+    echo "|--------------------------------------|"
+    echo "|    Version $VERSION     GNU GPLv3       |"
+    echo "|--------------------------------------|"
+    echo "|         Made by AwlsomeAlex          |"
+    echo "========================================"
+    echo ""
+}
+
+
 #########################
 #                       #
 # StarBuilder Functions #
@@ -61,53 +80,39 @@ NC='\033[0m'
 #########################
 
 
-##############################
-# Update StarBuilder Library # update_library
-##############################
-function update_library (){
-	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/master/version.txt
-	STAR_VER_NEW=$(cat version.txt)
-	if [ $VERSION == $STAR_VER_NEW ]; then
-		echo "StarBuilder is up-to-date."
-		menu
-	else
-		echo "StarBuilder has to be updated."
-		rm -rf version.txt
-		rm -rf /tmp/starver.txt
-		exit 0
-		# More Functionality (Like Library Updating) will be added at another time.
-	fi
-}
-
-
-##########################
-# Check Library Function # check_lib
-##########################
 function check_lib (){
 CHECK="StarBuilder Library Fully Functional." 
 }
 
 
-##########################
-# Delete Temporary Files # deltempfile
-##########################
 function deltempfile (){
     rm -r /tmp/menuchoice.$$
 }
 
 
-###################
-# Master Function # master
-###################
+function update_library (){
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/master/version.txt
+	STAR_VER_NEW=$(cat version.txt)
+	if [ $VERSION == $STAR_VER_NEW ]; then
+	    star_logo
+		echo "StarBuilder is up-to-date."
+		rm -rf version.txt
+		menu
+	else
+	    star_logo
+		echo "StarBuilder has to be updated."
+		rm -rf /tmp/starver.txt		
+        exit 0
+		# More Functionality (Like Library Updating) will be added at another time.
+	fi
+}
+
+
 function master (){
 	update_library
 	menu
 }
 
-
-#################
-# Menu Function # menu
-#################
 function menu (){
     
     trap 'deltempfile'  EXIT # Calls 'deltemp' on exit.
@@ -147,55 +152,55 @@ done
 }
 
 
-#####################
-#                   #
-# Compile StarLinux # compile_starlinux
-#                   #
-#####################
 function compile_starlinux (){
-    echo "Compile StarLinux"
-    exit 1
+    function prepare_directory() {
+        if [ -d "/tmp/starbuilder" ]; then
+            star_logo
+            echo "StarBuilder Directory already exists. Overwrite?"
+            echo ""
+            echo "Type yes to overwrite or no to exit..."
+            read OVERWRITE
+            if [ $OVERWRITE == yes ]; then 
+                rm -rf /tmp/starbuilder
+                mkdir -p /tmp/starbuilder/{source,work,install}
+                exit 1
+                # Download Sources Function To-Be-Added!
+            elif [ $OVERWRITE == no ]; then
+                echo "StarBuilder will now return to the Main Menu..."
+                sleep 2
+                return 0
+            else
+                echo "Invaid Option. Please type yes or no..."
+                sleep 2
+                prepare_directory
+            fi
+        fi
+        mkdir -p /tmp/starbuilder/{source,work,install}
+        exit 1
+        # Download Sources Function To-Be-Adde
+    }
+    prepare_directory
 }
 
 
-#################
-#               #
-# Load Overlays # load_overlays
-#               #
-#################
 function load_overlays (){
     echo "Load Overlays"
     exit 1
 }
 
 
-###############
-#             #
-# Build Image # build_image
-#             #
-###############
 function build_image (){
     echo "Build Image"
     exit 1
 }
 
 
-##################
-#                #
-# Package Source # package_source
-#                #
-##################
 function package_source (){
     echo "Package Source"
     exit 1
 }
 
 
-################
-#              #
-# About Dialog # about
-#              #
-################
 function about (){
     echo "About Dialog"
     exit 1
