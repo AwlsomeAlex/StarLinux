@@ -45,7 +45,7 @@ echo "Downloading Linux Kernel Version $KERN_VER..."
 sleep 3
 wget $DOWNLOAD_URL -q --show-progress
 if [ ! -f $ARCHIVE_FILE ]; then
-	echo "Incorrect Linux Kernel Version. Please Try Again!"
+	echo "Unknown Linux Kernel Version. Please Try Again!"
 	exit 0
 fi
 logo
