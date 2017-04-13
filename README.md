@@ -8,7 +8,10 @@ StarLinux is an idea I had a long time ago, originally to be made as an Ubuntu-B
 Just recently I've finally discovered (after many attempts) to have the root directory of the Linux Distribtuion be an actual filesystem (ext2 at the moment) instead of it being pulled from two seperate directories (static root filesystem + overlayfs). This concept will be released as soon as I perfected it but it's basically a **really really** dumbed down version of Linux From Scratch. 
 
 ## What's Included with StarLinux?
-* Nothing at the Moment.
+* StarLinux Kernel Packer (Linux Kernel 4.9.x LTS Branch)
+* StarLinux Kernel 4.9.x (Archived for InitramFS Maker Script)
+* StarLinux InitramFS Maker (Busybox + GlibC + StarInit)
+* StarLinux Installer for Archlinux Live CD (x64 ONLY)
 
 ## How to Install:
 Resolve the following Ubuntu Dependencies:
@@ -17,9 +20,6 @@ Resolve the following Ubuntu Dependencies:
 Resolve the following Archlinux Dependencies:
 `sudo pacman -S base-devel wget make gawk gcc bc syslinux texinfo`
 
-Run the following Script:
-
-`./starbuilder-install.sh`
 
 ## Credits:
 * AwlsomeAlex (Creator of StarLinux)
