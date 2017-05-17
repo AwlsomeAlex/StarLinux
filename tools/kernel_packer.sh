@@ -58,7 +58,7 @@ echo "Configuring Linux Kernel Version $KERN_VER..."
 sleep 3
 make mrproper -j $NUM_JOBS
 make defconfig -j $NUM_JOBS
-sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"awlsomelinux\"/" .config
+sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"starlinux\"/" .config
 sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
 sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
 sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
@@ -116,3 +116,8 @@ tar -czvf kernel-$KERN_VER.tar.gz *
 cp kernel-$KERN_VER.tar.gz $HOME/Documents
 cd $HOME/Documents
 rm -rf /tmp/kern_packer/
+logo
+echo "Linux Kernel $KERN_VER has been compiled and packaged and is ready for StarLinux!"
+echo "Thank you for choosing StarLinux! Created by AwlsomeAlex {GNU GPLv3}!"
+exit 1
+
