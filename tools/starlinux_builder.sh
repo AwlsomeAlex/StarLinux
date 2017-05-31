@@ -45,9 +45,53 @@ menu () {
 	echo ""
 }
 
-make_dir () {
-		
+sb_exit () {
+	logo
+	echo "StarBuilder will now exit."
+	echo "Thank you for using StarBuilder!"
+	echo "Created by AwlsomeAlex [GNU GPLv3]"
+	exit
+	
 }
 
-define_version () {
-	
+make_dir () {
+	if [ -d /tmp/starbuilder ]; then
+		logo
+		echo "WARNING! The StarBuilder Directory has already been created. What action should be taken?"
+		echo ""
+		echo "1.) Overwrite Current StarBuilder Directory."
+		echo "2.) Rename Current StarBuilder Directory."
+		echo "3.) Cancel StarBuilder Completely."
+		echo ""
+		read DIR_OPTION
+			if [ $DIR_OPTION == 1 ]; then
+				logo
+				echo "Overwritting Current StarBuilder Directory..."
+				rm -rf /tmp/starbuilder
+				echo "StarBuilder Directory Overwritten."
+			elif [ $DIR_OPTION == 2 ]; then
+				logo
+				echo "Renaming Current StarBuilder Directory..."
+				mv /tmp/starbuilder /tmp/starbuilder_$$
+				rm -rf /tmp/starbuilder
+				echo "StarBuilder Directory Overwritten."
+			elif [ $DIR_OPTION == 3 ]; then
+				sb_exit
+			else
+				logo
+				echo "Invalid Option. Please choose again!"
+				return 0
+			fi
+	fi
+	logo
+	echo "Creating Essential StarBuilder Directories..."
+	mkdir /tmp/starbuilder
+	mkdir -p /tmp/starbuilder/{Source,Work/Image,Image}
+	echo "StarBuilder Directories Created."
+}
+
+#define_version () {
+#	
+#}
+
+make_dir
