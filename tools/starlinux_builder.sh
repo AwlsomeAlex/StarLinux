@@ -22,6 +22,9 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 KERN_VER="Undefined"
 GLIBC_VER="Undefined"
 BUSYBOX_VER="Undefined"
+KERN_STATUS="---"
+GLIBC_STATUS="---"
+BUSYBOX_STATUS="---"
 
 ## Functions ##
 logo () {
@@ -37,11 +40,11 @@ logo () {
 
 menu () {
 	echo ""
-	echo "================================="
-	echo "| Linux Kernel     | $KERN_VER   "
-	echo "| GlibC Library    | $GLIBC_VER  "
-	echo "| BusyBox Userland | $BUSYBOX_VER"
-	echo "================================="
+	echo "======================================"
+	echo "| ($KERN_STATUS) Linux Kernel     | $KERN_VER     "
+	echo "| ($GLIBC_STATUS) GlibC Library    | $GLIBC_VER    "
+	echo "| ($BUSYBOX_STATUS) BusyBox Userland | $BUSYBOX_VER  "
+	echo "======================================"
 	echo ""
 }
 
@@ -88,10 +91,112 @@ make_dir () {
 	mkdir /tmp/starbuilder
 	mkdir -p /tmp/starbuilder/{Source,Work/Image,Image}
 	echo "StarBuilder Directories Created."
+	define_version
 }
 
-#define_version () {
-#	
-#}
+define_version () {
+	if [ $KERN_VER == "Undefined" ]; then
+		logo
+		menu
+		echo "A Kernel Version has not been defined. Please define a Kernel Version: [NOTE: Please don't go beyond 4.9.x!]" # Can't go beyond due to a configuration error with Linux Kernel 4.10 and up. [TEMP FIX]
+		read KERN_VER
+		KERN_STATUS="#--"
+		define_version
+	fi
+	if [ $GLIBC_VER == "Undefined" ]; then
+		logo
+		menu
+		echo "A GNU Library C Version has not been defined. Please define a GlibC Version:"
+		read GLIBC_VER
+		GLIBC_STATUS="#--"
+		define_version
+	fi
+	if [ $BUSYBOX_VER == "Undefined" ]; then
+		logo
+		menu
+		echo "A Busybox Version has not been defined. Please define a Busybox Version:"
+		read BUSYBOX_VER
+		BUSYBOX_STATUS="#--"
+		define_version
+	fi
+	logo
+	menu
+	echo "Do these versions look correct?"
+	echo "WARNING: Any incorrect version number will cause the builder to fail and StarLinux to be messed up!"
+	echo ""
+	echo "1.) No, Change Kernel Version."
+	echo "2.) No, Change GlibC Version."
+	echo "3.) No, Change Busybox Version."
+	echo "4.) Yes, continue!"
+	read DEFINE_OPTION
+	if [ $DEFINE_OPTION == "1" ]; then
+		KERN_VER="Undefined"
+		KERN_STATUS="---"
+		define_version
+	elif [ $DEFINE_OPTION == "2" ]; then
+		GLIBC_VER="Undefined"
+		GLIBC_STATUS="---"
+		define_version
+	elif [ $DEFINE_OPTION == "3" ]; then
+		BUSYBOX_VER="Undefined"
+		BUSYBOX_STATUS="---"
+		define_version
+	elif [ $DEFINE_OPTION == "4" ]; then
+		download_packages
+	else
+		logo
+		echo "Invalid Option! Exitting..."
+		exit 0
+	fi
+}
+
+download_packages () {
+	cd /tmp/starbuilder/Source
+	logo
+	echo "Downloading Linux Kernel $KERN_VER..."
+	wget http://kernel.org/pub/linux/kernel/v4.x/linux-$KERN_VER.tar.xz -q --show-progress
+	KERN_STATUS="##-"
+	echo ""
+	echo "Downloading GNU C Library $GLIBC_VER..."
+	wget http://ftp.gnu.org/gnu/glibc/glibc-$GLIBC_VER.tar.bz2 -q --show-progress
+	GLIBC_STATUS="##-"
+	echo ""
+	echo "Downloading Busybox $BUSYBOX_VER..."
+	wget https://busybox.net/downloads/busybox-$BUSYBOX_VER.tar.bz2 -q --show-progress
+	BUSYBOX_STATUS="##-"
+	echo ""
+	echo "Downloading Syslinux 6.03..."
+	wget http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -q --show-progress
+	extract_packages
+}
+
+extract_packages () {
+	cd /tmp/starbuilder/Work
+	logo
+	menu
+	echo "Extracting Linux Kernel $KERN_VER..."
+	sleep 3
+	tar -xvf ../Source/linux-$KERN_VER.tar.xz -C .
+	KERN_STATUS="###"
+	logo
+	menu
+	echo "Extracting GNU C Library $GLIBC_VER..."
+	sleep 3
+	tar -xvf ../Source/glibc-$GLIBC_VER.tar.bz2 -C .
+	GLIBC_STATUS="###"
+	logo
+	menu
+	echo "Extracting Busybox $BUSYBOX_VER..."
+	sleep 3
+	tar -xvf ../Source/busybox-$BUSYBOX_VER.tar.bz2 -C .
+	BUSYBOX_STATUS="###"
+	logo
+	menu
+	echo "Extracting Syslinux 6.03..."
+	sleep 3
+	tar -xvf ../Source/syslinux-6.03.tar.xz -C .
+	ls /tmp/starbuilder/Work
+	exit 1
+}
 
 make_dir
