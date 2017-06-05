@@ -195,8 +195,89 @@ extract_packages () {
 	echo "Extracting Syslinux 6.03..."
 	sleep 3
 	tar -xvf ../Source/syslinux-6.03.tar.xz -C .
-	ls /tmp/starbuilder/Work
-	exit 1
+	kernel_build
+}
+
+kernel_build () {
+	cd /tmp/starbuilder/Work/linux-$KERN_VER
+	KERN_STATUS="CFG"
+	logo
+	menu
+	echo "Configuring Linux Kernel $KERN_VER..."
+	sleep 3
+	make mrproper -j $NUM_JOBS
+	make defconfig -j $NUM_JOBS
+	sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"starlinux\"/" .config
+	sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
+	sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
+	sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
+	sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
+	sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
+	sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
+	sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
+	echo "CONFIG_EFI_MIXED=y" >> .config
+	mkdir /tmp/starbuilder/Work/linux_extra
+	mkdir /tmp/starbuilder/Work/linux_extra/lib
+	mkdir /tmp/starbuilder/Work/linux_extra/lib/firmware
+	KERN_STATUS="BLD"
+	logo
+	menu
+	echo "Building Linux Kernel $KERN_VER..."
+	sleep 3
+	make \
+		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+		bzImage -j $NUM_JOBS
+	KERN_STATUS="INS"
+	logo
+	menu
+	echo "Installing Linux Kernel $KERN_VER..."
+	sleep 3
+	cp arch/x86/boot/bzImage \
+		/tmp/starbuilder/Image/kernel-$KERN_VER.xz
+	KERN_STATUS="HDR"
+	logo
+	menu
+	echo "Generating Linux Kernel Headers $KERN_VER..."
+	sleep 3
+	make \
+		INSTALL_HDR_PATH=/tmp/starbuilder/Work/linux_extra \
+		headers_install -j $NUM_JOBS
+	KERN_STATUS="MOD"
+	logo
+	menu
+	echo "Generating Linux Kernel Modules $KERN_VER..."
+	sleep 3
+	make \
+		modules -j $NUM_JOBS
+	logo
+	menu
+	echo "Installing Linux Kernel Modules $KERN_VER..."
+	sleep 3
+	make \
+		INSTALL_MOD_PATH=/tmp/starbuilder/Work/linux_extra \
+		modules_install -j $NUM_JOBS
+	KERN_STATUS="FRM"
+	logo
+	menu
+	echo "Generating Linux Kernel Firmware $KERN_VER..."
+	sleep 3
+	make \
+		INSTALL_FW_PATH=/tmp/starbuilder/Work/linux_extra/lib/firmware \
+		firmware_install -j $NUM_JOBS
+	KERN_STATUS="MOD"
+	logo
+	menu
+	echo "Configuring Linux Kernel Modules $KERN_VER..."
+	cd /tmp/starbuilder/Work/linux_extra/lib/modules
+	cd $(ls)
+	unlink build
+	unlink source
+	cd /tmp/starbuilder/Work
+	KERN_STATUS="BLT"
+	logo
+	menu
+	echo "Linux Kernel $KERN_VER has been successfully built!"
+	exit 1 # To be Continued
 }
 
 make_dir
