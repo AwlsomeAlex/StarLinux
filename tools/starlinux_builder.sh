@@ -277,7 +277,67 @@ kernel_build () {
 	logo
 	menu
 	echo "Linux Kernel $KERN_VER has been successfully built!"
-	exit 1 # To be Continued
+	glibc_build
+}
+
+glibc_build () {
+	cd /tmp/starbuilder/Work/glibc-$GLIBC_VER
+	GLIBC_STATUS="CFG"
+	logo
+	menu
+	echo "Configuring GNU C Library $GLIBC_VER..."
+	sleep 3
+	mkdir /tmp/starbuilder/Work/glibc_objects
+	mkdir /tmp/starbuilder/Work/glibc
+	GLIBC_SRC=$(pwd)
+	KERN_INSTALLED=/tmp/starbuilder/Work/linux_extra
+	GLIBC_INSTALLED=/tmp/starbuilder/Work/glibc
+	cd /tmp/starbuilder/Work/glibc_objects
+	$GLIBC_SRC/configure \
+		--prefix= \
+		--with-headers=$KERN_INSTALLED/include \
+		--without-gd \
+		--without-selinux \
+		--disable-werror \
+		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
+	GLIBC_STATUS="BLD"
+	logo
+	menu
+	echo "Building GNU C Library $GLIBC_VER..."
+	sleep 3
+	make -j $NUM_JOBS
+	GLIBC_STATUS="INS"
+	logo
+	menu
+	echo "Installing GNU C Library $GLIBC_VER..."
+	sleep 3
+	make install \
+		DESTDIR=$GLIBC_INSTALLED \
+		-j $NUM_JOBS
+	GLIBC_STATUS="PRE"
+	logo
+	menu
+	echo "Preparing GNU C Library $GLIBC_VER..."
+	sleep 3
+	cd /tmp/starbuilder/Work
+	cp -r glibc glibc_final
+	cd glibc_final
+	GLIBC_FINAL=$(pwd)
+	mkdir -p usr
+	cd usr
+	ln -s ../include include
+	ln -s ../lib lib
+	cd ../include
+	ln -s $KERN_INSTALLED/include/linux linux
+	ln -s $KERN_INSTALLED/include/asm asm
+	ln -s $KERN_INSTALLED/include/asm-generic asm-generic
+	ln -s $KERN_INSTALLED/include/mtd mtd
+	cd /tmp/starbuilder/Work
+	GLIBC_STATUS="BLT"
+	logo
+	menu
+	echo "GNU C Library $GLIBC_VER has been successfully built!"
+	exit 1
 }
 
 make_dir
