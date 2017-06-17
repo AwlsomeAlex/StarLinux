@@ -57,6 +57,49 @@ sb_exit () {
 	
 }
 
+check_packages() {
+		logo
+		echo "NOTICE: Starbuilder will now download/update any required packages needed to compile. [THIS WILL REQUIRE ROOT/SUDO ACCESS!]"
+		echo ""
+		echo "Please select your Distribution:"
+		echo "1.) Ubuntu 16.04+"
+		echo "2.) Debian 8.x"
+		echo "3.) Fedora 24+"
+		echo "4.) ArchLinux"
+		echo ""
+		read DISTRO
+			if [ $DISTRO == 1 ]; then
+				logo
+				echo "Requesting Root/Sudo Rights for APT..."
+				sleep 3
+				sudo apt-get update
+				sudo apt-get install -y build-essential wget make gawk gcc bc syslinux genisoimage texinfo bison
+				logo
+				echo "Required packages have been installed. Continuing..."
+				sleep 3
+				make_dir
+			elif [ $DISTRO == 2 ]; then
+				logo
+				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
+				sleep 3
+				make_dir
+			elif [ $DISTRO == 3 ]; then
+				logo
+				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
+				sleep 3
+				make_dir
+			elif [ $DISTRO == 4 ]; then
+				logo
+				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
+				sleep 3
+				make_dir
+			else
+				logo
+				echo "Invalid Option. Please choose again!"
+				return 0
+			fi
+}
+
 make_dir () {
 	if [ -d /tmp/starbuilder ]; then
 		logo
@@ -340,4 +383,4 @@ glibc_build () {
 	exit 1
 }
 
-make_dir
+check_packages
