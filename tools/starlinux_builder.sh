@@ -210,6 +210,9 @@ download_packages () {
 	echo ""
 	echo "Downloading Syslinux 6.03..."
 	wget http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -q --show-progress
+	logo
+	echo "Downloading StarLinux starinit Boot Scripts..."
+	wget https://github.com/AwlsomeAlex/starinit/archive/master.zip -q --show-progress
 	extract_packages
 }
 
@@ -238,6 +241,11 @@ extract_packages () {
 	echo "Extracting Syslinux 6.03..."
 	sleep 3
 	tar -xvf ../Source/syslinux-6.03.tar.xz -C .
+	logo
+	menu
+	echo "Extracting starinit..."
+	sleep 3
+	unzip ../Source/master.zip -d .
 	kernel_build
 }
 
@@ -380,6 +388,90 @@ glibc_build () {
 	logo
 	menu
 	echo "GNU C Library $GLIBC_VER has been successfully built!"
+	busybox_build
+}
+
+busybox_build () {
+	cd /tmp/starbuilder/Work/busybox-$BUSYBOX_VER
+	BUSYBOX_STATUS="CFG"
+	logo
+	menu
+	echo "Configuring Busybox Userland $BUSYBOX_VER..."
+	sleep 3
+	mkdir /tmp/starbuilder/Work/busybox_final
+	make distclean -j $NUM_JOBS
+	make defconfig -j $NUM_JOBS
+	sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config
+	BUSYBOX_STATUS="BLD"
+	logo
+	menu
+	echo "Building Busybox Userland $BUSYBOX_VER..."
+	sleep 3
+	make \
+		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+		busybox -j $NUM_JOBS
+	BUSYBOX_STATUS="INS"
+	logo
+	menu
+	echo "Installing Busybox Userland $BUSYBOX_VER..."
+	make \
+		CONFIG_PREFIX="/tmp/starbuilder/Work/busybox_final" \
+		install -j $NUM_JOBS
+	BUSYBOX_INSTALLED=/tmp/starbuilder/Work/busybox_final
+	BUSYBOX_STATUS="BLT"
+	logo
+	menu
+	echo "Busybox Userland $BUSYBOX_VER has been successfully built!"
+	generate_initramfs
+}
+
+generate_initramfs () {
+	logo
+	menu
+	echo "Setting up InitramFS Environment..."
+	sleep 3
+	cd /tmp/starbuilder/Work/Image
+	cp -r $BUSYBOX_INSTALLED initramfs
+	cp -r /tmp/starbuilder/Work/master/src/* initramfs
+	cd initramfs
+	rm -f linuxrc
+	logo
+	menu
+	echo "Copying Required InitramFS Libraries..."
+	sleep 3
+	BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
+	if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
+		mkdir lib64
+		cp $GLIBC_FINAL/lib/ld-linux* lib64
+		echo "Configured for 64-bit Libraries."
+	else
+		cp $GLIBC_FINAL/lib/ld-linux* lib
+		echo "Configured for 32-bit Libraries."
+	fi
+	cp $GLIBC_FINAL/lib/libm.so.6 lib
+	cp $GLIBC_FINAL/lib/libc.so.6 lib
+	cp $GLIBC_FINAL/lib/libresolv.so.2 lib
+	cp $GLIBC_FIANL/lib/libnss_dns.so.2 lib
+	cp -r /tmp/starbuilder/Work/linux_extra/lib/* lib
+	strip -g \
+		/tmp/starbuilder/Work/Image/initramfs/bin/* \
+		/tmp/starbuilder/Work/Image/initramfs/sbin/* \
+		/tmp/starbuilder/Work/Image/initramfs/lib/* \
+		2>/dev/null
+	logo
+	menu
+	echo "InitramFS Environment Configured!"
+	pack_initramfs
+}
+
+pack_initramfs () {
+	logo
+	menu
+	echo "Packing InitramFS Environment..."
+	sleep 3
+	cd /tmp/starbuilder/Work/Image/initramfs
+	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$KERN_VER.cpio.xz
+	echo "InitramFS has been successfully packed!"
 	exit 1
 }
 
