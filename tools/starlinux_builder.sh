@@ -451,7 +451,7 @@ generate_initramfs () {
 	cp $GLIBC_FINAL/lib/libm.so.6 lib
 	cp $GLIBC_FINAL/lib/libc.so.6 lib
 	cp $GLIBC_FINAL/lib/libresolv.so.2 lib
-	cp $GLIBC_FIANL/lib/libnss_dns.so.2 lib
+	cp $GLIBC_FINAL/lib/libnss_dns.so.2 lib
 	cp -r /tmp/starbuilder/Work/linux_extra/lib/* lib
 	strip -g \
 		/tmp/starbuilder/Work/Image/initramfs/bin/* \
