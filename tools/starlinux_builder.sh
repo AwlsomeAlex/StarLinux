@@ -472,6 +472,7 @@ pack_initramfs () {
 	cd /tmp/starbuilder/Work/Image/initramfs
 	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$KERN_VER.cpio.xz
 	cp ../initramfs-$KERN_VER.cpio.xz /tmp/starbuilder/Image/initramfs-$KERN_VER.xz
+	cp -r ../initramfs /tmp/starbuilder/Image/initramfs
 	echo "InitramFS has been successfully packed!"
 	exit 1
 }

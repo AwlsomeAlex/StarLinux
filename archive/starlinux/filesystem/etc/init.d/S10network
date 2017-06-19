@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#########################
+# StarLinux Init Script #
+#########################
+# Made by AwlsomeAlex
+# Adapted for StarLinux from Gentoo
+
+case "$1" in
+	start)
+		for DEVICE in /sys/class/net/* ; do
+			echo -e "\e[1;32m(Pass) \e[0mFound Network Device ${DEVICE##*/}"
+			ip link set ${DEVICE##*/} up
+			[ ${DEVICE##*/} != lo ] && udhcpc -b -i ${DEVICE##*/} -s /etc/init.d/rc.udhcp
+		done
+		/sbin/ifup -a
+	stop)
+		echo "Stopping Network..."
+		/sbin/ifdown -a
+		;;
+	restart|reload)
+		"$0" stop
+		"$0" start
+		;;
+	*)
+		echo $"Useage: $0 {start|stop|restart}"
+esac
+
+exit $?

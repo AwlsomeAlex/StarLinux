@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#########################
+# StarLinux Init Script #
+#########################
+# Made by AwlsomeAlex
+# Adapted for StarLinux from Gentoo/Buildroot
+
+for i in /etc/init.d/S??* ;do
+	[ ! -f "$i" ] && continue
+	
+	case "$i" in
+	*.sh)
+		# Source Shell Script
+		(
+		trap - INT QUIT TSTP
+		set start
+		. $i
+		)
+	*)
+		# Fork Subprocess
+		$i start
+		;;
+	esac
+done
