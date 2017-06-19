@@ -432,7 +432,7 @@ generate_initramfs () {
 	sleep 3
 	cd /tmp/starbuilder/Work/Image
 	cp -r $BUSYBOX_INSTALLED initramfs
-	cp -r /tmp/starbuilder/Work/master/src/* initramfs
+	cp -r /tmp/starbuilder/Work/starinit-master/src/* initramfs
 	cd initramfs
 	rm -f linuxrc
 	logo
