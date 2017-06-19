@@ -1,4 +1,6 @@
 #!/bin/bash
+# Created by AwlsomeAlex (GNU GPLv3)
+# Version GIT
 
 #############################
 # StarLinux Builder Utility #
