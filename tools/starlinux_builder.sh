@@ -487,7 +487,7 @@ gen_archive () {
 	sleep 3
 	cd /tmp/starbuilder
 	mkdir -p /tmp/starbuilder/StarLinux-$KERN_VER/filesystem
-	cp -r /tmp/starbuilder/Image/initramfs/* /tmp/starbuilder/StarLinux/filesystem/
+	cp -r /tmp/starbuilder/Image/initramfs/* /tmp/starbuilder/StarLinux-$KERN_VER/filesystem/
 	cp /tmp/starbuilder/Image/initramfs-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/initramfs.xz
 	cp /tmp/starbuilder/Image/kernel-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/kernel.xz
 	# Add ArchLinux Installation Script Here! (Yes I said ArchLinux)
@@ -496,7 +496,8 @@ gen_archive () {
 	menu
 	echo "Generating StarLinux Archive..."
 	sleep 3
-	tar -zcvf StarLinux-$KERN_VER.tar.gz /tmp/starbuilder/StarLinux-$KERN_VER
+	cd /tmp/starbuilder
+	tar -zcvf StarLinux-$KERN_VER.tar.gz StarLinux-$KERN_VER
 	logo
 	menu
 	echo "Generating and Verifying MD5 Verification..."
