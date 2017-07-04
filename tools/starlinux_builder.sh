@@ -477,6 +477,36 @@ pack_initramfs () {
 	cp -r ../initramfs /tmp/starbuilder/Image/initramfs
 	echo "InitramFS has been successfully packed!"
 	exit 1
+	# gen_archive
+}
+
+gen_archive () {
+	logo
+	menu
+	echo "Preparing StarLinux Archive..."
+	sleep 3
+	cd /tmp/starbuilder
+	mkdir -p /tmp/starbuilder/StarLinux-$KERN_VER/filesystem
+	cp -r /tmp/starbuilder/Image/initramfs/* /tmp/starbuilder/StarLinux/filesystem/
+	cp /tmp/starbuilder/Image/initramfs-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/initramfs.xz
+	cp /tmp/starbuilder/Image/kernel-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/kernel.xz
+	# Add ArchLinux Installation Script Here! (Yes I said ArchLinux)
+	# Add Extra Program Compiling Here! 
+	logo
+	menu
+	echo "Generating StarLinux Archive..."
+	sleep 3
+	tar -zcvf StarLinux-$KERN_VER.tar.gz /tmp/starbuilder/StarLinux-$KERN_VER
+	logo
+	menu
+	echo "Generating and Verifying MD5 Verification..."
+	md5sum StarLinux-$KERN_VER.tar.gz > StarLinux-$KERN_VER.md5
+	md5sum -c StarLinux-$KERN_VER.md5
+	logo
+	menu
+	echo "StarBuilder is now complete! Enjoy your version of StarLinux!"
+	exit 1
+	
 }
 
 check_packages
