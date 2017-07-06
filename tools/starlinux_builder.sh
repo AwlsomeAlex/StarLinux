@@ -27,6 +27,8 @@ BUSYBOX_VER="Undefined"
 KERN_STATUS="---"
 GLIBC_STATUS="---"
 BUSYBOX_STATUS="---"
+BUILD_DIR="/tmp/starbuilder"
+
 
 ## Functions ##
 logo () {
@@ -65,7 +67,7 @@ check_packages() {
 		echo ""
 		echo "Please select your Distribution:"
 		echo "1.) Ubuntu 16.04+"
-		echo "2.) Debian 8.x"
+		echo "2.) Debian 8.x+"
 		echo "3.) Fedora 24+"
 		echo "4.) ArchLinux"
 		echo ""
@@ -87,7 +89,12 @@ check_packages() {
 				make_dir
 			elif [ $DISTRO == 3 ]; then
 				logo
-				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
+				echo "Requesting Root/Sudo Rights for DNF..."
+				sleep 3
+				sudo dnf update -y
+				sudo dnf install -y make automake wget gawk gcc bc syslinux genisoimage texinfo bison
+				logo
+				echo "Required packages have been installed. Continuing..."
 				sleep 3
 				make_dir
 			elif [ $DISTRO == 4 ]; then
@@ -103,7 +110,7 @@ check_packages() {
 }
 
 make_dir () {
-	if [ -d /tmp/starbuilder ]; then
+	if [ -d $BUILD_DIR ]; then
 		logo
 		echo "WARNING! The StarBuilder Directory has already been created. What action should be taken?"
 		echo ""
@@ -115,13 +122,13 @@ make_dir () {
 			if [ $DIR_OPTION == 1 ]; then
 				logo
 				echo "Overwritting Current StarBuilder Directory..."
-				rm -rf /tmp/starbuilder
+				rm -rf $BUILD_DIR
 				echo "StarBuilder Directory Overwritten."
 			elif [ $DIR_OPTION == 2 ]; then
 				logo
 				echo "Renaming Current StarBuilder Directory..."
-				mv /tmp/starbuilder /tmp/starbuilder_$$
-				rm -rf /tmp/starbuilder
+				mv $BUILD_DIR $BUILD_DIR_$$
+				rm -rf $BUILD_DIR
 				echo "StarBuilder Directory Overwritten."
 			elif [ $DIR_OPTION == 3 ]; then
 				sb_exit
@@ -133,8 +140,8 @@ make_dir () {
 	fi
 	logo
 	echo "Creating Essential StarBuilder Directories..."
-	mkdir /tmp/starbuilder
-	mkdir -p /tmp/starbuilder/{Source,Work/Image,Image}
+	mkdir $BUILD_DIR
+	mkdir -p $BUILD_DIR/{Source,Work/Image,Image}
 	echo "StarBuilder Directories Created."
 	define_version
 }
@@ -196,7 +203,7 @@ define_version () {
 }
 
 download_packages () {
-	cd /tmp/starbuilder/Source
+	cd $BUILD_DIR/Source
 	logo
 	echo "Downloading Linux Kernel $KERN_VER..."
 	wget http://kernel.org/pub/linux/kernel/v4.x/linux-$KERN_VER.tar.xz -q --show-progress
@@ -219,7 +226,7 @@ download_packages () {
 }
 
 extract_packages () {
-	cd /tmp/starbuilder/Work
+	cd $BUILD_DIR/Work
 	logo
 	menu
 	echo "Extracting Linux Kernel $KERN_VER..."
@@ -252,7 +259,7 @@ extract_packages () {
 }
 
 kernel_build () {
-	cd /tmp/starbuilder/Work/linux-$KERN_VER
+	cd $BUILD_DIR/Work/linux-$KERN_VER
 	KERN_STATUS="CFG"
 	logo
 	menu
@@ -270,9 +277,9 @@ kernel_build () {
 	# ^^^ Linux Kernel 4.10 =< Support Fix ^^^
 	sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 	echo "CONFIG_EFI_MIXED=y" >> .config
-	mkdir /tmp/starbuilder/Work/linux_extra
-	mkdir /tmp/starbuilder/Work/linux_extra/lib
-	mkdir /tmp/starbuilder/Work/linux_extra/lib/firmware
+	mkdir $BUILD_DIR/Work/linux_extra
+	mkdir $BUILD_DIR/Work/linux_extra/lib
+	mkdir $BUILD_DIR/Work/linux_extra/lib/firmware
 	KERN_STATUS="BLD"
 	logo
 	menu
@@ -287,14 +294,14 @@ kernel_build () {
 	echo "Installing Linux Kernel $KERN_VER..."
 	sleep 3
 	cp arch/x86/boot/bzImage \
-		/tmp/starbuilder/Image/kernel-$KERN_VER.xz
+		$BUILD_DIR/Image/kernel-$KERN_VER.xz
 	KERN_STATUS="HDR"
 	logo
 	menu
 	echo "Generating Linux Kernel Headers $KERN_VER..."
 	sleep 3
 	make \
-		INSTALL_HDR_PATH=/tmp/starbuilder/Work/linux_extra \
+		INSTALL_HDR_PATH=$BUILD_DIR/Work/linux_extra \
 		headers_install -j $NUM_JOBS
 	KERN_STATUS="MOD"
 	logo
@@ -308,7 +315,7 @@ kernel_build () {
 	echo "Installing Linux Kernel Modules $KERN_VER..."
 	sleep 3
 	make \
-		INSTALL_MOD_PATH=/tmp/starbuilder/Work/linux_extra \
+		INSTALL_MOD_PATH=$BUILD_DIR/Work/linux_extra \
 		modules_install -j $NUM_JOBS
 	KERN_STATUS="FRM"
 	logo
@@ -316,17 +323,17 @@ kernel_build () {
 	echo "Generating Linux Kernel Firmware $KERN_VER..."
 	sleep 3
 	make \
-		INSTALL_FW_PATH=/tmp/starbuilder/Work/linux_extra/lib/firmware \
+		INSTALL_FW_PATH=$BUILD_DIR/Work/linux_extra/lib/firmware \
 		firmware_install -j $NUM_JOBS
 	KERN_STATUS="MOD"
 	logo
 	menu
 	echo "Configuring Linux Kernel Modules $KERN_VER..."
-	cd /tmp/starbuilder/Work/linux_extra/lib/modules
+	cd $BUILD_DIR/Work/linux_extra/lib/modules
 	cd $(ls)
 	unlink build
 	unlink source
-	cd /tmp/starbuilder/Work
+	cd $BUILD_DIR/Work
 	KERN_STATUS="BLT"
 	logo
 	menu
@@ -335,18 +342,18 @@ kernel_build () {
 }
 
 glibc_build () {
-	cd /tmp/starbuilder/Work/glibc-$GLIBC_VER
+	cd $BUILD_DIR/Work/glibc-$GLIBC_VER
 	GLIBC_STATUS="CFG"
 	logo
 	menu
 	echo "Configuring GNU C Library $GLIBC_VER..."
 	sleep 3
-	mkdir /tmp/starbuilder/Work/glibc_objects
-	mkdir /tmp/starbuilder/Work/glibc
+	mkdir $BUILD_DIR/Work/glibc_objects
+	mkdir $BUILD_DIR/Work/glibc
 	GLIBC_SRC=$(pwd)
-	KERN_INSTALLED=/tmp/starbuilder/Work/linux_extra
-	GLIBC_INSTALLED=/tmp/starbuilder/Work/glibc
-	cd /tmp/starbuilder/Work/glibc_objects
+	KERN_INSTALLED=$BUILD_DIR/Work/linux_extra
+	GLIBC_INSTALLED=$BUILD_DIR/Work/glibc
+	cd $BUILD_DIR/Work/glibc_objects
 	$GLIBC_SRC/configure \
 		--prefix= \
 		--with-headers=$KERN_INSTALLED/include \
@@ -373,7 +380,7 @@ glibc_build () {
 	menu
 	echo "Preparing GNU C Library $GLIBC_VER..."
 	sleep 3
-	cd /tmp/starbuilder/Work
+	cd $BUILD_DIR/Work
 	cp -r glibc glibc_final
 	cd glibc_final
 	GLIBC_FINAL=$(pwd)
@@ -386,7 +393,7 @@ glibc_build () {
 	ln -s $KERN_INSTALLED/include/asm asm
 	ln -s $KERN_INSTALLED/include/asm-generic asm-generic
 	ln -s $KERN_INSTALLED/include/mtd mtd
-	cd /tmp/starbuilder/Work
+	cd $BUILD_DIR/Work
 	GLIBC_STATUS="BLT"
 	logo
 	menu
@@ -395,13 +402,13 @@ glibc_build () {
 }
 
 busybox_build () {
-	cd /tmp/starbuilder/Work/busybox-$BUSYBOX_VER
+	cd $BUILD_DIR/Work/busybox-$BUSYBOX_VER
 	BUSYBOX_STATUS="CFG"
 	logo
 	menu
 	echo "Configuring Busybox Userland $BUSYBOX_VER..."
 	sleep 3
-	mkdir /tmp/starbuilder/Work/busybox_final
+	mkdir $BUILD_DIR/Work/busybox_final
 	make distclean -j $NUM_JOBS
 	make defconfig -j $NUM_JOBS
 	sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config
@@ -418,9 +425,9 @@ busybox_build () {
 	menu
 	echo "Installing Busybox Userland $BUSYBOX_VER..."
 	make \
-		CONFIG_PREFIX="/tmp/starbuilder/Work/busybox_final" \
+		CONFIG_PREFIX="$BUILD_DIR/Work/busybox_final" \
 		install -j $NUM_JOBS
-	BUSYBOX_INSTALLED=/tmp/starbuilder/Work/busybox_final
+	BUSYBOX_INSTALLED=$BUILD_DIR/Work/busybox_final
 	BUSYBOX_STATUS="BLT"
 	logo
 	menu
@@ -433,9 +440,9 @@ generate_initramfs () {
 	menu
 	echo "Setting up InitramFS Environment..."
 	sleep 3
-	cd /tmp/starbuilder/Work/Image
+	cd $BUILD_DIR/Work/Image
 	cp -r $BUSYBOX_INSTALLED initramfs
-	cp -r /tmp/starbuilder/Work/starinit-master/src/* initramfs
+	cp -r $BUILD_DIR/Work/starinit-master/src/* initramfs
 	cd initramfs
 	rm -f linuxrc
 	logo
@@ -455,11 +462,11 @@ generate_initramfs () {
 	cp $GLIBC_FINAL/lib/libc.so.6 lib
 	cp $GLIBC_FINAL/lib/libresolv.so.2 lib
 	cp $GLIBC_FINAL/lib/libnss_dns.so.2 lib
-	cp -r /tmp/starbuilder/Work/linux_extra/lib/* lib
+	cp -r $BUILD_DIR/Work/linux_extra/lib/* lib
 	strip -g \
-		/tmp/starbuilder/Work/Image/initramfs/bin/* \
-		/tmp/starbuilder/Work/Image/initramfs/sbin/* \
-		/tmp/starbuilder/Work/Image/initramfs/lib/* \
+		$BUILD_DIR/Work/Image/initramfs/bin/* \
+		$BUILD_DIR/Work/Image/initramfs/sbin/* \
+		$BUILD_DIR/Work/Image/initramfs/lib/* \
 		2>/dev/null
 	logo
 	menu
@@ -472,10 +479,10 @@ pack_initramfs () {
 	menu
 	echo "Packing InitramFS Environment..."
 	sleep 3
-	cd /tmp/starbuilder/Work/Image/initramfs
+	cd $BUILD_DIR/Work/Image/initramfs
 	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$KERN_VER.cpio.xz
-	cp ../initramfs-$KERN_VER.cpio.xz /tmp/starbuilder/Image/initramfs-$KERN_VER.xz
-	cp -r ../initramfs /tmp/starbuilder/Image/initramfs
+	cp ../initramfs-$KERN_VER.cpio.xz $BUILD_DIR/Image/initramfs-$KERN_VER.xz
+	cp -r ../initramfs $BUILD_DIR/Image/initramfs
 	echo "InitramFS has been successfully packed!"
 	# exit 1
 	gen_archive
@@ -486,18 +493,18 @@ gen_archive () {
 	menu
 	echo "Preparing StarLinux Archive..."
 	sleep 3
-	cd /tmp/starbuilder
-	mkdir -p /tmp/starbuilder/StarLinux-$KERN_VER/filesystem
-	cp -r /tmp/starbuilder/Image/initramfs/* /tmp/starbuilder/StarLinux-$KERN_VER/filesystem/
-	cp /tmp/starbuilder/Image/initramfs-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/initramfs.xz
-	cp /tmp/starbuilder/Image/kernel-$KERN_VER.xz /tmp/starbuilder/StarLinux-$KERN_VER/kernel.xz
+	cd $BUILD_DIR
+	mkdir -p $BUILD_DIR/StarLinux-$KERN_VER/filesystem
+	cp -r $BUILD_DIR/Image/initramfs/* $BUILD_DIR/StarLinux-$KERN_VER/filesystem/
+	cp $BUILD_DIR/Image/initramfs-$KERN_VER.xz $BUILD_DIR/StarLinux-$KERN_VER/initramfs.xz
+	cp $BUILD_DIR/Image/kernel-$KERN_VER.xz $BUILD_DIR/StarLinux-$KERN_VER/kernel.xz
 	# Add ArchLinux Installation Script Here! (Yes I said ArchLinux)
 	# Add Extra Program Compiling Here! 
 	logo
 	menu
 	echo "Generating StarLinux Archive..."
 	sleep 3
-	cd /tmp/starbuilder
+	cd $BUILD_DIR
 	tar -zcvf StarLinux-$KERN_VER.tar.gz StarLinux-$KERN_VER
 	logo
 	menu
