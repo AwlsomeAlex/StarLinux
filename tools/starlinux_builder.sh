@@ -143,7 +143,7 @@ define_version () {
 	if [ $KERN_VER == "Undefined" ]; then
 		logo
 		menu
-		echo "A Kernel Version has not been defined. Please define a Kernel Version: [NOTE: Please don't go beyond 4.9.x!]" # Can't go beyond due to a configuration error with Linux Kernel 4.10 and up. [TEMP FIX]
+		echo "A Kernel Version has not been defined. Please define a Kernel Version: [Kernel Versions below 4.x are NOT supported! :(]"
 		read KERN_VER
 		KERN_STATUS="#--"
 		define_version
@@ -263,10 +263,11 @@ kernel_build () {
 	sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"starlinux\"/" .config
 	sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
 	sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
-	sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
 	sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
 	sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
 	sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
+	echo "CONFIG_APPLE_PROPERTIES=n" >> .config
+	# ^^^ Linux Kernel 4.10 =< Support Fix ^^^
 	sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 	echo "CONFIG_EFI_MIXED=y" >> .config
 	mkdir /tmp/starbuilder/Work/linux_extra
@@ -476,8 +477,8 @@ pack_initramfs () {
 	cp ../initramfs-$KERN_VER.cpio.xz /tmp/starbuilder/Image/initramfs-$KERN_VER.xz
 	cp -r ../initramfs /tmp/starbuilder/Image/initramfs
 	echo "InitramFS has been successfully packed!"
-	exit 1
-	# gen_archive
+	# exit 1
+	gen_archive
 }
 
 gen_archive () {
