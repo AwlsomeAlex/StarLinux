@@ -1,0 +1,7 @@
+
+Star Package Manager (Version GIT)
+Created by AwlsomeAlex (GNU GPLv3)
+
+Usage: spm PACKAGE
+
+

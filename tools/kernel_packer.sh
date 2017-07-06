@@ -65,6 +65,8 @@ sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
 sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
 sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
 sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
+echo "CONFIG_APPLE_PROPERTIES=n" >> .config
+# ^^^ Linux Kernel 4.10 =< Support Fix ^^^
 sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 echo "CONFIG_EFI_MIXED=y" >> .config
 logo
