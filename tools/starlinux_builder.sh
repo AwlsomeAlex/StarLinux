@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created by AwlsomeAlex (GNU GPLv3)
-# Version GIT
+# Version JULY-06-2017
 
 #############################
 # StarLinux Builder Utility #
@@ -477,8 +477,8 @@ pack_initramfs () {
 	cp ../initramfs-$KERN_VER.cpio.xz /tmp/starbuilder/Image/initramfs-$KERN_VER.xz
 	cp -r ../initramfs /tmp/starbuilder/Image/initramfs
 	echo "InitramFS has been successfully packed!"
-	# exit 1
-	gen_archive
+	exit 1
+	# gen_archive
 }
 
 gen_archive () {
