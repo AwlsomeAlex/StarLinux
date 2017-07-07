@@ -92,6 +92,7 @@ install_package () {
 	echo "Star Package Manager will now start the Installation Recipe to install $PACKAGE."
 	sleep 3
 	install_$PACKAGE
+}
 
 install_spm () {
 	logo
