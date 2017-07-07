@@ -44,6 +44,28 @@ list_packages () {
 	exit 0
 }
 
+update_spm () {
+	logo
+	echo ""
+	echo "Updating Star Package Manager Package Repository..."
+	echo ""
+	echo "NOTE: Internet Access is required!"
+	echo "WARNING: StarLinux BusyBox 1.26.2 and below is NOT SUPPORTED!"
+	sleep 3
+	cd /tmp
+	echo "Removing old Star Package Manager Files..."
+	rm -rf /etc/spm/packages.txt
+	echo "Downloading latest Star Package Manager Files..."
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt
+	echo "Installing Latest Star Package Manager Package Repository..."
+	cp packages.txt /etc/spm/packages.txt
+	rm -rf packages.txt
+	echo ""
+	echo "Star Package Manager Package Repository has been updated."
+	cd /
+	exit 0
+}
+
 install_spm () {
 	logo
 	echo ""
@@ -99,6 +121,8 @@ elif [[ "$1" = "$(grep -r "$1" "/etc/spm/packages.txt")" ]] ; then
 	install_package
 elif [ "$1" = "list" -o "$1" = "-l" ] ; then
 	list_packages
+elif [ "$1" = "update" -o "$1" = "-u" ] ; then
+	update_spm
 else
 	echo "SPM: Invalid Command or Unknown Package. Please type 'spm list' for a list of packages."
 fi
