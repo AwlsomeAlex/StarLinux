@@ -69,7 +69,7 @@ install_spm () {
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/help.txt
 	echo "Downloading Latest Static-Get Script..."
-	wget http://s.minos.io/s -q --show-progress
+	wget http://s.minos.io/s
 	echo "Required Star Package Manager Files Downloaded."
 	sleep 3
 	logo
@@ -79,8 +79,8 @@ install_spm () {
 	chmod +x /usr/bin/static-get
 	cp spm.sh /usr/bin/spm
 	chmod +x /usr/bin/spm
-	cp spm/help.txt /etc/spm/help.txt
-	cp spm/packages.txt /etc/spm/packages.txt
+	cp help.txt /etc/spm/help.txt
+	cp packages.txt /etc/spm/packages.txt
 	echo "Star Package Manager has been successfully installed! Please reboot your StarLinux Machine to continue!"
 	cd /
 	rm -rf /tmp/spm_download
