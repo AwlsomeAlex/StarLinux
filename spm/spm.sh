@@ -68,7 +68,6 @@ update_spm () {
 }
 
 install_package () {
-	PACKAGE="$1"
 	logo 
 	echo ""
 	echo "Star Package Manager will now Download and Install $PACKAGE"
@@ -146,6 +145,7 @@ fi
 if [ "$1" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
 	display_help
 elif [[ "$1" = "$(grep -r "$1" "/etc/spm/packages.txt")" ]] ; then
+	PACKAGE=$1
 	install_package
 elif [ "$1" = "list" -o "$1" = "-l" ] ; then
 	list_packages
