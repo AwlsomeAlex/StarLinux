@@ -4,4 +4,12 @@ Created by AwlsomeAlex (GNU GPLv3)
 
 Usage: spm PACKAGE
 
-
+PACKAGE		The requested package you'd like
+			to install using Star Package Manager
+			ex: `nano` would download and 
+			install the Nano Text Editor. However
+			if the package isn't configured for
+			Star Package Manager the program will
+			exit.
+			
+spm nano

@@ -35,6 +35,13 @@ logo () {
 display_help () {
 	logo
 	cat /etc/spm/help.txt
+	exit 0
+}
+
+list_packages () {
+	logo
+	cat /etc/spm/packages.txt
+	exit 0
 }
 
 install_spm () {
@@ -52,11 +59,15 @@ install_spm () {
 	logo
 	echo "Required Star Package Manager Files will now be downloaded..."
 	sleep 3
-	cd /tmp
+	mkdir /tmp/spm_download
+	cd /tmp/spm_download
 	echo "Downloading Latest Star Package Manager Executable (GIT)..."
-	wget https:// -q --show-progress
+	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh -q --show-progress
 	echo "Downloading Latest Star Package Manager Files (GIT)..."
-	wget https:// -q --show-progress
+	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt -q --show-progress
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/help.txt -q --show-progress
 	echo "Downloading Latest Static-Get Script..."
 	wget http://s.minos.io/s -q --show-progress
 	echo "Required Star Package Manager Files Downloaded."
@@ -71,18 +82,10 @@ install_spm () {
 	cp spm/help.txt /etc/spm/help.txt
 	cp spm/packages.txt /etc/spm/packages.txt
 	echo "Star Package Manager has been successfully installed! Please reboot your StarLinux Machine to continue!"
+	cd /
+	rm -rf /tmp/spm_download
 	exit 1
 }
-
-
-
-
-
-
-
-
-
-
 
 # Check for options:
 
@@ -94,8 +97,10 @@ if [ "\$1" = "" -o "\$1" = "-h" -o "\$1" = "--help" ] ; then
 	display_help
 elif [[ "\$1" = $(grep -r "\$1" "/etc/spm/packages.txt") ]] ; then
 	install_package
+elif [ "\$1" = "list" -o "\$1" = "-l" ] ; then
+	list_packages
 else
-	echo "SPM: Invalid Command! Please type `spm` for help."
+	echo "SPM: Invalid Command or Unknown Package. Please type 'spm list' for a list of packages."
 fi
 
 

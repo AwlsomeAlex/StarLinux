@@ -500,6 +500,10 @@ gen_archive () {
 	cp $BUILD_DIR/Image/kernel-$KERN_VER.xz $BUILD_DIR/StarLinux-$KERN_VER/kernel.xz
 	# Add ArchLinux Installation Script Here! (Yes I said ArchLinux)
 	# Add Extra Program Compiling Here! 
+	cd $BUILD_DIR/StarLinux-$KERN_VER/filesystem/root
+	echo "Downloading Latest Star Package Manager Script (For Optional Installation) [Requires BusyBox Version 1.27.0 or above!]"
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh -q --show-progress
+	cd $BUILD_DIR
 	logo
 	menu
 	echo "Generating StarLinux Archive..."
