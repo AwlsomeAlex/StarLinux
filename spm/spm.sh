@@ -56,6 +56,7 @@ update_spm () {
 	echo "Removing old Star Package Manager Files..."
 	rm -rf /etc/spm/packages.txt
 	echo "Downloading latest Star Package Manager Files..."
+	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt
 	echo "Installing Latest Star Package Manager Package Repository..."
 	cp packages.txt /etc/spm/packages.txt
@@ -65,6 +66,32 @@ update_spm () {
 	cd /
 	exit 0
 }
+
+install_package () {
+	PACKAGE="$1"
+	logo 
+	echo ""
+	echo "Star Package Manager will now Download and Install $PACKAGE"
+	echo ""
+	echo "NOTE: Internet Access is required!"
+	echo "WARNING: StarLinux BusyBox 1.26.2 and below is NOT SUPPORTED!"
+	sleep 3
+	logo
+	echo "Downloading $PACKAGE Installation Recipe..."
+	mkdir -p /tmp/spm
+	cd /tmp/spm
+	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/recipes/$PACKAGE.lib
+	if [ ! -f "$PACKAGE.lib" ] ; then
+		echo "Star Package Manager failed to retrieve the Installation Recipe. Please try again later."
+		rm -rf /tmp/spm
+		exit 0
+	fi
+	. ./$PACKAGE.lib
+	logo
+	echo "Star Package Manager will now start the Installation Recipe to install $PACKAGE."
+	sleep 3
+	install_$PACKAGE
 
 install_spm () {
 	logo

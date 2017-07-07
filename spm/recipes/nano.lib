@@ -1,0 +1,25 @@
+# Created by AwlsomeAlex (GNU GPLv3)
+# Install Version 4.2.4
+# Build Version ?????
+
+###############################
+# Nano - Star Package Manager #
+###############################
+
+package_logo () {
+	clear
+	echo ""
+	echo "==============================="
+	echo "| Star Package Manager - Nano |"
+	echo "|-----------------------------|"
+	echo "|   Created by AwlsomeAlex    |"
+	echo "==============================="
+	echo ""
+}
+
+install_nano () {
+	package_logo
+	echo "Star Package Manager will now install $PACKAGE."
+	mkdir -p /tmp/spm/nano
+	
+}
