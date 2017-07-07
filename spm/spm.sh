@@ -20,11 +20,59 @@
 # program. 
 
 # Functions:
-display_help () {
-	cat /etc/spm/help.txt
+logo () {
+	clear
+	echo ""
+	echo "========================"
+	echo "| Star Package Manager |"
+	echo "|----------------------|"
+	echo "|Created by AwlsomeAlex|"
+	echo "========================"
+	echo ""
 }
 
 
+display_help () {
+	logo
+	cat /etc/spm/help.txt
+}
+
+install_spm () {
+	logo
+	echo ""
+	echo "Star Package Manager will now be installed onto the system."
+	echo ""
+	echo "NOTE: Internet Access is required!"
+	echo "WARNING: StarLinux BusyBox 1.26.2 and below is NOT SUPPORTED!"
+	sleep 3
+	logo
+	echo "Creating Star Package Manager Directories..."
+	sleep 3
+	mkdir -p /etc/spm
+	logo
+	echo "Required Star Package Manager Files will now be downloaded..."
+	sleep 3
+	cd /tmp
+	echo "Downloading Latest Star Package Manager Executable (GIT)..."
+	wget https:// -q --show-progress
+	echo "Downloading Latest Star Package Manager Files (GIT)..."
+	wget https:// -q --show-progress
+	echo "Downloading Latest Static-Get Script..."
+	wget http://s.minos.io/s -q --show-progress
+	echo "Required Star Package Manager Files Downloaded."
+	sleep 3
+	logo
+	echo "Installing Star Package Manager..."
+	sleep 3
+	cp s /usr/bin/static-get
+	chmod +x /usr/bin/static-get
+	cp spm.sh /usr/bin/spm
+	chmod +x /usr/bin/spm
+	cp spm/help.txt /etc/spm/help.txt
+	cp spm/packages.txt /etc/spm/packages.txt
+	echo "Star Package Manager has been successfully installed! Please reboot your StarLinux Machine to continue!"
+	exit 1
+}
 
 
 
