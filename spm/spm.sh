@@ -63,11 +63,11 @@ install_spm () {
 	cd /tmp/spm_download
 	echo "Downloading Latest Star Package Manager Executable (GIT)..."
 	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
-	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh -q --show-progress
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh
 	echo "Downloading Latest Star Package Manager Files (GIT)..."
 	# THIS IS A TEMPORARY DEVEL TREE DOWNLOAD LINK
-	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt -q --show-progress
-	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/help.txt -q --show-progress
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/packages.txt
+	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/help.txt
 	echo "Downloading Latest Static-Get Script..."
 	wget http://s.minos.io/s -q --show-progress
 	echo "Required Star Package Manager Files Downloaded."
