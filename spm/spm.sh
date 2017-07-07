@@ -93,11 +93,11 @@ if [ -f "./spm.sh" ]; then
 	install_spm
 fi
 
-if [ "\$1" = "" -o "\$1" = "-h" -o "\$1" = "--help" ] ; then
+if [ "$1" = "" -o "$1" = "-h" -o "$1" = "--help" ] ; then
 	display_help
-elif [[ "\$1" = $(grep -r "\$1" "/etc/spm/packages.txt") ]] ; then
+elif [[ "$1" = $(grep -r "$1" "/etc/spm/packages.txt") ]] ; then
 	install_package
-elif [ "\$1" = "list" -o "\$1" = "-l" ] ; then
+elif [ "$1" = "list" -o "$1" = "-l" ] ; then
 	list_packages
 else
 	echo "SPM: Invalid Command or Unknown Package. Please type 'spm list' for a list of packages."
