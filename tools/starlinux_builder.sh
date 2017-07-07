@@ -503,6 +503,7 @@ gen_archive () {
 	cd $BUILD_DIR/StarLinux-$KERN_VER/filesystem/root
 	echo "Downloading Latest Star Package Manager Script (For Optional Installation) [Requires BusyBox Version 1.27.0 or above!]"
 	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh -q --show-progress
+	chmod +x spm.sh
 	cd $BUILD_DIR
 	logo
 	menu
