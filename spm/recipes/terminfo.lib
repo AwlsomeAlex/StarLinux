@@ -20,7 +20,7 @@ package_logo () {
 install_terminfo () {
 	package_logo
 	echo "Checking for dependencies..."
-	if [[ "bash" = "$(grep -r "$1" "/etc/spm/installed.txt")" ]] ; then 
+	if [[ "bash" = "$(grep -r "bash" "/etc/spm/installed.txt")" ]] ; then 
 		echo "Dependencies have been met. Continuing..."
 		continue
 	else
