@@ -1,0 +1,45 @@
+# Created by AwlsomeAlex (GNU GPLv3)
+# Install Version 4.4.1
+# Build Version ????
+
+###############################
+# Bash - Star Package Manager #
+###############################
+
+package_logo () {
+	clear
+	echo ""
+	echo "==============================="
+	echo "| Star Package Manager - Bash |"
+	echo "|-----------------------------|"
+	echo "|   Created by AwlsomeAlex    |"
+	echo "==============================="
+	echo ""
+}
+
+install_bash () {
+	package_logo
+	echo "Star Package Manager will now install $PACKAGE."
+	mkdir -p /tmp/spm/bash
+	cd /tmp/spm/bash
+	static-get -x bash
+	cd bash-*
+	echo "Installing $PACKAGE Executable to Root Filesystem..."
+	cp bin/* /bin
+	echo "Configuring inittab for Bash..."
+	sed -i '3s/sh/bash/' /etc/inittab
+	echo "Configuring Bash Shell..."
+	echo "export PS1='\w\$ '" >> /etc/bashrc
+	touch ~/.bashrc
+	echo ". /etc/bashrc" > ~/.bashrc
+	source /etc/bashrc
+	if [ -f /bin/bash ] ; then
+	echo "bash" >> /etc/spm/installed.txt
+		echo "$PACKAGE has been successfully installed! Thank you for using Star Package Manager!"
+		cd /
+		rm -rf /tmp/spm/bash
+		exit 1
+	else
+		echo "$PACKAGE failed to install! Please try again later!"
+		exit 0
+	fi
