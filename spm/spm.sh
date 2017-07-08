@@ -130,6 +130,7 @@ install_spm () {
 	chmod +x /usr/bin/spm
 	cp help.txt /etc/spm/help.txt
 	cp packages.txt /etc/spm/packages.txt
+	touch /etc/spm/installed.txt
 	echo "Star Package Manager has been successfully installed! Please reboot your StarLinux Machine to continue!"
 	cd /
 	rm -rf /tmp/spm_download

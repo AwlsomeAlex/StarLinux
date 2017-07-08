@@ -19,6 +19,15 @@ package_logo () {
 
 install_nano () {
 	package_logo
+	echo "Checking for dependencies..."
+	if [[ "terminfo" = "$(grep -r "$1" "/etc/spm/installed.txt")" ]] ; then 
+		echo "Dependencies have been met. Continuing..."
+		continue
+	else
+		echo "Missing Dependency 'terminfo'. Please install terminfo with 'spm terminfo'."
+		exit 0
+	fi
+	package_logo
 	echo "Star Package Manager will now install $PACKAGE."
 	mkdir -p /tmp/spm/nano
 	cd /tmp/spm/nano
@@ -39,5 +48,16 @@ install_nano () {
 	echo "Installing Nano Shared Configuration to Root Filesystem..."
 	cp -r share/* /usr/share
 	echo "Configruing Nano..."
-	echo "export TERMINFO=/usr/share/terminfo/" >> ~/.bashrc
+	echo "export TERMINFO=/usr/share/terminfo/" >> /etc/bashrc
+	source /etc/bashrc
+	sleep 3
+	package_logo
+	if [ -f /usr/bin/nano ] ; then
+	echo "nano" >> /etc/spm/installed.txt
+		echo "$PACKAGE has been successfully installed! Thank you for using Star Package Manager!"
+		exit 1
+	else
+		echo "$PACKAGE failed to install! Please try again later!"
+		exit 0
+	fi
 }
