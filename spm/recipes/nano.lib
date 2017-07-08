@@ -21,5 +21,23 @@ install_nano () {
 	package_logo
 	echo "Star Package Manager will now install $PACKAGE."
 	mkdir -p /tmp/spm/nano
-	
+	cd /tmp/spm/nano
+	static-get -x nano
+	cd nano
+	echo "Installing Nano Executables to Root Filesystem..."
+	cp bin/* /bin
+	echo "Installing Nano Configurations to Root Filesystem..."
+	cp -r etc/* /etc
+	echo "Installing Nano Man Files to Root Filesystem..."
+	mkdir -p /usr/share/man
+	# ^^^ TEMPORARY ^^^
+	cp -r man/* /usr/share/man
+	echo "Installing Nano Documentation to Root Filesystem..."
+	mkdir -p /usr/share/doc
+	# ^^^ TEMPORARY ^^^
+	cp -r doc/* /usr/share/doc
+	echo "Installing Nano Shared Configuration to Root Filesystem..."
+	cp -r share/* /usr/share
+	echo "Configruing Nano..."
+	echo "export TERMINFO=/usr/share/terminfo/" >> ~/.bashrc
 }
