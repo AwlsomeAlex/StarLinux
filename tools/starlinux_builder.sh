@@ -502,7 +502,7 @@ gen_archive () {
 	# Add Extra Program Compiling Here! 
 	cd $BUILD_DIR/StarLinux-$KERN_VER/filesystem/root
 	echo "Downloading Latest Star Package Manager Script (For Optional Installation) [USEABLE FOR BUSYBOX VERSIONS 1.27.0+]"
-	wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/devel/spm/spm.sh -q --show-progress
+	wget https://raw.githubusercontent.com/AwlsomeAlex/spm/master/spm.sh -q --show-progress
 	chmod +x spm.sh
 	cd $BUILD_DIR
 	logo
