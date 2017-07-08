@@ -43,3 +43,4 @@ install_bash () {
 		echo "$PACKAGE failed to install! Please try again later!"
 		exit 0
 	fi
+}
