@@ -493,7 +493,6 @@ gen_archive () {
 	menu
 	echo "Preparing StarLinux Archive..."
 	sleep 3
-	STARLINUX_ROOT=$BUILD_DIR/Image/StarLinux-$KERN_VER/filesystem
 	cd $BUILD_DIR
 	mkdir -p $BUILD_DIR/StarLinux-$KERN_VER/filesystem
 	cp -r $BUILD_DIR/Image/initramfs/* $BUILD_DIR/StarLinux-$KERN_VER/filesystem/
@@ -506,12 +505,12 @@ gen_archive () {
 	wget https://raw.githubusercontent.com/AwlsomeAlex/spm/master/spm.sh -q --show-progress
 	chmod +x spm.sh
 	echo "Creating Default Root User..."
-	cd $STARLINUX_ROOT/etc
+	cd $BUILD_DIR/StarLinux-$KERN_VER/filesystem/etc/
 	touch passwd
 	touch group
 	echo "root:x:0:root" > group
 	echo "root:T3Nj3bPbabOHw:0:0:StarLinux Root,,,:/root:/bin/bash" > passwd
-	cp $STARLINUX_ROOT/etc/bashrc /root/.profile
+	cp $BUILD_DIR/StarLinux-$KERN_VER/filesystem/etc/bashrc $BUILD_DIR/StarLinux-$KERN_VER/filesystem/root/.profile
 	cd $BUILD_DIR
 	logo
 	menu
