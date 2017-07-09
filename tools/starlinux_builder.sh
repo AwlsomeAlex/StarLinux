@@ -511,6 +511,7 @@ gen_archive () {
 	touch group
 	echo "root:x:0:root" > group
 	echo "root:T3Nj3bPbabOHw:0:0:StarLinux Root,,,:/root:/bin/bash" > passwd
+	cp $STARLINUX_ROOT/etc/bashrc /root/.profile
 	cd $BUILD_DIR
 	logo
 	menu
