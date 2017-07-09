@@ -277,6 +277,12 @@ kernel_build () {
 	# ^^^ Linux Kernel 4.10 =< Support Fix ^^^
 	sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 	echo "CONFIG_EFI_MIXED=y" >> .config
+	echo ""
+	echo "INSERT CUSTOM .config NOW!"
+	echo "You have 15 Seconds..."
+	echo "INSERT CUSTOM .config NOW!"
+	echo ""
+	sleep 15
 	mkdir $BUILD_DIR/Work/linux_extra
 	mkdir $BUILD_DIR/Work/linux_extra/lib
 	mkdir $BUILD_DIR/Work/linux_extra/lib/firmware
