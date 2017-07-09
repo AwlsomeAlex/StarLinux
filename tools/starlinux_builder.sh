@@ -493,6 +493,7 @@ gen_archive () {
 	menu
 	echo "Preparing StarLinux Archive..."
 	sleep 3
+	STARLINUX_ROOT=/$BUILD_DIR/Image/StarLinux-$KERN_VER/filesystem
 	cd $BUILD_DIR
 	mkdir -p $BUILD_DIR/StarLinux-$KERN_VER/filesystem
 	cp -r $BUILD_DIR/Image/initramfs/* $BUILD_DIR/StarLinux-$KERN_VER/filesystem/
@@ -500,10 +501,16 @@ gen_archive () {
 	cp $BUILD_DIR/Image/kernel-$KERN_VER.xz $BUILD_DIR/StarLinux-$KERN_VER/kernel.xz
 	# Add ArchLinux Installation Script Here! (Yes I said ArchLinux)
 	# Add Extra Program Compiling Here! 
-	cd $BUILD_DIR/StarLinux-$KERN_VER/filesystem/root
+	cd $STARLINUX_ROOT/root
 	echo "Downloading Latest Star Package Manager Script (For Optional Installation) [USEABLE FOR BUSYBOX VERSIONS 1.27.0+]"
 	wget https://raw.githubusercontent.com/AwlsomeAlex/spm/master/spm.sh -q --show-progress
 	chmod +x spm.sh
+	echo "Creating Default Root User..."
+	cd $STARLINUX_ROOT/etc
+	touch passwd
+	touch group
+	echo "root:x:0:root" > group
+	echo "root:T3Nj3bPbabOHw:0:0:StarLinux Root,,,:/root:/bin/bash" > passwd
 	cd $BUILD_DIR
 	logo
 	menu
