@@ -75,6 +75,7 @@ if [ -d $WORK_AREA ]; then
             endit
         fi
 fi
+## Now create the new Work Area.
 PACKAGE="StarLinux Script"
 PROCESS="Creating Work Area..."
 process
