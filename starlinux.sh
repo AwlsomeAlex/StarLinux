@@ -9,6 +9,8 @@
 # ----- Configration Area -----#
 WORK_AREA=/tmp/starlinux
 ERROR_CODE=NULL
+PACKAGE="NULL"
+PROCESS="NULL"
 
 #----- Function Area -----#
 logo() {
@@ -23,7 +25,8 @@ logo() {
     echo ""
 }
 process() {
-    echo ""
+    clear
+    logo
     echo "==================="
     echo "| Current Package: "
     echo "| $PACKAGE         "
@@ -31,7 +34,7 @@ process() {
     echo "| Current Process: "
     echo "| $PROCESS         "
     echo "==================="
-    echo ""
+    echo "RESULT:"
 }
 endit() {
     logo
@@ -55,15 +58,16 @@ if [ -d $WORK_AREA ]; then
     read OPTION
         if [[ $OPTION = "y" ]]; then
             logo
-            PACKAGE=""
+            PACKAGE="StarLinux Script"
             PROCESS="Deleting Old Directory..."
             process
             rm -rf $WORK_AREA
             echo "Old Work Area has been Deleted."
+            sleep 2
         elif [[ $OPTION == "n" ]]; then
             logo
             echo "StarLinux Utility will not Overwrite the Old Work Area. (May Cause Problems...)"
-            sleep 3
+            sleep 2
             ERROR_CODE="USED_WORK_DIRECTORY"
             endit
         else
@@ -71,3 +75,8 @@ if [ -d $WORK_AREA ]; then
             endit
         fi
 fi
+PACKAGE="StarLinux Script"
+PROCESS="Creating Work Area..."
+process
+mkdir -p $WORK_AREA
+echo "Work Area has been created."
