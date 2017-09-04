@@ -1,0 +1,66 @@
+##################################
+#                                #
+# StarLinux Build Recipe - Linux #
+#                                #
+##################################
+# Created by AwlsomeAlex [GNU GPLv3]
+
+VERSION="4.12.10"
+
+build() {
+    ## Check for Work Area
+    if [ -d $WORK_AREA ]; then
+        continue
+    else
+        ERROR_CODE="WORK_AREA_MISSING"
+        endit
+    fi
+
+    ## Download Archive & Extract Linux Kernel Archive
+    PACKAGE="Linux Kernel"
+    PROCESS="Downloading Linux Archive $VERSION..."
+    process
+    wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$VERSION.tar.xz -O $WORK_AREA/Source/linux-$VERSION.tar.xz -q --show-progress
+    echo "Linux Kernel $VERSION has been Downloaded."
+    sleep 2
+    PROCESS="Extracting Linux Archive $VERSION..."
+    process
+    tar -xvf $WORK_AREA/Source/linux-$VERSION.tar.xz -C $WORK_AREA/Work
+    echo "Linux Kernel $VERSION has been Extracted."
+    sleep 2
+
+    ## Configure and Build Linux Kernel
+    PROCESS="Configuring Linux Kernel $VERSION"
+    process
+    cd $WORK_AREA/Work/linux-$VERSION
+    make mrproper -j $NUM_JOBS
+    make defconfig -j $NUM_JOBS
+    if [ $KERNEL = "minimal" ]; then
+        # Download Minimal Linux Configuration Here.
+    elif [ $KERNEL = "network " ]; then
+        # Download Linux Configuration w/ Networking Here.
+    elif [ $KERNEL = "network+fs" ]; then
+        # Download Linux Configuration w/ Networking + FS Support Here.
+    else
+        ERROR_CODE="INVALID_KERNEL_CONFIG"
+        endit
+    fi
+    echo "Linux Kernel $VERSION has been Configured."
+    sleep 2
+    cd $WORK_AREA
+
+    ## Build Linux Kernel
+    if [ $KERNEL_EXTRAS = "true" ]; then
+        mkdir -p $WORK_AREA/Work/linux-extra/lib/firmware
+    fi
+    PROCESS="Building Linux Kernel $VERSION"
+    process
+    make \
+        CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+        bzImage -j $NUM_JOBS
+    echo "Linux Kernel $VERSION has been built."
+    if [ $KERNEL_EXTRAS = "true "]; then
+        PROCESS="Generating Linux Kernel $VERSION Headers"
+        process
+        INSTALL_HDR_PATH=$WORK_AREA/Work/linux-extra \
+}

@@ -1,0 +1,18 @@
+###################################
+#                                 #
+# StarLinux Build Script - Nebula #
+#                                 #
+###################################
+# Created by AwlsomeAlex [GNU GPLv3]
+
+# ----- [DO NOT TOUCH] Configuration Area [DO NOT TOUCH] ----- #
+
+KERNEL=minimal
+
+
+# ----- Function + Script Area ----- #
+start() {
+    PACKAGE="StarLinux Nebula Library"
+    PROCESS="Downloading Files..."
+    process
+}

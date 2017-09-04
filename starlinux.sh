@@ -44,7 +44,7 @@ endit() {
     echo "The StarLinux Builder Script will now exit."
     echo "If there was an error. It will display a code here:"
     echo "========================"
-    echo "| StarLinux Build Code: "
+    echo "| StarLinux Error Code: "
     echo "| $ERROR_CODE           "
     echo "========================"
     echo "Thank you for using StarLinux!"
@@ -102,6 +102,7 @@ read OPTION
         ## StarLinux Update Package
         PACKAGE="StarLinux Update Library"
         PROCESS="Downloading Files..."
+        process
         wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/build.lib -q --show-progress
         . $WORK_AREA/Source/build.lib
         start || ERROR_CODE="START_FAILED" && endit
@@ -109,6 +110,7 @@ read OPTION
         ## StarLinux Nebula (Git)
         PACKAGE="StarLinux Nebula Library"
         PROCESS="Downloading Files..."
+        process
         wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/build.lib -q --show-progress
         . $WORK_AREA/Source/build.lib
         start || ERROR_CODE="START_FAILED" && endit
@@ -116,6 +118,7 @@ read OPTION
       ## StarLinux Static (Git)
       PACKAGE="StarLinux Static Library"
       PROCESS="Downloading Files..."
+      process
       wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/build.lib -q --show-progress
       . $WORK_AREA/Source/build.lib
       start || ERROR_CODE="START_FAILED" && endit
