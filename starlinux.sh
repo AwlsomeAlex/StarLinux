@@ -11,13 +11,16 @@ WORK_AREA=/tmp/starlinux
 ERROR_CODE=NULL
 PACKAGE="NULL"
 PROCESS="NULL"
+JOB_FACTOR=1
+NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
+NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 
 #----- Function Area -----#
 logo() {
     clear
     echo ""
     echo "====================="
-    echo "| StarLinux Utility |"
+    echo "| StarLinux Builder |"
     echo "|-------------------|"
     echo "|   By AwlsomeAlex  |"
     echo "|     GNU GPLv3     |"
@@ -38,10 +41,10 @@ process() {
 }
 endit() {
     logo
-    echo "The StarLinux Utility Script will now exit."
+    echo "The StarLinux Builder Script will now exit."
     echo "If there was an error. It will display a code here:"
     echo "========================"
-    echo "| StarLinux Error Code: "
+    echo "| StarLinux Build Code: "
     echo "| $ERROR_CODE           "
     echo "========================"
     echo "Thank you for using StarLinux!"
@@ -79,5 +82,40 @@ fi
 PACKAGE="StarLinux Script"
 PROCESS="Creating Work Area..."
 process
-mkdir -p $WORK_AREA
+mkdir -p $WORK_AREA/{Source,Work/Final,Final}
 echo "Work Area has been created."
+
+## Ask user which option they'd like to choose.
+logo
+echo "Welcome to the StarLinux Build Utility Script. Please select an option below:"
+echo ""
+echo "1.) UPDATE - Creates InitramFS and Kernel Archives for easy StarLinux Updates."
+echo "2.) NEBULA - Creates a LiveCD of the Bare Minimum required for StarLinux to boot."
+echo "3.) STATIC - Same as NEBULA except the static-get script is provided and Network Drivers are enabled."
+echo "4.) PROTOSTAR - Same as STATIC except instead of static-get, it's the Star Package Manager plus it's Installable."
+echo "5.) SUN - A beefed version of PROTOSTAR that gives StarLinux the ability to be Self-Hosted + GNU Userland."
+echo "6.) SUPERNOVA - A fully fledged TUI Linux Distribution with Utilities such as Web Browser, Mail Client, etc."
+echo "7.) NEUTRON - SUPERNOVA but with a Graphical Interface [Xorg] and GUI Utilities."
+echo ""
+read OPTION
+    if [ $OPTION == 1 ]; then
+        ## Build Utility Script
+        PACKAGE="StarLinux Build Utility"
+        PROCESS="Downloading Script..."
+        wget
+    elif [ $OPTION == 2 ]; then
+        ## System Updater Script
+        echo "System Updater"
+        exit 0
+    elif [ $OPTION == 3 ]; then
+        ## Installer Script
+        echo "Installer Script"
+        exit 0
+    elif [ $OPTION >= 4]; then
+        ## Features Unavailable
+        ERROR_CODE="UNIMPLEMENTED_FEATURE"
+        endit
+    else
+        ERROR_CODE="INVALID_OPTION"
+        endit
+    fi
