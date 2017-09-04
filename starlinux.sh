@@ -103,16 +103,22 @@ read OPTION
         PACKAGE="StarLinux Update Library"
         PROCESS="Downloading Files..."
         wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/build.lib -q --show-progress
+        . $WORK_AREA/Source/build.lib
+        start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 2 ]; then
         ## StarLinux Nebula (Git)
         PACKAGE="StarLinux Nebula Library"
         PROCESS="Downloading Files..."
         wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/build.lib -q --show-progress
+        . $WORK_AREA/Source/build.lib
+        start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 3 ]; then
       ## StarLinux Static (Git)
       PACKAGE="StarLinux Static Library"
       PROCESS="Downloading Files..."
       wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/build.lib -q --show-progress
+      . $WORK_AREA/Source/build.lib
+      start || ERROR_CODE="START_FAILED" && endit
     else
         ERROR_CODE="UNIMPLEMENTED_FEATURE"
         endit
