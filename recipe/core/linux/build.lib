@@ -62,5 +62,30 @@ build() {
     if [ $KERNEL_EXTRAS = "true "]; then
         PROCESS="Generating Linux Kernel $VERSION Headers"
         process
-        INSTALL_HDR_PATH=$WORK_AREA/Work/linux-extra \
+        make \
+            INSTALL_HDR_PATH=$WORK_AREA/Work/linux-extra \
+            headers_install -j $NUM_JOBS
+        PROCESS="Generating Linux Kernel $VERSION Modules"
+        process
+        make \
+            modules -j $NUM_JOBS
+        PROCESS="Installing Linux Kernel $VERSION Modules"
+        process
+        make \
+            INSTALL_MOD_PATH=$WORK_AREA/Work/linux-extra \
+            modules_install -j $NUM_JOBS
+        PROCESS="Installing Linux Kernel $VERSION Modules"
+        process
+        make \
+            INSTALL_FW_PATH=$WORK_DIR/Work/linux-extra/lib/firmware \
+            firmware_install -j $NUM_JOBS
+        PROCESS="Configuring Linux Kernel $VERSION Modules"
+        process
+        cd $WORK_AREA/Work/linux-extra/lib/modules
+        cd $(ls)
+        unlink build
+        unlink source
+        cd $WORK_AREA/Work/linux-$VERSION
+    fi
+
 }
