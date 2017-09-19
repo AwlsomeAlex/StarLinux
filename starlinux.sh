@@ -8,7 +8,7 @@
 
 # ----- Configration Area -----#
 WORK_AREA=/tmp/starlinux
-ERROR_CODE=NULL
+ERROR_CODE="NO_COMMAND"
 PACKAGE="NULL"
 PROCESS="NULL"
 JOB_FACTOR=1
