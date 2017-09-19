@@ -36,7 +36,7 @@ build() {
     make mrproper -j $NUM_JOBS
     make defconfig -j $NUM_JOBS
     if [ $KERNEL = "minimal" ]; then
-        # Download Minimal Linux Configuration Here.
+		wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/nebula.config -O .config -q --show-progress
     elif [ $KERNEL = "network " ]; then
         # Download Linux Configuration w/ Networking Here.
     elif [ $KERNEL = "network+fs" ]; then
@@ -47,7 +47,6 @@ build() {
     fi
     echo "Linux Kernel $VERSION has been Configured."
     sleep 2
-    cd $WORK_AREA
 
     ## Build Linux Kernel
     if [ $KERNEL_EXTRAS = "true" ]; then
