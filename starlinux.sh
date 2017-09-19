@@ -82,7 +82,7 @@ fi
 PACKAGE="StarLinux Script"
 PROCESS="Creating Work Area..."
 process
-mkdir -p $WORK_AREA/{Source,Work/Final,Final}
+mkdir -p $WORK_AREA/{Source/Library,Source/Archive,Work/Final,Final}
 echo "Work Area has been created."
 
 ## Ask user which option they'd like to choose.
@@ -103,24 +103,24 @@ read OPTION
         PACKAGE="StarLinux Update Library"
         PROCESS="Downloading Files..."
         process
-        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/build.lib -q --show-progress
-        . $WORK_AREA/Source/build.lib
+        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+        . $WORK_AREA/Source/Library/build.lib
         start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 2 ]; then
         ## StarLinux Nebula (Git)
         PACKAGE="StarLinux Nebula Library"
         PROCESS="Downloading Files..."
         process
-        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/build.lib -q --show-progress
-        . $WORK_AREA/Source/build.lib
+        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+        . $WORK_AREA/Source/Library/build.lib
         start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 3 ]; then
       ## StarLinux Static (Git)
       PACKAGE="StarLinux Static Library"
       PROCESS="Downloading Files..."
       process
-      wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/build.lib -q --show-progress
-      . $WORK_AREA/Source/build.lib
+      wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+      . $WORK_AREA/Source/Library/build.lib
       start || ERROR_CODE="START_FAILED" && endit
     else
         ERROR_CODE="UNIMPLEMENTED_FEATURE"

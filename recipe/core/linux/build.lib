@@ -20,12 +20,12 @@ build() {
     PACKAGE="Linux Kernel"
     PROCESS="Downloading Linux Archive $VERSION..."
     process
-    wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$VERSION.tar.xz -O $WORK_AREA/Source/linux-$VERSION.tar.xz -q --show-progress
+    wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$VERSION.tar.xz -O $WORK_AREA/Source/Archive/linux-$VERSION.tar.xz -q --show-progress
     echo "Linux Kernel $VERSION has been Downloaded."
     sleep 2
     PROCESS="Extracting Linux Archive $VERSION..."
     process
-    tar -xvf $WORK_AREA/Source/linux-$VERSION.tar.xz -C $WORK_AREA/Work
+    tar -xvf $WORK_AREA/Source/Archive/linux-$VERSION.tar.xz -C $WORK_AREA/Work
     echo "Linux Kernel $VERSION has been Extracted."
     sleep 2
 
