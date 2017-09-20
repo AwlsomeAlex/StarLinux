@@ -30,7 +30,7 @@ logo() {
     echo ""
 }
 process() {
-    clear
+    # clear
     logo
     echo "==================="
     echo "| Current Package: "
