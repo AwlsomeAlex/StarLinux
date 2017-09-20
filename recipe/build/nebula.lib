@@ -28,4 +28,14 @@ start() {
     wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/build.lib -O $WORK_AREA/Source/Library/01_build.lib -q --show-progress || network_timeout # Linux Build Library 
     # Add More Libraries Here
     echo "Libraries have been downloaded."
+    
+    ## "Recall" Libraries and Execute Build Codes
+    PACKAGE="StarLinux Nebula Libraries"
+    PROCESS="Executing Libraries..."
+    process
+    . $WORK_AREA/Source/Library/01_build.lib || ERROR_CODE="LIBRARY_FAILED_TO_LOAD" && endit
+    build
+    echo "$PACKAGE has been built. Continuing..."
+    # Add More Libraries Here
+	echo "All Packages have been built."
 }
