@@ -19,11 +19,9 @@
 
 VERSION="4.9.50"
 
-build_it() {
+build() {
     ## Check for Work Area
-    if [ -d $WORK_AREA ]; then
-        continue
-    else
+    if [ ! -d $WORK_AREA ]; then
         ERROR_CODE="WORK_AREA_MISSING"
         endit
     fi

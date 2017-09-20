@@ -14,9 +14,7 @@ KERNEL=minimal
 # ----- Function + Script Area ----- #
 start() {
 	## Check for Work Area
-    if [ -d $WORK_AREA ]; then
-        continue
-    else
+    if [ ! -d $WORK_AREA ]; then
         ERROR_CODE="WORK_AREA_MISSING"
         endit
     fi
@@ -34,7 +32,7 @@ start() {
     PROCESS="Executing Libraries..."
     process
     . $WORK_AREA/Source/Library/01_build.lib || ERROR_CODE="LIBRARY_FAILED_TO_LOAD" && endit
-    build_it
+    build
     echo "$PACKAGE has been built. Continuing..."
     # Add More Libraries Here
 	echo "All Packages have been built."
