@@ -5,6 +5,7 @@
 #                        #
 ##########################
 # Created by AwlsomeAlex [GNU GPLv3]
+# Version GIT
 
 # ----- Configration Area -----#
 WORK_AREA=/tmp/starlinux
@@ -25,6 +26,7 @@ logo() {
     echo "|   By AwlsomeAlex  |"
     echo "|     GNU GPLv3     |"
     echo "====================="
+    echo "     Version: GIT    "
     echo ""
 }
 process() {
@@ -51,6 +53,11 @@ endit() {
     echo ""
     exit
 }
+network_timeout() {
+	ERROR_CODE="NETWORK_TIMEOUT"
+	endit
+}
+
 #----- Script Area -----#
 
 ## Begin by checking for Old Work Area.
@@ -103,7 +110,7 @@ read OPTION
         PACKAGE="StarLinux Update Library"
         PROCESS="Downloading Files..."
         process
-        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/update.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress || network_timeout
         . $WORK_AREA/Source/Library/build.lib
         start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 2 ]; then
@@ -111,7 +118,7 @@ read OPTION
         PACKAGE="StarLinux Nebula Library"
         PROCESS="Downloading Files..."
         process
-        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+        wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/nebula.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress || network_timeout
         . $WORK_AREA/Source/Library/build.lib
         start || ERROR_CODE="START_FAILED" && endit
     elif [ $OPTION == 3 ]; then
@@ -119,7 +126,7 @@ read OPTION
       PACKAGE="StarLinux Static Library"
       PROCESS="Downloading Files..."
       process
-      wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress
+      wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/build/static.lib -O $WORK_AREA/Source/Library/build.lib -q --show-progress || network_timeout
       . $WORK_AREA/Source/Library/build.lib
       start || ERROR_CODE="START_FAILED" && endit
     else

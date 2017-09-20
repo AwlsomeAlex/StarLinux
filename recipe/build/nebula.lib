@@ -4,6 +4,7 @@
 #                                 #
 ###################################
 # Created by AwlsomeAlex [GNU GPLv3]
+# Last Updated: 9/19/17
 
 # ----- [DO NOT TOUCH] Configuration Area [DO NOT TOUCH] ----- #
 
@@ -12,7 +13,19 @@ KERNEL=minimal
 
 # ----- Function + Script Area ----- #
 start() {
-    PACKAGE="StarLinux Nebula Library"
+	## Check for Work Area
+    if [ -d $WORK_AREA ]; then
+        continue
+    else
+        ERROR_CODE="WORK_AREA_MISSING"
+        endit
+    fi
+    
+    ## Download Library Files for Compiling
+    PACKAGE="StarLinux Nebula Libraries"
     PROCESS="Downloading Files..."
     process
+    wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/build.lib -O $WORK_AREA/Source/Library/01_build.lib -q --show-progress || network_timeout # Linux Build Library 
+    # Add More Libraries Here
+    echo "Libraries have been downloaded."
 }

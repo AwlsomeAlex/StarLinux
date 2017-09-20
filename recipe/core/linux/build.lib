@@ -4,8 +4,20 @@
 #                                #
 ##################################
 # Created by AwlsomeAlex [GNU GPLv3]
+# Last Updated: 9/19/17
 
-VERSION="4.12.10"
+#-------------
+# Information 
+#-------------
+#
+# Latest Tested Version: 4.9.50
+# Latest Tested Date: 9/19/17 - AwlsomeAlex
+# Status: UNKNOWN
+#
+# Recommended Version: 4.9.x
+# Minimum Supported Version: 4.0.0
+
+VERSION="4.9.50"
 
 build() {
     ## Check for Work Area
@@ -20,7 +32,7 @@ build() {
     PACKAGE="Linux Kernel"
     PROCESS="Downloading Linux Archive $VERSION..."
     process
-    wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$VERSION.tar.xz -O $WORK_AREA/Source/Archive/linux-$VERSION.tar.xz -q --show-progress
+    wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$VERSION.tar.xz -O $WORK_AREA/Source/Archive/linux-$VERSION.tar.xz -q --show-progress || network_timeout
     echo "Linux Kernel $VERSION has been Downloaded."
     sleep 2
     PROCESS="Extracting Linux Archive $VERSION..."
@@ -36,7 +48,7 @@ build() {
     make mrproper -j $NUM_JOBS
     make defconfig -j $NUM_JOBS
     if [ $KERNEL = "minimal" ]; then
-		wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/nebula.config -O .config -q --show-progress
+		wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/nebula.config -O .config -q --show-progress || network_timeout
     elif [ $KERNEL = "network " ]; then
         # Download Linux Configuration w/ Networking Here.
     elif [ $KERNEL = "network+fs" ]; then
