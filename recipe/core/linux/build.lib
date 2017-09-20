@@ -19,7 +19,7 @@
 
 VERSION="4.9.50"
 
-build() {
+build_it() {
     ## Check for Work Area
     if [ -d $WORK_AREA ]; then
         continue
