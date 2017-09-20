@@ -49,10 +49,12 @@ build() {
     make defconfig -j $NUM_JOBS
     if [ $KERNEL = "minimal" ]; then
 		wget https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/new/recipe/core/linux/nebula.config -O .config -q --show-progress || network_timeout
-    elif [ $KERNEL = "network " ]; then
+    elif [ $KERNEL = "network" ]; then
+		ERROR_CODE="UNIMPLEMENTED" && endit
         # Download Linux Configuration w/ Networking Here.
     elif [ $KERNEL = "network+fs" ]; then
         # Download Linux Configuration w/ Networking + FS Support Here.
+        ERROR_CODE="UNIMPLEMENTED" && endit
     else
         ERROR_CODE="INVALID_KERNEL_CONFIG"
         endit
