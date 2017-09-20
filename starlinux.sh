@@ -18,7 +18,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 
 #----- Function Area -----#
 logo() {
-    clear
+    #clear
     echo ""
     echo "====================="
     echo "| StarLinux Builder |"
@@ -30,7 +30,7 @@ logo() {
     echo ""
 }
 process() {
-    # clear
+    #clear
     logo
     echo "==================="
     echo "| Current Package: "
