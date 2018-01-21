@@ -1,6 +1,9 @@
 # Codename Nebula
 Created by AwlsomeAlex
 
+## WARNING:
+**IT IS NOT RECOMMENDED TO RUN ANY SCRIPT AT THIS TIME AS THEY ARE UNTESTED!**
+
 ## License:
 GNU GLPv3
 
