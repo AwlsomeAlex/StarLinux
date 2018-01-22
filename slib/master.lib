@@ -25,6 +25,8 @@ install_required() {
 	check_distro
 	if [[ $OS == "Ubuntu" ]]; then
 		sudo apt install $PACKAGE
+	else
+		echo "Unknown Distribution Detected. Please report for support or install the package $PACKAGE manually."
 	fi
 }
 
