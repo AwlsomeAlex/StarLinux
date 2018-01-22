@@ -32,12 +32,17 @@ echo ""
 echo "Downloading Files..."
 sudo mkdir -p /usr/lib/slib/tmp/
 cd /usr/lib/slib/tmp
-wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress
-unzip StarOS.zip || echo "The Package 'unzip' is currently not installed and needs to be!" && sudo rm -rf /usr/lib/slib && exit 999
-cd StarOS
+if [ -f master.lib ]; then
+	. master.lib
+	echo "The Star Library Master Library has been found. Installing locally... Version $SLIB_VER"
+else
+	wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress
+	unzip StarOS.zip || echo "The Package 'unzip' is currently not installed and needs to be!" && sudo rm -rf /usr/lib/slib && exit 999
+	cd StarOS/slib
+fi
 echo ""
 echo "Processing Star Library Files..."
-sudo cp -r lib /usr/lib/slib/
+sudo cp -r *.lib /usr/lib/slib/
 sudo cp -r slib-update /usr/bin/
 sudo touch /usr/lib/slib/slib.txt
 sudo echo "$VERSION" > /usr/lib/slib/slib.txt
