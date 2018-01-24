@@ -73,7 +73,7 @@ update_repo() {
 	if [[ $NATIVE == "True" ]]; then
 		ORIGIN=$(pwd)
 		cd /tmp
-		download ### LATEST VERSION ###
+		download https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/StarOS/spm/version.txt
 		diff /etc/spm/version.txt /tmp/version.txt >/dev/null 2>&1 || UPDATE=Y
 		if [[ $UPDATE == "Y" ]]; then
 			download ### REPO FILES ##
