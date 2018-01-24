@@ -69,6 +69,12 @@ check_distro() {
 	fi
 }
 
+assurance() {
+	echo "-----------------------------------------------"
+	echo " Star Package Manager Library $SPML_VER Loaded."
+	echo "-----------------------------------------------"
+}
+
 update_repo() {
 	if [[ $NATIVE == "True" ]]; then
 		ORIGIN=$(pwd)
