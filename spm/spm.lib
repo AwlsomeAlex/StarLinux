@@ -82,8 +82,12 @@ update_repo() {
 		download https://raw.githubusercontent.com/AwlsomeAlex/StarLinux/StarOS/spm/version.txt
 		diff /etc/spm/version.txt /tmp/version.txt >/dev/null 2>&1 || UPDATE=Y
 		if [[ $UPDATE == "Y" ]]; then
-			download ### REPO FILES ##
-			### UPDATE REPO ###
+			download StarOS #Temporary GIT
+			unzip StarOS.zip #Temporary GIT
+			cd StarOS/spm
+			sudo cp -r repo /etc/spm/repo #Untested
+			cd /tmp
+			rm -rf StarOS.zip StarOS/
 		fi
 		rm -rf version.txt
 		cd $ORIGIN
