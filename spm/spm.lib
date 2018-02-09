@@ -8,6 +8,9 @@
 
 SPML_VER="GIT-20180209-001"
 
+
+
+
 # Download a File [-s will silently download]
 download() {
 	FILE=$1
@@ -49,6 +52,7 @@ title() {
 	echo ""	
 }
 
+# Check Host Operating System Distribution
 check_distro() {
 	if [ -f /etc/os-release ]; then
 		. /etc/os-release
@@ -69,12 +73,14 @@ check_distro() {
 	fi
 }
 
+# Reassure User Library is Loaded.
 assurance() {
 	echo "-----------------------------------------------"
 	echo " Star Package Manager Library $SPML_VER Loaded."
 	echo "-----------------------------------------------"
 }
 
+# Update Repository to Latest GIT (Temporary)
 update_repo() {
 	if [[ $NATIVE == "True" ]]; then
 		ORIGIN=$(pwd)
@@ -101,10 +107,11 @@ update_repo() {
 		unzip -q StarOS 
 		cd StarLinux-StarOS/spm/repo
 		if [[ $(cat version.txt) == $SPM_VER ]]; then
-			echo "Versions match."
+			echo "$SPM_VER Repository Downloaded."
 		else
-			echo "Versions DONT Match"
+			echo "The GIT Repository is behind. Please Try Again Later. :("
+			exit 0
 		fi
-		### SETUP REPO ###
+		REPO_DIR=$(pwd) ## Save this for later. ;)
 	fi
 }
