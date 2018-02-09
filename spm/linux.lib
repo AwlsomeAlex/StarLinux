@@ -1,0 +1,24 @@
+################################
+#                              #
+# Star Package Manager Library #
+#                              #
+################################
+# Created by AwlsomeAlex [GPLv3]
+# Compatible with StarOS & Star Library
+
+SPML_VER="GIT-20180209-001"
+
+function assurance() {
+    echo ""
+    echo "======================================================="
+    echo " Star Package Manager $SPML_VER Library Loaded."
+    echo "======================================================="
+    echo ""
+    if [[ ! $SPML_VER == $SPM_VER ]]; then
+	echo "WARNING: The Executable '$SPM_VER' is a different version than the Library '$SPML_VER'. Proceed with caution!"
+    fi
+}
+
+function test() {
+    echo "Hello World."
+}

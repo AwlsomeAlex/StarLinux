@@ -115,3 +115,7 @@ update_repo() {
 		REPO_DIR=$(pwd) ## Save this for later. ;)
 	fi
 }
+
+function test_lib() {
+    echo "Hello World"
+}

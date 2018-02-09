@@ -28,6 +28,6 @@ if [[ ! $SPML_VER == $SPM_VER ]]; then
 fi
 update_repo || echo "An internet connection could not be established. This is required."
 
-test() {
+function test() {
 	echo "Hello"
 } 
