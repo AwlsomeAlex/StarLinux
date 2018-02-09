@@ -6,7 +6,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPML_VER="GIT"
+SPML_VER="GIT-20180209-001"
 
 # Download a File [-s will silently download]
 download() {
@@ -92,7 +92,19 @@ update_repo() {
 		rm -rf version.txt
 		cd $ORIGIN
 	else
-		download ### REPO FILES ###
+		if [ -d /tmp/spm ]; then
+			rm -rf /tmp/spm
+		fi
+		mkdir /tmp/spm
+		cd /tmp/spm
+		download StarOS
+		unzip -q StarOS 
+		cd StarLinux-StarOS/spm/repo
+		if [[ $(cat version.txt) == $SPM_VER ]]; then
+			echo "Versions match."
+		else
+			echo "Versions DONT Match"
+		fi
 		### SETUP REPO ###
 	fi
 }
