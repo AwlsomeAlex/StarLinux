@@ -102,9 +102,13 @@ function main() {
 		update)
 			update
 			;;
+		update-lib)
+			update-lib-linux
+			;;
 		*)
-			echo -e "${RD}Usage $0 [update]"
+			echo -e "${RD}Usage $0 [update, update-lib]"
 			echo -e "Commands:"
-			echo -e "	Update:		Updates SPM Repository${NC}"
+			echo -e "	update:			Updates SPM Repository"
+			echo -e "	update-lib:		Updates SPM Function Library${NC}"
 	esac
 }
