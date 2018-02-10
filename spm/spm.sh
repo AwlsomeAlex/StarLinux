@@ -9,8 +9,8 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPM_VER="GIT-20180210-001"
-OPTION="$1"
+SPM_VER="GIT-20180210-002"
+COMMAND="$1"
 PACKAGE="$2"
 
 ### WARNING: When Running in Codenvy Use Command: `sed -i -e 's/\r$//' spm` to get rid of garbage!

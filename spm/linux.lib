@@ -6,7 +6,10 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPML_VER="GIT-20180210-001"
+SPML_VER="GIT-20180210-002"
+START_DIR=$(pwd)
+REPO_DIR=/tmp/spm/repo
+
 
 RD='\033[1;31m'
 GN='\033[1;32m'
@@ -68,7 +71,24 @@ function test() {
 # to execute, like package building.
 
 function update() {
-	#TO-BE-ADDED
+	if [ -d /tmp/spm ]; then
+		rm -rf /tmp/spm
+	fi
+	mkdir -p /tmp/spm/repo
+	cd /tmp/spm
+	download StarOS
+	unzip -q StarOS
+	rm -rf StarOS.zip
+	cp -r StarLinux-StarOS/spm/repo/* repo/
+	rm -rf StarLinux-StarOS
+	if [[ $(cat repo/version.txt) == $SPML_VER ]]; then
+		echo "$SPML_VER Repository has been updated."
+	else
+		echo -e "${RD}WARNING:${NC} Either the GIT Repository is behind or the Library is outdated. Please update the Library with './spm update-lib' and try again!"
+		cd $START_DIR
+		#rm -rf /tmp/spm
+		exit 0
+	fi
 }
 
 
@@ -78,12 +98,13 @@ function update() {
 # Main User-Executed 
 # Function loaded at runtime.
 function main() {
-	case "$OPTION" in
-		test)
-			test
+	case "$COMMAND" in
+		update)
+			update
 			;;
 		*)
-			echo -e "${RD}Usage $0 {test}"
-			echo -e "Test Text.${NC}"
+			echo -e "${RD}Usage $0 [update]"
+			echo -e "Commands:"
+			echo -e "	Update:		Updates SPM Repository${NC}"
 	esac
 }
