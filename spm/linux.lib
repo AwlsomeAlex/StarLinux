@@ -53,5 +53,5 @@ function download() {
 
 function test() {
     echo "Hello World."
-    download google.com
 }
+
