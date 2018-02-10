@@ -8,17 +8,50 @@
 
 SPML_VER="GIT-20180209-001"
 
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+NC='\033[0m'
+
+
+
+#############
+# Functions #
+#############
+
 function assurance() {
     echo ""
     echo "======================================================="
-    echo " Star Package Manager $SPML_VER Library Loaded."
+    echo -e " ${GN}Star Package Manager $SPML_VER Library Loaded.${NC}"
     echo "======================================================="
     echo ""
     if [[ ! $SPML_VER == $SPM_VER ]]; then
-	echo "WARNING: The Executable '$SPM_VER' is a different version than the Library '$SPML_VER'. Proceed with caution!"
+	echo -e "${RD}WARNING:${NC} The Executable '$SPM_VER' is a different version than the Library '$SPML_VER'. Proceed with caution!"
     fi
+}
+
+function download() {
+	## Created by AwlsomeAlex [GNU GPLv3]
+	## User-Friendly and Noise-Free Downloader powered by wget
+	## Modified for easy download of StarOS Repository
+	FILE=$1
+	TICKER=$2
+	if [[ $FILE == "StarOS" ]]; then
+		wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress
+	elif [[ $FILE == "" ]]; then
+		echo -e "${RD}Usage: download [file] [options]"
+        echo -e "Option: -s (Silent Download Option)"
+        echo -e "File: StarOS | Download Link${NC}"
+	else
+		if [[ $TICKER == "-s" ]]; then
+			wget $FILE -q
+		else
+			wget $FILE -q --show-progress
+		fi
+	fi
 }
 
 function test() {
     echo "Hello World."
+    download google.com
 }

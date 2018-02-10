@@ -47,6 +47,6 @@ case "$OPTION" in
         test
         ;;
     *)
-        echo "Usage $0 {test}"
-        echo "Test Text."
+        echo -e "${RD}Usage $0 {test}"
+        echo -e "Test Text.${NC}"
 esac
