@@ -15,9 +15,11 @@ NC='\033[0m'
 
 
 
-#############
-# Functions #
-#############
+###################
+# Child Functions #
+###################
+# Set of Functions to help aid 
+# Primary Functions in SPM
 
 # Function which assures the User the Library was Downloaded.
 function assurance() {
@@ -59,9 +61,22 @@ function test() {
 }
 
 
-#########################
-# Main Primary Function #
-#########################
+#####################
+# Primary Functions #
+#####################
+# Functions which SPM is designed
+# to execute, like package building.
+
+function update() {
+	#TO-BE-ADDED
+}
+
+
+#################
+# Main Function #
+#################
+# Main User-Executed 
+# Function loaded at runtime.
 function main() {
 	case "$OPTION" in
 		test)
