@@ -52,13 +52,14 @@ function update-lib-linux() {
 		. ./linux.lib
 		echo -e "${GN} Star Package Manager $SPML_VER has been installed!${NC}"
 		if [[ ! $SPML_VER == $SPM_VER ]]; then
-			echo "${RD}However, it was the wrong version... Try again in a few minutes. Maybe the repository is updating?${NC{"
+			echo "${RD}However, it was the wrong version... Try again in a few minutes. Maybe the repository is updating?${NC}"
 			exit 1
 		fi
 		exit 0
 	else
 		echo "The Library Installation has failed. Please check your Internet Connection or File Permissions."
 		exit 1
+	fi
 }
 
 
