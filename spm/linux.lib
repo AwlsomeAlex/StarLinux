@@ -6,7 +6,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPML_VER="GIT-20180209-001"
+SPML_VER="GIT-20180210-001"
 
 RD='\033[1;31m'
 GN='\033[1;32m'
@@ -19,6 +19,7 @@ NC='\033[0m'
 # Functions #
 #############
 
+# Function which assures the User the Library was Downloaded.
 function assurance() {
     echo ""
     echo "======================================================="
@@ -30,6 +31,7 @@ function assurance() {
     fi
 }
 
+# SPM-Modified Download Function
 function download() {
 	## Created by AwlsomeAlex [GNU GPLv3]
 	## User-Friendly and Noise-Free Downloader powered by wget
@@ -51,7 +53,22 @@ function download() {
 	fi
 }
 
+# Command to Test Certain Functionality of SPM
 function test() {
     echo "Hello World."
 }
 
+
+#########################
+# Main Primary Function #
+#########################
+function main() {
+	case "$OPTION" in
+		test)
+			test
+			;;
+		*)
+			echo -e "${RD}Usage $0 {test}"
+			echo -e "Test Text.${NC}"
+	esac
+}

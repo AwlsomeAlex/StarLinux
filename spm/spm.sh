@@ -9,7 +9,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPM_VER="GIT-20180209-001"
+SPM_VER="GIT-20180210-001"
 OPTION="$1"
 PACKAGE="$2"
 
@@ -42,11 +42,4 @@ fi
 ##############################
 # Main Script Execution Area #
 ##############################
-case "$OPTION" in
-    test)
-        test
-        ;;
-    *)
-        echo -e "${RD}Usage $0 {test}"
-        echo -e "Test Text.${NC}"
-esac
+main
