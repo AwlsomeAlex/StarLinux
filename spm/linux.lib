@@ -82,7 +82,7 @@ function update() {
 	cp -r StarLinux-StarOS/spm/repo/* repo/
 	rm -rf StarLinux-StarOS
 	if [[ $(cat repo/version.txt) == $SPML_VER ]]; then
-		echo "$SPML_VER Repository has been updated."
+		echo "SPM Repository has been updated to $(cat repo/version.txt)"
 	else
 		echo -e "${RD}WARNING:${NC} Either the GIT Repository is behind or the Library is outdated. Please update the Library with './spm update-lib' and try again!"
 		cd $START_DIR
