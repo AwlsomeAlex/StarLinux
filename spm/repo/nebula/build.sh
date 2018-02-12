@@ -7,7 +7,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-. ./common.lib
+. ../common.lib
 
 if [ -d $STAR_DIR ]; then
 	echo -e "${RD} WARNING:${NC} A Nebula Directory has been detected at '$STAR_DIR'. It will now be deleted. Please exit the script to cancel this." #Option Menu TO-BE-ADDED
