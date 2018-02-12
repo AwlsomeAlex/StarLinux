@@ -104,7 +104,7 @@ function build() {
 		exit 0
 	fi
 	cd $REPO_DIR/$PACKAGE
-	build.sh
+	./build.sh
 }
 
 
