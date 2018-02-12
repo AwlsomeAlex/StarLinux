@@ -6,7 +6,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPML_VER="GIT-20180211-003"
+SPML_VER="GIT-20180211-004"
 START_DIR=$(pwd)
 REPO_DIR=/tmp/spm/repo
 
