@@ -1,0 +1,67 @@
+################################
+#                              #
+# Star Package Manager Library #
+#                              #
+################################
+# Created by AwlsomeAlex [GPLv3]
+# Heavily Inspired by Ivandavidov's common.sh for Overlays
+# Compatible with StarOS & Star Library
+
+
+#############
+# Variables #
+#############
+
+export START_DIR="$(pwd)"
+export REPO_DIR=/tmp/spm/repo
+export STAR_DIR=/tmp/nebula
+export WORK_DIR=/tmp/nebula/work
+export SRC_DIR=/tmp/nebula/source
+export FINAL_DIR=/tmp/nebula/final
+export JOB_FACTOR=2
+export CFLAGS=-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE
+export NUM_CORES="$(grep ^processor /proc/cpuinfo | wc -l)"
+export NUM_JOBS="$((NUM_CORES * JOB_FACTOR))"
+
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+NC='\033[0m'
+
+
+#############
+# Functions #
+#############
+
+function check_for_star() {
+	if [ ! -d $STAR_DIR ]; then
+		echo -e "${RD} ERROR:${NC} The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!"
+		exit 0
+	fi
+}
+
+function download() {
+	## Created by AwlsomeAlex [GNU GPLv3]
+	## User-Friendly and Noise-Free Downloader powered by wget
+	## Modified for easy download of StarOS Packages
+	LINK=$1
+	FILE=$2
+	if [[ $LINK == "" ]]; then
+		echo -e "${RD}WARNING: A Download Link was not provided."
+
+	else
+		wget $LINK -c $FILE -q --show-progress
+	fi
+}
+
+function extract() {
+	FILE=$1
+	NAME=$2
+	
+	if [ -d $WORK_DIR/$NAME ]; then
+		rm -rf $WORK_DIR/$NAME
+	fi
+	mkdir -p $WORK_DIR/$NAME
+	tar -xvf $FILE -C $WORK_DIR/$NAME
+}
+

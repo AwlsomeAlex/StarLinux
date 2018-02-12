@@ -85,7 +85,7 @@ function update() {
 	if [[ $(cat repo/version.txt) == $SPML_VER ]]; then
 		echo "SPM Repository has been updated to $(cat repo/version.txt)"
 	else
-		echo -e "${RD}WARNING:${NC} Either the GIT Repository is behind or the Library is outdated. Please update the Library with './spm update-lib' and try again!"
+		echo -e "${RD}ERROR:${NC} Either the GIT Repository is behind or the Library is outdated. Please update the Library with './spm update-lib' and try again!"
 		cd $START_DIR
 		#rm -rf /tmp/spm
 		exit 0
@@ -94,16 +94,17 @@ function update() {
 
 # Build StarOS Package
 function build() {
-	#update
+	update
 	if [[ $PACKAGE == "" ]]; then
-		echo -e "${RD}WARNING:${NC} No Package Defined."
+		echo -e "${RD}ERROR:${NC} No Package Defined."
 		exit 0
 	fi
 	if [ ! -d $REPO_DIR/$PACKAGE ]; then
-		echo -e "${RD}WARNING:${NC} Invalid Package '$PACKAGE.'"
+		echo -e "${RD}ERROR:${NC} Invalid Package '$PACKAGE.'"
 		exit 0
 	fi
-	$REPO_DIR/$PACKAGE/build.sh
+	cd $REPO_DIR/$PACKAGE
+	build.sh
 }
 
 
