@@ -1,11 +1,11 @@
 #!/bin/bash
 # Star Package Manager Master Executable
 
-###############################
-#                             #
-# Star Package Manager - Exec #
-#                             #
-###############################
+########################
+#                      #
+# Star Package Manager #
+#                      #
+########################
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
@@ -43,6 +43,7 @@ function update-lib-linux() {
 #############################
 # Connecting to the Library #
 #############################
+clear
 echo ""
 echo "Star Package Manager Version $SPM_VER"
 echo ""

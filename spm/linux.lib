@@ -70,6 +70,7 @@ function test() {
 # Functions which SPM is designed
 # to execute, like package building.
 
+# Update SPM Repository
 function update() {
 	if [ -d /tmp/spm ]; then
 		rm -rf /tmp/spm
@@ -91,6 +92,20 @@ function update() {
 	fi
 }
 
+# Build StarOS Package
+function build() {
+	#update
+	if [[ $PACKAGE == "" ]]; then
+		echo -e "${RD}WARNING:${NC} No Package Defined."
+		exit 0
+	fi
+	if [ ! -d $REPO_DIR/$PACKAGE ]; then
+		echo -e "${RD}WARNING:${NC} Invalid Package '$PACKAGE.'"
+		exit 0
+	fi
+	$REPO_DIR/$PACKAGE/build.sh
+}
+
 
 #################
 # Main Function #
@@ -105,10 +120,14 @@ function main() {
 		update-lib)
 			update-lib-linux
 			;;
+		build)
+			build
+			;;
 		*)
-			echo -e "${RD}Usage $0 [update, update-lib]"
+			echo -e "${RD}Usage $0 [update, update-lib, build]"
 			echo -e "Commands:"
 			echo -e "	update:			Updates SPM Repository"
-			echo -e "	update-lib:		Updates SPM Function Library${NC}"
+			echo -e "	update-lib:		Updates SPM Function Library"
+			echo -e "	build:			Build Package for StarOS${NC}"
 	esac
 }
