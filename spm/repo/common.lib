@@ -50,7 +50,8 @@ function download() {
 		echo -e "${RD}WARNING: A Download Link was not provided."
 
 	else
-		wget $LINK -c $FILE -q --show-progress
+		wget -P $FILE $LINK -q --show-progress
+		#wget $LINK -c $FILE -q --show-progress
 	fi
 }
 
