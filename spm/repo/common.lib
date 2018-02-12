@@ -13,11 +13,11 @@
 #############
 
 export START_DIR="$(pwd)"
-export REPO_DIR=/tmp/spm/repo
-export STAR_DIR=/tmp/nebula
-export WORK_DIR=/tmp/nebula/work
-export SRC_DIR=/tmp/nebula/source
-export FINAL_DIR=/tmp/nebula/final
+export REPO_DIR="/tmp/spm/repo"
+export STAR_DIR="/tmp/nebula"
+export WORK_DIR="/tmp/nebula/work"
+export SRC_DIR="/tmp/nebula/source"
+export FINAL_DIR="/tmp/nebula/final"
 export JOB_FACTOR=2
 export CFLAGS="-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE"
 export NUM_CORES="$(grep ^processor /proc/cpuinfo | wc -l)"
