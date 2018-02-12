@@ -13,7 +13,7 @@ if [ -d $STAR_DIR ]; then
 	echo -e "${RD} WARNING:${NC} A Nebula Directory has been detected at '$STAR_DIR'. It will now be deleted. Please exit the script to cancel this." #Option Menu TO-BE-ADDED
 	rm -rf $STAR_DIR
 fi
-mkdir -p $STAR_DIR/{source, work, final}
+mkdir -p $STAR_DIR/{source,work,final}
 if [ ! -d $REPO_DIR ]; then
 	echo -e "${RD}WARNING:${NC} The Repository Folder could not be found at '$REPO_DIR'. This will cause future problems!"
 	exit 0

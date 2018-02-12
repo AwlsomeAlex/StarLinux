@@ -19,7 +19,7 @@ export WORK_DIR=/tmp/nebula/work
 export SRC_DIR=/tmp/nebula/source
 export FINAL_DIR=/tmp/nebula/final
 export JOB_FACTOR=2
-export CFLAGS=-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE
+export CFLAGS="-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE"
 export NUM_CORES="$(grep ^processor /proc/cpuinfo | wc -l)"
 export NUM_JOBS="$((NUM_CORES * JOB_FACTOR))"
 
