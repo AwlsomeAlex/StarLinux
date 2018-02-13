@@ -94,7 +94,9 @@ function update() {
 
 # Build StarOS Package
 function build() {
-	update
+	if [ ! -d /tmp/spm ]; then
+		update
+	fi
 	if [[ $PACKAGE == "" ]]; then
 		echo -e "${RD}ERROR:${NC} No Package Defined."
 		exit 0
