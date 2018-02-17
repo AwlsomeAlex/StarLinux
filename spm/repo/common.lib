@@ -42,24 +42,20 @@ warning() {
 	echo ""
 }
 
-function check_for_star() {
-	if [ ! -d $STAR_DIR ]; then
-		echo -e "${RD}ERROR: The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!${NC}"
-		#exit 0
-	fi
-}
-
 function dependent() {
 	PACKAGE=$1
 	TICK=$2
 	if [[ $TICK == "SPM" ]]; then
 		echo "Checking SPM Dependency $PACKAGE..."
 		if [[ $PACKAGE == "nebula" ]]; then
-			check_for_star
+			if [ ! -d $STAR_DIR ]; then
+				echo -e "${RD}ERROR: The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!${NC}"
+				exit 0
+			fi
 		else
 			if [ ! -d $WORK_DIR/$PACKAGE ]; then
 				echo -e "${RD}ERROR: Dependency '$PACKAGE' is missing. Please build it with 'spm compile $PACKAGE'.${NC}"
-				#exit 0
+				exit 0
 			fi
 		fi
 	elif [[ $TICK == "Host" ]]; then
