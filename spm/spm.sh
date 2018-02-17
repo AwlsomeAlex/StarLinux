@@ -9,7 +9,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPM_VER="GIT-20180216-002"
+SPM_VER="GIT-20180216-003"
 COMMAND="$1"
 PACKAGE="$2"
 

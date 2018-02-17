@@ -14,7 +14,7 @@ KERNEL="basic" # OPTIONS: 'skinny_ergo' - Bare Minimum for Kernel Compile ||| 'b
 PACKAGE="linux"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
-dependent nebula
+dependent nebula SPM
 download_msg
 download $DOWNLOAD_LINK $SRC_DIR
 extract $SRC_DIR/$ARCHIVE_FILE $PACKAGE
