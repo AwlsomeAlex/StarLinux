@@ -91,6 +91,7 @@ function dependent() {
 		sudo apt install $PACKAGE
 	else
 		echo -e "${RD}ERROR: No TICK defined.${NC}"
+		exit 0
 	fi
 }
 
