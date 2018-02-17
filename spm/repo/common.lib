@@ -25,14 +25,22 @@ export NUM_JOBS="$((NUM_CORES * JOB_FACTOR))"
 RD='\033[1;31m'
 GN='\033[1;32m'
 YW='\033[1;33m'
+BL='\033[1;34m'
 NC='\033[0m'
 
 
 #############
+#           #
 # Functions #
+#           #
 #############
 
-warning() {
+
+############
+# Messages #
+############
+
+warning_msg() {
 	MESSAGE=$1
 	echo ""
 	echo "==================="
@@ -41,6 +49,26 @@ warning() {
 	echo $MESSAGE
 	echo ""
 }
+
+download_msg() {
+	echo -e "${BL}(****) Downloading and Extracting $PACKAGE...${NC}"	
+}
+
+download_done_msg() {
+	echo -e "${GN}(DONE) Downloading and Extracting $PACKAGE.${NC}"
+}
+
+build_msg() {
+	echo -e "${BL}(****) Building $PACKAGE...${NC}"
+}
+
+build_done_msg() {
+	echo -e "${GN}(DONE) Built $PACKAGE...${NC}"
+}
+
+
+
+
 
 function dependent() {
 	PACKAGE=$1
@@ -59,7 +87,7 @@ function dependent() {
 			fi
 		fi
 	elif [[ $TICK == "Host" ]]; then
-		warning "THIS WILL REQUIRE SUPERUSER ACCESS FOR USE OF THE PROGRAM 'apt'!!!"
+		warning_msg "THIS WILL REQUIRE SUPERUSER ACCESS FOR USE OF THE PROGRAM 'apt'!!!"
 		sudo apt install $PACKAGE
 	else
 		echo -e "${RD}ERROR: No TICK defined.${NC}"

@@ -9,7 +9,7 @@
 # Created by AwlsomeAlex [GPLv3]
 # Compatible with StarOS & Star Library
 
-SPM_VER="GIT-20180211-004"
+SPM_VER="GIT-20180216-002"
 COMMAND="$1"
 PACKAGE="$2"
 
@@ -27,9 +27,9 @@ function update-lib-linux() {
 	rm -rf StarLinux-StarOS
 	if [ -f linux.lib ]; then
 		. ./linux.lib
-		echo -e "${GN} Star Package Manager $SPML_VER has been installed!${NC}"
+		echo -e "${GN}Star Package Manager $SPML_VER has been installed!${NC}"
 		if [[ ! $SPML_VER == $SPM_VER ]]; then
-			echo "${RD}However, it was the wrong version... Try again in a few minutes. Maybe the repository is updating?${NC}"
+			echo -e "${RD}However, it was the wrong version... Try again in a few minutes. Maybe the repository is updating?${NC}"
 			exit 1
 		fi
 		exit 0
