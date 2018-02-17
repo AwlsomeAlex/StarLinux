@@ -13,6 +13,6 @@ DOWNLOAD_LINK="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.18.tar.xz
 PACKAGE="linux"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
-check_for_star
+dependent nebula
 download $DOWNLOAD_LINK $SRC_DIR
 extract $SRC_DIR/$ARCHIVE_FILE $PACKAGE

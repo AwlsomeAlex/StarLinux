@@ -7,7 +7,6 @@
 # Heavily Inspired by Ivandavidov's common.sh for Overlays
 # Compatible with StarOS & Star Library
 
-
 #############
 # Variables #
 #############
@@ -33,10 +32,41 @@ NC='\033[0m'
 # Functions #
 #############
 
+warning() {
+	MESSAGE=$1
+	echo ""
+	echo "==================="
+	echo -e "| ${RD}!!! WARNING !!! ${NC}|"
+	echo "==================="
+	echo $MESSAGE
+	echo ""
+}
+
 function check_for_star() {
 	if [ ! -d $STAR_DIR ]; then
-		echo -e "${RD} ERROR:${NC} The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!"
-		exit 0
+		echo -e "${RD}ERROR: The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!${NC}"
+		#exit 0
+	fi
+}
+
+function dependent() {
+	PACKAGE=$1
+	TICK=$2
+	if [[ $TICK == "SPM" ]]; then
+		echo "Checking SPM Dependency $PACKAGE..."
+		if [[ $PACKAGE == "nebula" ]]; then
+			check_for_star
+		else
+			if [ ! -d $WORK_DIR/$PACKAGE ]; then
+				echo -e "${RD}ERROR: Dependency '$PACKAGE' is missing. Please build it with 'spm compile $PACKAGE'.${NC}"
+				#exit 0
+			fi
+		fi
+	elif [[ $TICK == "Host" ]]; then
+		warning "THIS WILL REQUIRE SUPERUSER ACCESS FOR USE OF THE PROGRAM 'apt'!!!"
+		sudo apt install $PACKAGE
+	else
+		echo -e "${RD}ERROR: No TICK defined.${NC}"
 	fi
 }
 
@@ -47,7 +77,7 @@ function download() {
 	LINK=$1
 	FILE=$2
 	if [[ $LINK == "" ]]; then
-		echo -e "${RD}WARNING: A Download Link was not provided."
+		echo -e "${RD}WARNING: A Download Link was not provided.${NC}"
 
 	else
 		wget -P $FILE $LINK -q --show-progress
