@@ -82,7 +82,7 @@ function dependent() {
 			fi
 		else
 			if [ ! -d $WORK_DIR/$PACKAGE ]; then
-				echo -e "${RD}ERROR: Dependency '$PACKAGE' is missing. Please build it with 'spm compile $PACKAGE'.${NC}"
+				echo -e "${RD}ERROR: Dependency '$PACKAGE' is missing. Please build it with 'spm build $PACKAGE'.${NC}"
 				exit 0
 			fi
 		fi
