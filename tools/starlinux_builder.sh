@@ -65,9 +65,8 @@ check_packages() {
 		echo ""
 		echo "Please select your Distribution:"
 		echo "1.) Ubuntu 16.04+"
-		echo "2.) Debian 8.x"
-		echo "3.) Fedora 24+"
-		echo "4.) ArchLinux"
+		echo "2.) Debian 8+"
+		echo "3.) Other"
 		echo ""
 		read DISTRO
 			if [ $DISTRO == 1 ]; then
@@ -82,18 +81,18 @@ check_packages() {
 				make_dir
 			elif [ $DISTRO == 2 ]; then
 				logo
-				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
+				echo "Requesting Root/Sudo Rights for APT..."
+				sleep 3
+				sudo apt-get update
+				sudo apt-get install -y -build-essential wget make gawk gcc bc syslinux genisoimage texinfo bison
+				logo
+				echo "Required packages have been installed. Please note that this distro hasn't been tested with StarBuilder. Proceed with caution..."
 				sleep 3
 				make_dir
-			elif [ $DISTRO == 3 ]; then
+			elif [ $DISTRO == 3]; then
 				logo
-				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
-				sleep 3
-				make_dir
-			elif [ $DISTRO == 4 ]; then
-				logo
-				echo "This distribution is untested with StarBuilder. Please install the packages manually and proceed with caution..."
-				sleep 3
+				echo "This distribution hasn't been tested with StarBuilder. Please install the packages manually and proceed with caution..."
+				read -p "Press [Enter] to continue..."
 				make_dir
 			else
 				logo

@@ -62,41 +62,39 @@ parititon_disk () {
 	menu
 	echo "StarLinux Installer will now parititon your disk..."
 	sleep 3
-	echo "StarLinux needs to know which Hard Drive to install to. Please select the following options:"
+	echo "StarLinux needs to know which Hard Drive to install to. Please select one of the following, or type 'exit'."
 	echo ""
-	echo "1.) /dev/sda"
-	echo "c.) Cancel Installation"
+	df -h
 	echo ""
-	read ROOT_FS
-		if [ $ROOT_FS == 1 ]; then
-			ROOT_FS="/dev/sda"
-			STATUS="Formatting Disk..."
-			logo
-			menu
-			sleep 3
-			echo "You have chosen /dev/sda to be your disk. It will now be partitioned and formatted."
-			echo ""
-			echo "Partitioning Disk $ROOT_FS..."
-			echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/sda
-			echo "Formatting $ROOT_FS with ext4..."
-			mkfs.ext4 /dev/sda1
-			echo "Partitioning/Formatting Complete."
-			cow_mount
-		elif [ $ROOT_FS == "c" ]; then
-			ROOT_FS="Invalid"
+	read -p "Which drive should be used for installation? " ROOT_FS
+		if [ $ROOT_FS == "exit" ]; then
 			STATUS="Exitting..."
 			logo
 			menu
 			echo "You have aborted the StarLinux Installation Script. Have a nice day!"
 			exit 0
-		else
+		elif [ -e $ROOT_FS ]; then
 			ROOT_FS="Invalid"
 			STATUS="Error - Invalid Disk"
 			logo
 			menu
-			echo "The Disk you've selected is invalid. Exitting..."
-			exit 0
+			echo "The Disk you've selected cannot be found."
+			partition_disk
+		else
+			STATUS="Formatting Disk..."
+			logo
+			menu
+			sleep 3
+			echo "You have chosen $ROOT_FS to be your disk. It will now be partitioned and formatted."
+			echo ""
+			echo "Partitioning Disk $ROOT_FS..."
+			echo -e "o\nn\np\n1\n\n\nw" | fdisk $ROOT_FS
+			echo "Formatting $ROOT_FS with ext4..."
+			mkfs.ext4 $ROOT_FS
+			echo "Partitioning/Formatting Complete."
+			cow_mount
 		fi
+		
 }
 
 cow_mount () {
@@ -111,7 +109,7 @@ cow_mount () {
 	sleep 3
 	echo "Mounting Temporary Filesystem..."
 	mkdir /mnt/starlinux/
-	mount -t ext4 /dev/sda1 /mnt/starlinux/
+	mount -t ext4 $ROOT_FS /mnt/starlinux/
 	echo "StarLinux Filesystem Mounted."
 	starlinux_install
 }
