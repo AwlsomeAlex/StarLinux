@@ -73,12 +73,12 @@ parititon_disk () {
 			menu
 			echo "You have aborted the StarLinux Installation Script. Have a nice day!"
 			exit 0
-		elif [ -e $ROOT_FS ]
+		elif [ -e $ROOT_FS ]; then
 			ROOT_FS="Invalid"
 			STATUS="Error - Invalid Disk"
 			logo
 			menu
-			echo "The Disk you've selected is invalid."
+			echo "The Disk you've selected cannot be found."
 			partition_disk
 		else
 			STATUS="Formatting Disk..."
