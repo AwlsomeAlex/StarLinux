@@ -67,7 +67,7 @@ parititon_disk () {
 	df -h
 	echo ""
 	read -p "Which drive should be used for installation? " ROOT_FS
-		if [ $ROOT_FS == "c" ]; then
+		if [ $ROOT_FS == "exit" ]; then
 			STATUS="Exitting..."
 			logo
 			menu
