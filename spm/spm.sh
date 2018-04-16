@@ -1,71 +1,124 @@
 #!/bin/bash
-# Star Package Manager Master Executable
-
 ########################
-#                      #
+#----------------------#
 # Star Package Manager #
-#                      #
+#----------------------#
 ########################
-# Created by AwlsomeAlex [GPLv3]
-# Compatible with StarOS & Star Library
+# Created by AwlsomeAlex [GNU GPLv3]
+# Version: GIT
 
-SPM_VER="GIT-20180216-003"
+#############
+# Variables #
+#############
+VER="GIT"
+START_DIR=$(pwd)
+REPO_DIR=/tmp/spm/repo
+
 COMMAND="$1"
 PACKAGE="$2"
 
-### WARNING: When Running in Codenvy Use Command: `sed -i -e 's/\r$//' spm` to get rid of garbage!
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+BL='\033[1;34m'
+NC='\033[0m'
 
 
-########################
-# Updating the Library #
-########################
-function update-lib-linux() {
-	wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress # Assuming not linked to Library :(
-	unzip -q StarOS
-	rm -rf StarOS.zip
-	cp -r StarLinux-StarOS/spm/linux.lib linux.lib
-	rm -rf StarLinux-StarOS
-	if [ -f linux.lib ]; then
-		. ./linux.lib
-		echo -e "${GN}Star Package Manager $SPML_VER has been installed!${NC}"
-		if [[ ! $SPML_VER == $SPM_VER ]]; then
-			echo -e "${RD}However, it was the wrong version... Try again in a few minutes. Maybe the repository is updating?${NC}"
-			exit 1
-		fi
-		exit 0
+###################
+# Child Functions #
+###################
+# Set of Functions to help aid
+# Primary Functions for SPM
+
+# download: Downloads a file from the SPM Repository
+function download() {
+	## Created by AwlsomeAlex [GNU GPLv3]
+	## User-Friendly and Noise-Free Downloader powered by wget
+	## NOTE: Modified for easy download of StarOS Repository
+	FILE=$1
+	TICKER=$2
+	if [[ $FILE == "StarOS" ]]; then
+		wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress
+	elif [[ $FILE == "" ]]; then
+		echo -e "${RD} Usage: download [file] [options]"
+		echo -e "Options: -s (Silent Downloader Option)"
+		echo -e "File: StarOS | Download Link${NC}"
 	else
-		echo "The Library Installation has failed. Please check your Internet Connection or File Permissions."
-		exit 1
+		if [[ $TICKER == "-s" ]]; then
+			wget $FILE -q
+		else
+			wget $FILE -q --show-progress
+		fi
 	fi
 }
 
-
-#############################
-# Connecting to the Library #
-#############################
-clear
-echo ""
-echo "Star Package Manager Version $SPM_VER"
-echo ""
-if [ -d /etc/spm/ ]; then
-    echo "Native StarOS Linux Distribution Detected."
-    echo "Calling StarOS SPM Library..."
-    . /lib/spm/staros.lib || echo "The Library could not be found!" && exit 1
-    assurance
-else
-    echo "Non-Native Linux Distribution Detected."
-    echo "Calling Linux SPM Library..."
-    if [ -f linux.lib ]; then
-        . ./linux.lib
-        assurance
-    else
-        echo "The Library could not be found. Now Downloading..."
-        update-lib-linux
-    fi
-fi
+# test: Dynamic Function to test certain functionality
+function test() {
+	echo "Hello World"
+}
 
 
-##############################
-# Main Script Execution Area #
-##############################
+
+#####################
+# Primary Functions #
+#####################
+# Functions which SPM is designed
+# to execute, like package building
+
+# update: Updates the StarOS Repository [LINUX ONLY]
+function update() {
+	echo -e "${GN}StarOS Package Manager - Updating Repository ${NC}"
+	if [ -d /tmp/spm/repo ]; then
+		rm -rf /tmp/spm/repo
+	fi
+	mkdir -p /tmp/spm/repo
+	cd /tmp/spm
+	download StarOS
+	unzip -q StarOS
+	rm -rf StarOS.zip
+	cp -r StarLinux-StarOS/spm/repo/* repo/
+	rm -rf StarLinux-StarOS
+}
+
+# build: Build a StarOS Package for Operating System
+function build() {
+	if [ ! -d /tmp/spm ]; then
+		update
+	fi
+	if [[ $PACKAGE == "" ]]; then
+		echo -e "${RD}ERROR: ${NC}No Package Defined."
+		exit 1
+	fi
+	if [ ! -d $REPO_DIR/$PACKAGE ]; then
+		echo -e "${RD}ERRPR: ${NC}Invalid Package '$PACKAGE'."
+		exit 1
+	fi
+	cd $REPO_DIR/$PACKAGE
+	echo -e "${GN}StarOS Package Manager - Building $PACKAGE ${NC}"
+	./build.sh
+	cd $STAR_DIR
+}
+
+# main: The main function which is executed when calling the script
+function main() {
+	case "$COMMAND" in
+		update)
+			update
+			;;
+		build)
+			build
+			;;
+		*)
+			echo -e "${RD}Usage $0 [update, build]"
+			echo -e "Commands:"
+			echo -e "	update:			Update SPM Repository"
+			echo -e "	build:			Build Package for StarOS${NC}"
+	esac
+		
+}
+
+#####################
+# Primary Execution #
+#####################
+# Main Function Execution
 main

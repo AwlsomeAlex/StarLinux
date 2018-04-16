@@ -1,26 +1,33 @@
 #!/bin/bash
 #################################
-#                               #
+#-------------------------------#
 # Star Package Manager - Nebula #
-#                               #
+#-------------------------------#
 #################################
-# Created by AwlsomeAlex [GPLv3]
-# Compatible with StarOS & Star Library
+# Created by AwlsomeAlex [GNU GPLv3]
+# Compatible with SPM vGIT
 
 . ../common.lib
 if [ -d $STAR_DIR ]; then
-	echo -e "${RD} WARNING:A Nebula Directory has been detected at '$STAR_DIR'. It will now be deleted. Please exit the script to cancel this.${NC}" #Option Menu TO-BE-ADDED
-	rm -rf $STAR_DIR
+	message warning "A Nebula Directory has been detected at '$STAR_DIR' Would you like to delete this [Y or N]?"
+	read TF
+	if [[ $TF == "Y" ]]; then
+		message .... "Deleting Nebula Directories...."
+		rm -rf $STAR_DIR
+		message done "Deleted Nebula Directories."
+	else
+		exit 1
+	fi
 fi
+message .... "Creating Nebula Directories...."
 mkdir -p $STAR_DIR/{source,work,final}
 if [ ! -d $REPO_DIR ]; then
-	echo -e "${RD}WARNING: The Repository Folder could not be found at '$REPO_DIR'. This will cause future problems!${NC}"
-	exit 0
+	message warning "The SPM Repository could not be found at '$REPO_DIR'. Please run 'spm update' or THIS WILL CAUSE PROBLEMS!"
+	exit 1
 fi
 if [ -d $STAR_DIR ]; then
-	echo -e "${GN}DONE: The Nebula Directories have been created! Ready for Packages to be build with 'spm build PACKAGE'! When finished, execute 'spm build image'!${NC}"
-	exit 1
+	message done "Created Nebula Directories. Ready for packages to be built with 'spm build PACKAGE' then create image with 'spm build image'."
 else
-	echo -e "${RD}ERROR: The Nebula Directory could not be found. Possibly a Permissions or File Space problem?${NC}"
-	exit 0
+	message error "The Nebula Directories could not be found. Possibly a Permissions or File Space problem?"
+	exit 1
 fi

@@ -1,17 +1,15 @@
-################################
-#                              #
-# Star Package Manager Library #
-#                              #
-################################
-# Created by AwlsomeAlex [GPLv3]
+#########################################
+#---------------------------------------#
+# Star Package Manager - Common Library #
+#---------------------------------------#
+#########################################
+# Created by AwlsomeAlex [GNU GPLv3]
 # Heavily Inspired by Ivandavidov's common.sh for Overlays
-# Compatible with StarOS & Star Library
 
 #############
 # Variables #
 #############
-
-export START_DIR="$(pwd)"
+export START_DIR=$(pwd)
 export REPO_DIR="/tmp/spm/repo"
 export STAR_DIR="/tmp/nebula"
 export WORK_DIR="/tmp/nebula/work"
@@ -29,95 +27,83 @@ BL='\033[1;34m'
 NC='\033[0m'
 
 
+
+
 #############
-#           #
 # Functions #
-#           #
 #############
 
-
-############
-# Messages #
-############
-
-warning_msg() {
-	MESSAGE=$1
-	echo ""
-	echo "==================="
-	echo -e "| ${RD}!!! WARNING !!! ${NC}|"
-	echo "==================="
-	echo $MESSAGE
-	echo ""
-}
-
-download_msg() {
-	echo -e "${BL}(****) Downloading and Extracting $PACKAGE...${NC}"	
-}
-
-download_done_msg() {
-	echo -e "${GN}(DONE) Downloading and Extracting $PACKAGE.${NC}"
-}
-
-build_msg() {
-	echo -e "${BL}(****) Building $PACKAGE...${NC}"
-}
-
-build_done_msg() {
-	echo -e "${GN}(DONE) Built $PACKAGE...${NC}"
-}
-
-
-
-
-
-function dependent() {
-	PACKAGE=$1
-	TICK=$2
-	if [[ $TICK == "SPM" ]]; then
-		echo "Checking SPM Dependency $PACKAGE..."
-		if [[ $PACKAGE == "nebula" ]]; then
-			if [ ! -d $STAR_DIR ]; then
-				echo -e "${RD}ERROR: The Nebula Directories could not be found. Please run 'spm build nebula' to generate them!${NC}"
-				exit 0
-			fi
-		else
-			if [ ! -d $WORK_DIR/$PACKAGE ]; then
-				echo -e "${RD}ERROR: Dependency '$PACKAGE' is missing. Please build it with 'spm build $PACKAGE'.${NC}"
-				exit 0
-			fi
-		fi
-	elif [[ $TICK == "Host" ]]; then
-		warning_msg "THIS WILL REQUIRE SUPERUSER ACCESS FOR USE OF THE PROGRAM 'apt'!!!"
-		sudo apt install $PACKAGE
-	else
-		echo -e "${RD}ERROR: No TICK defined.${NC}"
-		exit 0
+# message [option] [message]: Messages for certain steps of Execution
+function message() {
+	OPTION=$1
+	MESSAGE=$2
+	if [[ $OPTION == "" ]]; then
+		echo -e "${RC}Usage: message [option] [message]"
+		echo -e "Option: download, warning, done, build, build_done"
+		echo -e "Message: Displays Text for Certain Messages"
+	elif [[ $OPTION == "download" ]]; then
+		echo -e "${BL}(****) ${NC}Downloading and Extracting $PACKAGE...."
+	elif [[ $OPTION == "download_done" ]]; then
+		echo -e "${GN}(DONE) ${NC}Downloaded and Extracted $PACKAGE."
+	elif [[ $OPTION == "build" ]]; then
+		echo -e "${BL}(****) ${NC}Building $PACKAGE...."
+	elif [[ $OPTION == "build_done" ]]; then
+		echo -e "${GN}(DONE) ${NC}Built $Package."
+	elif [[ $OPTION == "warning" ]]; then
+		echo ""
+		echo "==================="
+		echo -e "| ${RD}!!! WARNING !!! ${NC}|"
+		echo "==================="
+		echo $MESSAGE
+		echo ""
+	elif [[ $OPTION == "error" ]]; then
+		echo ""
+		echo "================="
+		echo -e "| ${RD}!!! ERROR !!! ${NC}|"
+		echo "================="
+		echo $MESSAGE
+		echo ""
+		#exit 1
+	elif [[ $OPTION == "...." ]]; then
+		echo -e "${GN}(****) ${NC} $MESSAGE"
+	elif [[ $OPTION == "done" ]]; then
+		echo -e "${GN}(DONE) ${NC} $MESSAGE"
 	fi
 }
 
+# depends: Makes sure a dependent package is ready
+function depends() {
+	PACKAGE=$1
+	if [[ $PACKAGE == "Nebula" ]]; then
+		if [ ! -d $STAR_DIR ]; then
+			message error "The Nebula Directories could not be found! Please run 'spm build nebula' to generat them!"
+		fi
+	elif [ ! -d $WORK_DIR/$PACKAGE ]; then
+		message error "Dependency '$PACKAGE' is missing. Please build it with 'spm build $PACKAGE'."
+	fi
+}
+
+# download: Downloads a file
 function download() {
 	## Created by AwlsomeAlex [GNU GPLv3]
 	## User-Friendly and Noise-Free Downloader powered by wget
-	## Modified for easy download of StarOS Packages
 	LINK=$1
 	FILE=$2
 	if [[ $LINK == "" ]]; then
-		echo -e "${RD}WARNING: A Download Link was not provided.${NC}"
-
+		echo -e "${RD}Usage: download [link] [file] ${NC}"
 	else
 		wget -P $FILE $LINK -q --show-progress
 		#wget $LINK -c $FILE -q --show-progress
 	fi
 }
 
+# extract: Extracts a package
 function extract() {
 	FILE=$1
 	NAME=$2
-	
 	if [ -d $WORK_DIR/$NAME ]; then
 		rm -rf $WORK_DIR/$NAME
 	fi
 	mkdir -p $WORK_DIR/$NAME
 	tar -xvf $FILE -C $WORK_DIR/$NAME
 }
-

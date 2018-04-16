@@ -1,7 +1,14 @@
 #!/bin/bash
-# Simple Compile Tool for SPM
+# SPM Shell Script Compiler
+# Created by AwlsomeAlex (GNU GPLv3)
 
-# Check for SHC
+# Check for SHC on machine
+if [[ $(type shc) = "" ]]; then
+	echo "The program SHC is not installed."
+	echo "Please install it with `sudo apt install shc` and try again."
+	exit 1
+fi
+# Check for precompiled SPM
 if [ -f spm ]; then
 	echo "Removing old Executable"
 	rm -rf spm
