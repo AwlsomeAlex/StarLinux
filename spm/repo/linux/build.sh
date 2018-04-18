@@ -12,8 +12,8 @@
 
 #---- Build Info ----#
 # Version Number: 4.14.34
-# Last Build: 4/17/18 9:38pm EST
-# Build Status: Fail (CONFIG ERROR)
+# Last Build: 4/17/18 9:58pm EST
+# Build Status: PASS (Kernel Only)
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -38,3 +38,22 @@ make \
 cp arch/x86/boot/bzImage \
 	$FINAL_DIR/kernel-$KERN_VER.xz
 message done "Built Linux Kernel."
+message .... "Building Linux Kernel Modules...."
+make \
+	modules -j $NUM_JOBS
+make \
+	INSTALL_MOD_PATH=$WORK_DIR/linux/linux_extra \
+	modules_install -j $NUM_JOBS
+message done "Built Linux Kernel Modules."
+message .... "Building Linux Kernel Firmware...."
+make \
+	INSTALL_FW_PATH=$WORK_DIR/linux/linux_extra/lib/firmware \
+	firmware_install -j $NUM_JOBS
+message done "Built Linux Kernel Firmware."
+message .... "Configuring Linux Kernel Modules...."
+cd $WORK_DIR/linux/linux_extra/lib/modules
+cd $(ls)
+unlink build
+unlink source
+message done "Configured Linux Kernel Modules."
+message done "Linux Kernel $KERN_VER has been built."
