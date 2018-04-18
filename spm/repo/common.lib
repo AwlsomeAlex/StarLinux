@@ -48,7 +48,7 @@ function message() {
 	elif [[ $OPTION == "build" ]]; then
 		echo -e "${BL}(****) ${NC}Building $PACKAGE...."
 	elif [[ $OPTION == "build_done" ]]; then
-		echo -e "${GN}(DONE) ${NC}Built $Package."
+		echo -e "${GN}(DONE) ${NC}Built $PACKAGE."
 	elif [[ $OPTION == "warning" ]]; then
 		echo ""
 		echo "==================="
