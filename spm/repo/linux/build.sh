@@ -11,9 +11,9 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: None
-# Last Build: None
-# Build Status: None
+# Version Number: 4.14.34
+# Last Build: 4/17/18 9:38pm EST
+# Build Status: Fail (CONFIG ERROR)
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -31,7 +31,7 @@ message done "Downloaded and Extracted Linux Kernel."
 message .... "Building Linux Kernel...."
 cd $WORK_DIR/linux/linux-*
 mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware
-cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-*/.config
+cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-$KERN_VER/.config
 make \
 	CFLAGS="$CFLAGS" \
 	bzImage -j $NUM_JOBS
