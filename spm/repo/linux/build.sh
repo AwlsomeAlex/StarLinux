@@ -17,9 +17,9 @@
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-DOWNLOAD_LINK="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.18.tar.xz"
+DOWNLOAD_LINK="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.34.tar.xz"
 KERNEL="basic" # There are three types of Kernels: 'mini' which only includes the bare bones functionality; 'basic' which includes SOME drivers like netwoking and FS; 'heavy' which includes MOST drivers and other optional features.
-KERN_VER="4.14.18"
+KERN_VER="4.14.34"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
 #---- Executable ----#
