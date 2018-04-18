@@ -30,7 +30,7 @@ extract $SRC_DIR/$ARCHIVE_FILE linux
 message done "Downloaded and Extracted Linux Kernel."
 message .... "Building Linux Kernel...."
 cd $WORK_DIR/linux/linux-*
-mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware
+mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware #Might need updating
 cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-$KERN_VER/.config
 make \
 	CFLAGS="$CFLAGS" \
@@ -45,15 +45,15 @@ make \
 	INSTALL_MOD_PATH=$WORK_DIR/linux/linux_extra \
 	modules_install -j $NUM_JOBS
 message done "Built Linux Kernel Modules."
-message .... "Building Linux Kernel Firmware...."
-make \
-	INSTALL_FW_PATH=$WORK_DIR/linux/linux_extra/lib/firmware \
-	firmware_install -j $NUM_JOBS
-message done "Built Linux Kernel Firmware."
+#message .... "Building Linux Kernel Firmware...."
+#make \
+#	INSTALL_FW_PATH=$WORK_DIR/linux/linux_extra/lib/firmware \
+#	firmware_install -j $NUM_JOBS
+#message done "Built Linux Kernel Firmware."
 message .... "Configuring Linux Kernel Modules...."
 cd $WORK_DIR/linux/linux_extra/lib/modules
 cd $(ls)
 unlink build
 unlink source
 message done "Configured Linux Kernel Modules."
-message done "Linux Kernel $KERN_VER has been built."
+echo -e "${GN}Linux Kernel $KERN_VER has been built.${NC}"
