@@ -63,9 +63,9 @@ function message() {
 		echo "================="
 		echo $MESSAGE
 		echo ""
-		#exit 1
+		exit 1
 	elif [[ $OPTION == "...." ]]; then
-		echo -e "${GN}(****) ${NC} $MESSAGE"
+		echo -e "${BL}(****) ${NC} $MESSAGE"
 	elif [[ $OPTION == "done" ]]; then
 		echo -e "${GN}(DONE) ${NC} $MESSAGE"
 	fi

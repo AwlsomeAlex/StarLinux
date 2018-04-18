@@ -15,9 +15,10 @@ KERNEL="basic"
 PACKAGE="linux"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
+#---- Executable ----#
 depends Nebula
 message download 
 download $DOWNLOAD_LINK $SRC_DIR
-extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE
+extract $SRC_DIR/$ARCHIVE_FILE linux
 message download_done
 message build
