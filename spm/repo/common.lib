@@ -41,14 +41,14 @@ function message() {
 		echo -e "${RC}Usage: message [option] [message]"
 		echo -e "Option: download, warning, done, build, build_done"
 		echo -e "Message: Displays Text for Certain Messages"
-	elif [[ $OPTION == "download" ]]; then
-		echo -e "${BL}(****) ${NC}Downloading and Extracting $PACKAGE...."
-	elif [[ $OPTION == "download_done" ]]; then
-		echo -e "${GN}(DONE) ${NC}Downloaded and Extracted $PACKAGE."
-	elif [[ $OPTION == "build" ]]; then
-		echo -e "${BL}(****) ${NC}Building $PACKAGE...."
-	elif [[ $OPTION == "build_done" ]]; then
-		echo -e "${GN}(DONE) ${NC}Built $PACKAGE."
+	#elif [[ $OPTION == "download" ]]; then
+	#	echo -e "${BL}(****) ${NC}Downloading and Extracting $PACKAGE...."
+	#elif [[ $OPTION == "download_done" ]]; then
+	#	echo -e "${GN}(DONE) ${NC}Downloaded and Extracted $PACKAGE."
+	#elif [[ $OPTION == "build" ]]; then
+	#	echo -e "${BL}(****) ${NC}Building $PACKAGE...."
+	#elif [[ $OPTION == "build_done" ]]; then
+	#	echo -e "${GN}(DONE) ${NC}Built $PACKAGE."
 	elif [[ $OPTION == "warning" ]]; then
 		echo ""
 		echo "==================="

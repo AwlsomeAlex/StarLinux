@@ -19,13 +19,12 @@
 #---- Variables ----#
 DOWNLOAD_LINK="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.18.tar.xz"
 KERNEL="basic" # There are three types of Kernels: 'mini' which only includes the bare bones functionality; 'basic' which includes SOME drivers like netwoking and FS; 'heavy' which includes MOST drivers and other optional features.
-PACKAGE="Linux"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
 #---- Executable ----#
 depends Nebula
-message download 
+message .... "Downloading and Extracting Linux Kernel...."
 download $DOWNLOAD_LINK $SRC_DIR
 extract $SRC_DIR/$ARCHIVE_FILE linux
-message download_done
-message build
+message done "Downloaded and Extracted Linux Kernel."
+message .... "Building Linux Kernel...."
