@@ -8,6 +8,14 @@
 # Compatible with SPM vGIT
 
 . ../common.lib
+
+#---- Build Info ----#
+# Version Number: GIT
+# Last Build: 4/16/18
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+#---- Executable ----#
 if [ -d $STAR_DIR ]; then
 	message warning "A Nebula Directory has been detected at '$STAR_DIR' Would you like to delete this [Y or N]?"
 	read TF
