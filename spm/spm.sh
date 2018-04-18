@@ -78,7 +78,7 @@ function update() {
 	rm -rf StarOS.zip
 	cp -r StarLinux-StarOS/spm/repo/* repo/
 	rm -rf StarLinux-StarOS
-	echo "Updated SPM Repo to $(cat /tmp/spm/repo/version.txt)"
+	echo -e "${GN}Updated SPM Repo to $(cat /tmp/spm/repo/version.txt) ${NC}"
 }
 
 # build: Build a StarOS Package for Operating System
