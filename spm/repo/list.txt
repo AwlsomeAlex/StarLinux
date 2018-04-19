@@ -1,6 +1,7 @@
-Updated: 4/19/18 - 12:11pm EST
+Updated: 4/19/18 - 12:37pm EST
 
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
 * linux 4.14.34 - Linux Kernel LTS to power StarLinux. [TESTED]
 * glibc 2.27 - GNU C Library for basic C functionality. [TESTED]
-* busybox 1.28.3 - Minimal Userland for Linux Kernel [UNTESTED]\
+* busybox 1.28.3 - Minimal Userland for Linux Kernel [UNTESTED]
+* starinit GIT - SysV-like Init Scripts for Busybox [UNTESTED]
