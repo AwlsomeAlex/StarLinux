@@ -1,0 +1,109 @@
+#########################################
+#---------------------------------------#
+# Star Package Manager - Common Library #
+#---------------------------------------#
+#########################################
+# Created by AwlsomeAlex [GNU GPLv3]
+# Heavily Inspired by Ivandavidov's common.sh for Overlays
+
+#############
+# Variables #
+#############
+export START_DIR=$(pwd)
+export REPO_DIR="/tmp/spm/repo"
+export STAR_DIR="/tmp/nebula"
+export WORK_DIR="/tmp/nebula/work"
+export SRC_DIR="/tmp/nebula/source"
+export FINAL_DIR="/tmp/nebula/final"
+export JOB_FACTOR=2
+export CFLAGS="-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE"
+export NUM_CORES="$(grep ^processor /proc/cpuinfo | wc -l)"
+export NUM_JOBS="$((NUM_CORES * JOB_FACTOR))"
+
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+BL='\033[1;34m'
+NC='\033[0m'
+
+
+
+
+#############
+# Functions #
+#############
+
+# message [option] [message]: Messages for certain steps of Execution
+function message() {
+	OPTION=$1
+	MESSAGE=$2
+	if [[ $OPTION == "" ]]; then
+		echo -e "${RC}Usage: message [option] [message]"
+		echo -e "Option: download, warning, done, build, build_done"
+		echo -e "Message: Displays Text for Certain Messages"
+	#elif [[ $OPTION == "download" ]]; then
+	#	echo -e "${BL}(****) ${NC}Downloading and Extracting $PACKAGE...."
+	#elif [[ $OPTION == "download_done" ]]; then
+	#	echo -e "${GN}(DONE) ${NC}Downloaded and Extracted $PACKAGE."
+	#elif [[ $OPTION == "build" ]]; then
+	#	echo -e "${BL}(****) ${NC}Building $PACKAGE...."
+	#elif [[ $OPTION == "build_done" ]]; then
+	#	echo -e "${GN}(DONE) ${NC}Built $PACKAGE."
+	elif [[ $OPTION == "warning" ]]; then
+		echo ""
+		echo "==================="
+		echo -e "| ${RD}!!! WARNING !!! ${NC}|"
+		echo "==================="
+		echo $MESSAGE
+		echo ""
+	elif [[ $OPTION == "error" ]]; then
+		echo ""
+		echo "================="
+		echo -e "| ${RD}!!! ERROR !!! ${NC}|"
+		echo "================="
+		echo $MESSAGE
+		echo ""
+		exit 1
+	elif [[ $OPTION == "...." ]]; then
+		echo -e "${BL}(****) ${NC} $MESSAGE"
+	elif [[ $OPTION == "done" ]]; then
+		echo -e "${GN}(DONE) ${NC} $MESSAGE"
+	fi
+}
+
+# depends: Makes sure a dependent package is ready
+function depends() {
+	PACKAGE=$1
+	if [[ $PACKAGE == "Nebula" ]]; then
+		if [ ! -d $STAR_DIR ]; then
+			message error "The Nebula Directories could not be found! Please run 'spm build nebula' to generat them!"
+		fi
+	elif [ ! -d $WORK_DIR/$PACKAGE ]; then
+		message error "Dependency '$PACKAGE' is missing. Please build it with 'spm build $PACKAGE'."
+	fi
+}
+
+# download: Downloads a file
+function download() {
+	## Created by AwlsomeAlex [GNU GPLv3]
+	## User-Friendly and Noise-Free Downloader powered by wget
+	LINK=$1
+	FILE=$2
+	if [[ $LINK == "" ]]; then
+		echo -e "${RD}Usage: download [link] [file] ${NC}"
+	else
+		wget -P $FILE $LINK -q --show-progress
+		#wget $LINK -c $FILE -q --show-progress
+	fi
+}
+
+# extract: Extracts a package
+function extract() {
+	FILE=$1
+	NAME=$2
+	if [ -d $WORK_DIR/$NAME ]; then
+		rm -rf $WORK_DIR/$NAME
+	fi
+	mkdir -p $WORK_DIR/$NAME
+	tar -xvf $FILE -C $WORK_DIR/$NAME
+}
