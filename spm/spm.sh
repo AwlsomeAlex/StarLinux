@@ -91,7 +91,7 @@ function build() {
 		exit 1
 	fi
 	if [ ! -d $REPO_DIR/$PACKAGE ]; then
-		echo -e "${RD}ERRPR: ${NC}Invalid Package '$PACKAGE'."
+		echo -e "${RD}ERROR: ${NC}Invalid Package '$PACKAGE'."
 		exit 1
 	fi
 	cd $REPO_DIR/$PACKAGE

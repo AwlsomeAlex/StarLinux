@@ -11,8 +11,8 @@
 
 #---- Build Info ----#
 # Version Number: 4.14.34
-# Last Build: 4/17/18 10:27pm EST
-# Build Status: PASS
+# Last Build: 4/18/18 11:00 EST
+# Build Status: TESTING....
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -37,6 +37,11 @@ make \
 cp arch/x86/boot/bzImage \
 	$FINAL_DIR/kernel-$KERN_VER.xz
 message done "Built Linux Kernel."
+message .... "Building Linux Kernel Headers...."
+make \
+	INSTALL_HDR_PATH=$WORK_DIR/linux/linux_extra \
+	headers_install -j $NUM_JOBS
+message done "Built Linux Kernel Headers."
 message .... "Building Linux Kernel Modules...."
 make \
 	modules -j $NUM_JOBS
