@@ -37,8 +37,8 @@ function download() {
 	## NOTE: Modified for easy download of StarOS Repository
 	FILE=$1
 	TICKER=$2
-	if [[ $FILE == "StarOS" ]]; then
-		wget https://github.com/AwlsomeAlex/StarLinux/archive/StarOS.zip -q --show-progress
+	if [[ $FILE == "StarLinux" ]]; then
+		wget https://github.com/AwlsomeAlex/StarLinux/archive/master.zip -q --show-progress
 	elif [[ $FILE == "" ]]; then
 		echo -e "${RD} Usage: download [file] [options]"
 		echo -e "Options: -s (Silent Downloader Option)"
@@ -65,23 +65,23 @@ function test() {
 # Functions which SPM is designed
 # to execute, like package building
 
-# update: Updates the StarOS Repository [LINUX ONLY]
+# update: Updates the StarLinux Repository [LINUX ONLY]
 function update() {
-	echo -e "${GN}StarOS Package Manager - Updating Repository ${NC}"
+	echo -e "${GN}StarLinux Package Manager - Updating Repository ${NC}"
 	if [ -d /tmp/spm/repo ]; then
 		rm -rf /tmp/spm/repo
 	fi
 	mkdir -p /tmp/spm/repo
 	cd /tmp/spm
-	download StarOS
-	unzip -q StarOS
-	rm -rf StarOS.zip
-	cp -r StarLinux-StarOS/spm/repo/* repo/
-	rm -rf StarLinux-StarOS
+	download StarLinux
+	unzip -q master
+	rm -rf master.zip
+	cp -r StarLinux-master/spm/repo/* repo/
+	rm -rf StarLinux-master
 	echo -e "${GN}Updated SPM Repo to $(cat /tmp/spm/repo/version.txt) ${NC}"
 }
 
-# build: Build a StarOS Package for Operating System
+# build: Build a StarLinux Package for Operating System
 function build() {
 	if [ ! -d /tmp/spm ]; then
 		update
@@ -95,7 +95,7 @@ function build() {
 		exit 1
 	fi
 	cd $REPO_DIR/$PACKAGE
-	echo -e "${GN}StarOS Package Manager - Building $PACKAGE ${NC}"
+	echo -e "${GN}StarLinux Package Manager - Building $PACKAGE ${NC}"
 	./build.sh
 	cd $STAR_DIR
 }
@@ -113,7 +113,7 @@ function main() {
 			echo -e "${RD}Usage $0 [update, build]"
 			echo -e "Commands:"
 			echo -e "	update:			Update SPM Repository"
-			echo -e "	build:			Build Package for StarOS${NC}"
+			echo -e "	build:			Build Package for StarLinux${NC}"
 	esac
 		
 }
