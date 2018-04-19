@@ -100,6 +100,12 @@ function build() {
 	cd $STAR_DIR
 }
 
+# list: Lists all packages available to be built from SPM
+function list() {
+	echo -e "${GN}StarLinux Package Manager - List Packages ${NC}"
+	cat $REPO_DIR/list.txt
+}
+
 # main: The main function which is executed when calling the script
 function main() {
 	case "$COMMAND" in
@@ -109,9 +115,13 @@ function main() {
 		build)
 			build
 			;;
+		list)
+			list
+			;;
 		*)
 			echo -e "${RD}Usage $0 [update, build]"
 			echo -e "Commands:"
+			echo -e "	list:			List packages available for SPM"
 			echo -e "	update:			Update SPM Repository"
 			echo -e "	build:			Build Package for StarLinux${NC}"
 	esac
