@@ -11,8 +11,8 @@
 
 #---- Build Info ----#
 # Version Number: GIT
-# Last Build: NONE
-# Build Status: UNTESTED
+# Last Build: 4/19/18 10:08 EST
+# Build Status: TESTING....
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -34,7 +34,7 @@ unzip $SRC_DIR/master.zip -d $WORK_DIR/starinit/
 message done "Downloaded and Extracted StarINIT."
 message .... "Creating StarINIT Directories...."
 mkdir -p $WORK_DIR/starinit/starinit
-cp -r $BUSYBOX_INSTALLED $WORK_DIR/starinit/starinit
+cp -r $BUSYBOX_INSTALLED/* $WORK_DIR/starinit/starinit
 cp -r $STARINIT/* $WORK_DIR/starinit/starinit
 cd $WORK_DIR/starinit/starinit
 rm -f linuxrc
