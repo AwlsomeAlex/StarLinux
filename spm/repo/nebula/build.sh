@@ -11,7 +11,7 @@
 
 #---- Build Info ----#
 # Version Number: GIT
-# Last Build: 4/16/18
+# Last Build: 4/23/18
 # Build Status: PASS
 # Identifier: AwlsomeAlex
 
@@ -34,7 +34,7 @@ if [ ! -d $REPO_DIR ]; then
 	exit 1
 fi
 if [ -d $STAR_DIR ]; then
-	message done "Created Nebula Directories. Ready for packages to be built with 'spm build PACKAGE' then create image with 'spm build image'."
+	message done "Created Nebula Directories. Ready for packages to be built with 'spm build PACKAGE' then create image with 'spm build image' or packaged with 'spm build archive'."
 else
 	message error "The Nebula Directories could not be found. Possibly a Permissions or File Space problem?"
 	exit 1
