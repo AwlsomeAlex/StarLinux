@@ -72,22 +72,22 @@ function test() {
 # update: Updates the StarLinux Repository [LINUX ONLY]
 function update() {
 	echo -e "${GN}StarLinux Package Manager - Updating Repository ${NC}"
-	if [ -d /tmp/spm/repo ]; then
-		rm -rf /tmp/spm/repo
+	if [ -d $REPO_DIR ]; then
+		rm -rf $REPO_DIR
 	fi
-	mkdir -p /tmp/spm/repo
-	cd /tmp/spm
+	mkdir -p $REPO_DIR
+	cd $REPO_DIR/..
 	download StarLinux
 	unzip -q master
 	rm -rf master.zip
 	cp -r StarLinux-master/spm/repo/* repo/
 	rm -rf StarLinux-master
-	echo -e "${GN}Updated SPM Repo to $(cat /tmp/spm/repo/version.txt) ${NC}"
+	echo -e "${GN}Updated SPM Repo to $(cat $REPO_DIR/version.txt) ${NC}"
 }
 
 # build: Build a StarLinux Package for Operating System
 function build() {
-	if [ ! -d /tmp/spm ]; then
+	if [ ! -d $REPO_DIR ]; then
 		update
 	fi
 	if [[ $PACKAGE == "" ]]; then
