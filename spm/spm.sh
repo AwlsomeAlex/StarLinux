@@ -24,6 +24,10 @@ BL='\033[1;34m'
 NC='\033[0m'
 
 
+
+### WARNING: When Running in Codenvy Use Command: `sed -i -e 's/\r$//' file` to get rid of garbage!
+
+
 ###################
 # Child Functions #
 ###################
@@ -103,7 +107,12 @@ function build() {
 # list: Lists all packages available to be built from SPM
 function list() {
 	echo -e "${GN}StarLinux Package Manager - List Packages ${NC}"
-	cat $REPO_DIR/list.txt
+	if [ -d $REPO_DIR ]; then
+	   cat $REPO_DIR/list.txt
+	else
+	   echo -e "${RD}ERROR: ${NC}Repository not found. Please load with '$0 update'"
+	   exit 1
+	fi
 }
 
 # main: The main function which is executed when calling the script
