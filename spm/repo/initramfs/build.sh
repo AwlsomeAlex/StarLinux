@@ -11,8 +11,8 @@
 
 #---- Build Info ----#
 # Version Number: vGit
-# Last Build: NONE
-# Build Status: TESTING....
+# Last Build: 4/23/18 10:14 EST
+# Build Status: PASS
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
