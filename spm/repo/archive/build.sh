@@ -11,8 +11,8 @@
 
 #---- Build Info ----#
 # Version Number: vGIT
-# Last Build: TESTING....
-# Build Status: NONE
+# Last Build: 4/23/18 10:19 EST
+# Build Status: PASS
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -34,7 +34,7 @@ cp $FINAL_DIR/kernel-$KERN_VER.xz .
 message done "Prepared StarLinux Archive."
 message .... "Packaging StarLinux Archive...."
 cd ..
-tar -zcvf $FINAL_DIR/StarLinux-$KERN_VER.tar.gz archive/*
+tar -zcvf $FINAL_DIR/StarLinux-$KERN_VER.tar.gz archive/archive/*
 md5sum $FINAL_DIR/StarLinux-$KERN_VER.tar.gz > $FINAL_DIR/StarLinux-$KERN_VER.md5
 md5sum -c $FINAL_DIR/StarLinux-$KERN_VER.md5
 message done "Packaged StarLinux Archive."
