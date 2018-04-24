@@ -10,7 +10,7 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: GIT
+# Version Number: vGIT
 # Last Build: NONE
 # Build Status: NONE
 # Identifier: AwlsomeAlex
@@ -22,12 +22,6 @@ ARCHIVE_DIR="$FINAL_DIR/archive"
 
 #---- Executable ----#
 depends Nebula
-depends linux
-depends starinit
+depends initramfs
 echo -e "${RD} PACKAGE IS INCOMPLETE! PLEASE TRY AGAIN LATER!"
 exit 1
-#message .... "Packaging Current StarLinux Directory...."
-#mkdir $FINAL_DIR/archive
-#cd $STARINIT_DIR
-#find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$KERN_VER.cpio.xz
-#cp ../initramfs-$KERN_VER.cpio.xz $ARCHIVE_DIR

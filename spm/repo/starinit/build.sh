@@ -31,6 +31,8 @@ depends busybox
 message .... "Downloading and Extracting StarINIT...."
 download $DOWNLOAD_LINK $SRC_DIR
 unzip $SRC_DIR/master.zip -d $WORK_DIR/starinit/
+mkdir -p $WORK_DIR/starinit/starinit
+cp $WORK_DIR/starinit/starinit-master/src/* $WORK_DIR/starinit/starinit
 message done "Downloaded and Extracted StarINIT."
 message .... "Creating StarINIT Directories...."
 mkdir -p $WORK_DIR/starinit/starinit
