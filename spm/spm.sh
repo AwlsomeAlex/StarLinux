@@ -128,7 +128,7 @@ function main() {
 			list
 			;;
 		*)
-			echo -e "${RD}Usage $0 [update, build]"
+			echo -e "${RD}Usage $0 [list, update, build]"
 			echo -e "Commands:"
 			echo -e "	list:			List packages available for SPM"
 			echo -e "	update:			Update SPM Repository"

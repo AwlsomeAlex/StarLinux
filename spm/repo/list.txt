@@ -1,9 +1,9 @@
-Updated: 4/23/18 - 10:20pm EST
+Updated: 4/23/18 - 10:38pm EST
 
 ----- SPM Tools -----
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
 * initramfs vGIT - Bare Minimum packages for StarLinux to boot. [TESTED] 
-* archive vGIT - Creates Experimental Archive of StarLinux. [TESTING....]
+* archive vGIT - Creates Experimental Archive of StarLinux. [TESTED]
 
 ----- System Essentials -----
 * linux 4.14.35 - Linux Kernel LTS to power StarLinux. [TESTED]
