@@ -33,8 +33,7 @@ cp $FINAL_DIR/initramfs-$KERN_VER.xz .
 cp $FINAL_DIR/kernel-$KERN_VER.xz .
 message done "Prepared StarLinux Archive."
 message .... "Packaging StarLinux Archive...."
-cd ..
-tar -zcvf $FINAL_DIR/StarLinux-$KERN_VER.tar.gz archive/archive/*
+tar -zcvf $FINAL_DIR/StarLinux-$KERN_VER.tar.gz *
 md5sum $FINAL_DIR/StarLinux-$KERN_VER.tar.gz > $FINAL_DIR/StarLinux-$KERN_VER.md5
 md5sum -c $FINAL_DIR/StarLinux-$KERN_VER.md5
 message done "Packaged StarLinux Archive."
