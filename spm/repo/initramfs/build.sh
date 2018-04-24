@@ -57,6 +57,8 @@ message done "Prepared StarLinux InitramFS."
 message .... "Packaging StarLinux InitramFS...."
 cd $INITRAMFS_DIR
 find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$KERN_VER.cpio.xz
-cp ../initramfs-$KERN_VER.cpio.xz $INITRAMFS_DIR/..
+cp ../initramfs-$KERN_VER.cpio.xz $FINAL_DIR/initramfs-$KERN_VER.xz
+mkdir -p $WORK_DIR/filesystem
+cp $INITRAMFS_DIR/* $FINAL_DIR/filesystem
 message done "Packaged StarLinux InitramFS."
 echo -e "${GN}StarLinux InitramFS $KERN_VER has been packaged.${NC}"
