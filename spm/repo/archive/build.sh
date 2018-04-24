@@ -18,7 +18,7 @@
 #---- Variables ----#
 KERN_VER="4.14.35" # !!!Temporary Versioning System!!! #
 STARINIT_DIR="$WORK_DIR/starinit/starinit"
-ARCHIVE_DIR="$FINAL_DIR/archive/archive"
+ARCHIVE_DIR="$WORK_DIR/archive/archive"
 INITRAMFS_DIR="$WORK_DIR/initramfs/initramfs"
 
 
@@ -34,9 +34,9 @@ cp $FINAL_DIR/kernel-$KERN_VER.xz .
 message done "Prepared StarLinux Archive."
 message .... "Packaging StarLinux Archive...."
 cd ..
-tar -zcvf ../StarLinux-$KERN_VER.tar.gz archive/*
-md5sum ../StarLinux-$KERN_VER.tar.gz > ../StarLinux-$KERN_VER.md5
-md5sum -c ../StarLinux-$KERN_VER.md5
+tar -zcvf $FINAL_DIR/StarLinux-$KERN_VER.tar.gz archive/*
+md5sum $FINAL_DIR/StarLinux-$KERN_VER.tar.gz > $FINAL_DIR/StarLinux-$KERN_VER.md5
+md5sum -c $FINAL_DIR/StarLinux-$KERN_VER.md5
 message done "Packaged StarLinux Archive."
 echo -e "${GN}StarLinux Archive $KERN_VER has been generated.${NC}"
 exit 1
