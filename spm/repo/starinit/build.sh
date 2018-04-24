@@ -32,7 +32,7 @@ message .... "Downloading and Extracting StarINIT...."
 download $DOWNLOAD_LINK $SRC_DIR
 unzip $SRC_DIR/master.zip -d $WORK_DIR/starinit/
 mkdir -p $WORK_DIR/starinit/starinit
-cp $WORK_DIR/starinit/starinit-master/src/* $WORK_DIR/starinit/starinit
+cp -r $WORK_DIR/starinit/starinit-master/src/* $WORK_DIR/starinit/starinit
 message done "Downloaded and Extracted StarINIT."
 echo -e "${GN}StarINIT has been downloaded.${NC}"
 # BUGGY CODING
