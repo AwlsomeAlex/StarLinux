@@ -1,12 +1,12 @@
-Updated: 4/25/18 - 10:24pm EST
+Updated: 4/25/18 - 10:44pm EST
 
 ----- SPM Tools -----
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
-* initramfs vGIT - Bare Minimum packages for StarLinux to boot. [TESTED] 
+* initramfs vGIT - Bare Minimum packages for StarLinux to boot. [TESTING....] 
 * archive vGIT - Creates Experimental Archive of StarLinux. [TESTED]
 
 ----- System Essentials -----
-* linux 4.14.36 - Linux Kernel LTS to power StarLinux. [TESTING....]
+* linux 4.14.36 - Linux Kernel LTS to power StarLinux. [TESTED]
 * glibc 2.27 - GNU C Library for basic C functionality. [TESTED]
 * busybox 1.28.3 - Minimal Userland for Linux Kernel [TESTED]
 * starinit GIT - SysV-like Init Scripts for Busybox [TESTED]

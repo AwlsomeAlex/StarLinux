@@ -11,17 +11,19 @@
 
 #---- Build Info ----#
 # Version Number: vGIT
-# Last Build: 4/23/18 10:14 EST
-# Build Status: PASS
+# Last Build: 4/25/18 10:44pm EST
+# Build Status: TESTING....
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
 #KERN_VER="" # !!!Temporary Versioning System!!! #
 BUSYBOX_INSTALLED="$WORK_DIR/busybox/busybox_final"
+BUSYBOX_ARCH=$(file bin/busybox | cut -d' ' -f3)
 GLIBC_FINAL="$WORK_DIR/glibc/glibc_final"
 STARINIT_DIR="$WORK_DIR/starinit/starinit"
 ARCHIVE_DIR="$FINAL_DIR/archive"
 INITRAMFS_DIR="$WORK_DIR/initramfs/initramfs"
+
 
 #---- Executable ----#
 depends Nebula
