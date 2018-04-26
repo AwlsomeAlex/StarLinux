@@ -16,7 +16,7 @@
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-KERN_VER="4.14.35" # !!!Temporary Versioning System!!! #
+#KERN_VER="" # !!!Temporary Versioning System!!! #
 STARINIT_DIR="$WORK_DIR/starinit/starinit"
 ARCHIVE_DIR="$WORK_DIR/archive/archive"
 INITRAMFS_DIR="$WORK_DIR/initramfs/initramfs"

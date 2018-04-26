@@ -19,6 +19,7 @@ export JOB_FACTOR=2
 export CFLAGS="-Os -s -fno-stack-protector -fomit-frame-pointer -U_FORTIFY_SOURCE"
 export NUM_CORES="$(grep ^processor /proc/cpuinfo | wc -l)"
 export NUM_JOBS="$((NUM_CORES * JOB_FACTOR))"
+export KERN_VER="4.14.36"
 
 RD='\033[1;31m'
 GN='\033[1;32m'

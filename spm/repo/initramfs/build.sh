@@ -10,13 +10,13 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: vGit
+# Version Number: vGIT
 # Last Build: 4/23/18 10:14 EST
 # Build Status: PASS
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-KERN_VER="4.14.35" # !!!Temporary Versioning System!!! #
+#KERN_VER="" # !!!Temporary Versioning System!!! #
 BUSYBOX_INSTALLED="$WORK_DIR/busybox/busybox_final"
 GLIBC_FINAL="$WORK_DIR/glibc/glibc_final"
 STARINIT_DIR="$WORK_DIR/starinit/starinit"
