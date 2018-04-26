@@ -18,7 +18,6 @@
 #---- Variables ----#
 #KERN_VER="" # !!!Temporary Versioning System!!! #
 BUSYBOX_INSTALLED="$WORK_DIR/busybox/busybox_final"
-BUSYBOX_ARCH=$(file bin/busybox | cut -d' ' -f3)
 GLIBC_FINAL="$WORK_DIR/glibc/glibc_final"
 STARINIT_DIR="$WORK_DIR/starinit/starinit"
 ARCHIVE_DIR="$FINAL_DIR/archive"
@@ -37,6 +36,7 @@ cp -r $BUSYBOX_INSTALLED/* $INITRAMFS_DIR
 cp -r $STARINIT_DIR/* $INITRAMFS_DIR
 cd $INITRAMFS_DIR
 rm -f linuxrc
+BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
 if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
 	mkdir lib64
 	cp $GLIBC_FINAL/lib/ld-linux* lib64
