@@ -11,8 +11,8 @@
 
 #---- Build Info ----#
 # Version Number: 4.14.36
-# Last Build: 4/25/18 10:44pm EST
-# Build Status: FAIL
+# Last Build: 4/26/18 11:55pm EST
+# Build Status: TESTING....
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -20,6 +20,7 @@ DOWNLOAD_LINK="https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.14.
 KERNEL="basic" # There are three types of Kernels: 'mini' which only includes the bare bones functionality; 'basic' which includes SOME drivers like netwoking and FS; 'heavy' which includes MOST drivers and other optional features.
 #KERN_VER=""
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
+HOST_ARCH=$(uname -m)
 
 #---- Executable ----#
 depends Nebula
@@ -30,10 +31,18 @@ message done "Downloaded and Extracted Linux Kernel."
 message .... "Building Linux Kernel...."
 cd $WORK_DIR/linux/linux-*
 mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware # Might need updating
-cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-$KERN_VER/.config ##----- !!!PROBLEMATIC CODE!!! -----##
-#
-# Add 64bit Configuration and way to choose automatically!!!
-#
+if [[ $HOST_ARCH == "x86_64" ]]; then
+	echo "64-bit Host Detected."
+	cp $REPO_DIR/linux/mini-x86_64.config $WORK_DIR/linux/linux-$KERN_VER/.config
+elif [[ $HOST_ARCH == "i686" ]]; then
+	echo "32-bit Host Detected."
+	cp $REPO_DIR/linux/mini-x86.config $WORK_DIR/linux/linux-$KERN_VER/.config
+elif [[ $HOST_ARCH == "i386" ]]; then
+	echo "Old 32-bit Host Detected."
+	cp $REPO_DIR/linux/mini-x86.config $WORK_DIR/linux/linux-$KERN_VER/.config
+else
+	message error "The Host System's Architecture is unsupported."
+fi
 make \
 	CFLAGS="$CFLAGS" \
 	bzImage -j $NUM_JOBS
