@@ -12,7 +12,7 @@
 #---- Build Info ----#
 # Version Number: 4.14.36
 # Last Build: 4/25/18 10:44pm EST
-# Build Status: PASS
+# Build Status: FAIL
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
@@ -29,8 +29,11 @@ extract $SRC_DIR/$ARCHIVE_FILE linux
 message done "Downloaded and Extracted Linux Kernel."
 message .... "Building Linux Kernel...."
 cd $WORK_DIR/linux/linux-*
-mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware #Might need updating
-cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-$KERN_VER/.config
+mkdir -p $WORK_DIR/linux/linux_extra/lib/firmware # Might need updating
+cp $REPO_DIR/linux/mini.config $WORK_DIR/linux/linux-$KERN_VER/.config ##----- !!!PROBLEMATIC CODE!!! -----##
+#
+# Add 64bit Configuration and way to choose automatically!!!
+#
 make \
 	CFLAGS="$CFLAGS" \
 	bzImage -j $NUM_JOBS
