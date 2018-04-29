@@ -17,6 +17,8 @@
 
 #---- Variables ----#
 DOWNLOAD_LINK="https://github.com/AwlsomeAlex/starinit/archive/v1.3.0.tar.gz"
+STARINIT_VER="1.3.0"
+ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 BUSYBOX_INSTALLED="$WORK_DIR/busybox/busybox_final"
 GLIBC_FINAL="$WORK_DIR/glibc/glibc_final"
 STARINIT="$WORK_DIR/starinit/starinit-master/src"
