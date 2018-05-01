@@ -10,13 +10,13 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: 4.14.36
-# Last Build: 4/26/18 11:55pm EST
-# Build Status: TESTING....
+# Version Number: 4.14.38
+# Last Build: 5/1/18 7:40am EST
+# Build Status: PASS
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-DOWNLOAD_LINK="https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.14.36.tar.xz"
+DOWNLOAD_LINK="https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.14.38.tar.xz"
 KERNEL="basic" # There are three types of Kernels: 'mini' which only includes the bare bones functionality; 'basic' which includes SOME drivers like netwoking and FS; 'heavy' which includes MOST drivers and other optional features.
 #KERN_VER=""
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
