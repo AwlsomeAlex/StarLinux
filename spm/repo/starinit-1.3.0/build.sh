@@ -22,19 +22,18 @@ ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
 
 #---- Executable ----#
-echo -e "${RD} PACKAGE IS INCOMPLETE! PLEASE TRY AGAIN LATER!{NC}"
-#depends Nebula
-#message .... "Downloading and Extracting StarINIT...."
-#download $DOWNLOAD_LINK $SRC_DIR
-#extract $SRC_DIR/$ARCHIVE_FILE starinit
-#message done "Downloaded and Extracted StarINIT."
-#message .... "Preparing StarINIT...."
-#mkdir -p $WORK_DIR/starinit/starinit
-#cd $WORK_DIR/starinit/starinit-*
-#cp -r src/* $WORK_DIR/starinit/starinit
-#message done "Prepared StarINIT."
-#echo -e "${GN}StarINIT has been prepared.${NC}"
-
-##
-## VERSION CONTROLLING TO-BE-ADDED
-##
+#echo -e "${RD} PACKAGE IS INCOMPLETE! PLEASE TRY AGAIN LATER!{NC}"
+depends Nebula
+message .... "Downloading and Extracting StarINIT...."
+download $DOWNLOAD_LINK $SRC_DIR
+extract $SRC_DIR/$ARCHIVE_FILE starinit
+message done "Downloaded and Extracted StarINIT."
+message .... "Preparing StarINIT...."
+mkdir -p $WORK_DIR/starinit/starinit
+cd $WORK_DIR/starinit/starinit-*
+cp -r src/* $WORK_DIR/starinit/starinit
+message done "Prepared StarINIT."
+message .... "Configuring StarINIT...."
+sed -i '21s/.*/STARLINUX_BUILD="$STARLINUX_BUILD"/' $WORK_DIR/starinit/starinit/lib/starinit.lib
+message done "Configured StarINIT."
+echo -e "${GN}StarINIT has been prepared.${NC}"
