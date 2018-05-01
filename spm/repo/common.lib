@@ -27,7 +27,9 @@ YW='\033[1;33m'
 BL='\033[1;34m'
 NC='\033[0m'
 
-STARLINUX_BUILD="'StarLinux Nebula vGIT'"
+KERN_VERX="'4.14.36'"
+CODENAME="'Nebula'"
+STARLINUX_BUILD="'vGIT'"
 
 
 #############
