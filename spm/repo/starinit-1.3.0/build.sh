@@ -34,8 +34,8 @@ cd $WORK_DIR/starinit/starinit-*
 cp -r src/* $WORK_DIR/starinit/starinit
 message done "Prepared StarINIT."
 message .... "Configuring StarINIT...."
-sed -i '22s/.*/STARLINUX_BUILD=$(echo $STARLINUX_BUILD)/' $WORK_DIR/starinit/starinit/lib/starinit.lib
+sed -i "21s/.*/STARLINUX_BUILD=$(echo $STARLINUX_BUILD)/" $WORK_DIR/starinit/starinit/lib/starinit.lib
 #sed -e 's/STARLINUX_BUILD=""/STARLINUX_BUILD="$STARLINUX_BUILD"/' $WORK_DIR/starinit/starinit/lib/starinit.lib $WORK_DIR/starinit/starinit/lib/starinit_tmp.lib
-mv $WORK_DIR/starinit/starinit/lib/starinit_tmp.lib $WORK_DIR/starinit/starinit/lib/starinit.lib
+#mv $WORK_DIR/starinit/starinit/lib/starinit_tmp.lib $WORK_DIR/starinit/starinit/lib/starinit.lib
 message done "Configured StarINIT."
 echo -e "${GN}StarINIT has been prepared.${NC}"
