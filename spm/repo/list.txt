@@ -1,4 +1,4 @@
-Updated: 5/6/18 - 12:46am EST
+Updated: 5/6/18 - 10:30am EST
 
 ----- SPM Tools -----
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
@@ -10,4 +10,4 @@ Updated: 5/6/18 - 12:46am EST
 * glibc 2.27 - GNU C Library for basic C functionality. [TESTED]
 * busybox 1.28.3 - Minimal Userland for Linux Kernel [TESTED]
 * starinit GIT - SysV-like Init Scripts for BusyBox [TESTED]
-* (T) starinit 1.3.1 - SysV-like Init Scripts for BusyBox [READY]
+* (T) starinit 1.3.2 - SysV-like Init Scripts for BusyBox [TESTING....]

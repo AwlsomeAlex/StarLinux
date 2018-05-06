@@ -10,14 +10,14 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: 1.3.1
+# Version Number: 1.3.2
 # Last Build: 5/6/18 12:32am EST
-# Build Status: READY
+# Build Status: TESTING....
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-DOWNLOAD_LINK="https://github.com/AwlsomeAlex/starinit/archive/v1.3.1.tar.gz"
-STARINIT_VER="1.3.1"
+DOWNLOAD_LINK="https://github.com/AwlsomeAlex/starinit/archive/v1.3.2.tar.gz"
+STARINIT_VER="1.3.2"
 ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
 
