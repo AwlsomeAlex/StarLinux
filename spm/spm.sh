@@ -124,7 +124,7 @@ function qemu() {
 		echo -e "${RD}ERROR: ${NC}No Archive Specified."
 		exit 1
 	fi
-	if [[! $ARCHIVE == *.tar.gz ]]; then
+	if [[ ! $ARCHIVE == *.tar.gz ]]; then
 		echo -e "${RD}ERROR: ${NC}Invalid File Format or Not an Archived Package."
 		exit 1
 	fi
