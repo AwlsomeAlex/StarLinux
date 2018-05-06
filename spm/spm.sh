@@ -13,6 +13,7 @@
 VER="GIT"
 START_DIR=$(pwd)
 REPO_DIR=/tmp/spm/repo
+QEMU_DIR=/tmp/starlinux
 
 COMMAND="$1"
 PACKAGE="$2"
@@ -115,6 +116,31 @@ function list() {
 	fi
 }
 
+# qemu [archive]: Runs a temporary StarLinux Virtual Machine from StarLinux Archive [TESTING Purposes]
+function qemu() {
+	ARCHIVE=$PACKAGE
+	echo -e "${GN}StarLinux Package Manager - QEMU Virtual Machine ${NC}"
+	if [[ $ARCHIVE == "" ]]; then
+		echo -e "${RD}ERROR: ${NC}No Archive Specified."
+		exit 1
+	fi
+	if [[! $ARCHIVE == *.tar.gz ]]; then
+		echo -e "${RD}ERROR: ${NC}Invalid File Format or Not an Archived Package."
+		exit 1
+	fi
+	rm -rf $REPO_DIR
+	mkdir -p $REPO_DIR
+	tar -xvf $ARCHIVE $REPO_DIR
+	if [ -f $REPO_DIR/StarLinux-*.tar.gz ]; then
+		echo -e "{RD}ERROR: ${NC}No StarLinux Filesystem Image was found! Maybe wasn't built with SPM?"
+		rm -rf $REPO_DIR
+		exit 1
+	fi
+	qemu-system-x86_64 -m 128 -kernel $REPO_DIR/kernel-*.xz -initrd initramfs-*.xz -hda StarLinux-*.img -append "root=/dev/sda"
+	exit 0
+	
+}
+
 # main: The main function which is executed when calling the script
 function main() {
 	case "$COMMAND" in
@@ -127,12 +153,16 @@ function main() {
 		list)
 			list
 			;;
+		qemu)
+			qemu
+			;;
 		*)
 			echo -e "${RD}Usage $0 [list, update, build]"
 			echo -e "Commands:"
 			echo -e "	list:			List packages available for SPM"
 			echo -e "	update:			Update SPM Repository"
-			echo -e "	build:			Build Package for StarLinux${NC}"
+			echo -e "	build:			Build Package for StarLinux"
+			echo -e "	qemu:			Runs a Virtual Machine of StarLinux${NC}"
 	esac
 		
 }
