@@ -10,29 +10,31 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: GIT
-# Last Build: 4/29/18 4:24pm EST
-# Build Status: UNTESTED
+# Version Number: 1.3.3
+# Last Build: 5/6/18 3:36pm EST
+# Build Status: READY
 # Identifier: AwlsomeAlex
 
 #---- Variables ----#
-DOWNLOAD_LINK="https://github.com/AwlsomeAlex/starinit/archive/old.zip"
-BUSYBOX_INSTALLED="$WORK_DIR/busybox/busybox_final"
-GLIBC_FINAL="$WORK_DIR/glibc/glibc_final"
-STARINIT="$WORK_DIR/starinit/starinit-old/src"
-BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
+DOWNLOAD_LINK="https://github.com/AwlsomeAlex/starinit/archive/v1.3.3.tar.gz"
+STARINIT_VER="1.3.3"
+ARCHIVE_FILE=${DOWNLOAD_LINK##*/}
 
 
 #---- Executable ----#
+#echo -e "${RD} PACKAGE IS INCOMPLETE! PLEASE TRY AGAIN LATER!{NC}"
 depends Nebula
-depends linux
-depends glibc
-depends busybox
 message .... "Downloading and Extracting StarINIT...."
 download $DOWNLOAD_LINK $SRC_DIR
-unzip $SRC_DIR/master.zip -d $WORK_DIR/starinit/
-mkdir -p $WORK_DIR/starinit/starinit
-cp -r $WORK_DIR/starinit/starinit-old/src/* $WORK_DIR/starinit/starinit
+extract $SRC_DIR/$ARCHIVE_FILE starinit
 message done "Downloaded and Extracted StarINIT."
-echo -e "${GN}StarINIT has been downloaded.${NC}"
-# BUGGY CODING
+message .... "Preparing StarINIT...."
+mkdir -p $WORK_DIR/starinit/starinit
+cd $WORK_DIR/starinit/starinit-*
+cp -r src/* $WORK_DIR/starinit/starinit
+message done "Prepared StarINIT."
+message .... "Configuring StarINIT...."
+sed -i "21s/.*/STARLINUX_BUILD=$(echo $STARLINUX_BUILD)/" $WORK_DIR/starinit/starinit/lib/starinit.lib
+sed -i "22s/.*/CODENAME=$(echo $CODENAME)/" $WORK_DIR/starinit/starinit/lib/starinit.lib
+message done "Configured StarINIT."
+echo -e "${GN}StarINIT has been prepared.${NC}"

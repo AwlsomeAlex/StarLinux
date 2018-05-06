@@ -1,15 +1,13 @@
-Updated: 5/6/18 - 3:56pm EST
+Updated: 5/6/18 - 4:36pm EST
 
 ----- SPM Tools -----
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
 * initramfs vGIT - Bare Minimum packages for StarLinux to boot. [TESTED] 
-* image vGIT - Creates a raw image of Filesystem to be booted by QEMU. [TESTED]
-* image-2 vGIT - Creates ext4 image of Filesystem to be booted by QEMU. [TESTING....]
+* image vGIT - Creates an ext4 image of Filesystem to be booted by QEMU. [TESTED]
 * archive vGIT - Creates Experimental Archive of StarLinux. [TESTED]
 
 ----- System Essentials -----
 * linux 4.14.39 - Linux Kernel LTS to power StarLinux. [TESTED]
 * glibc 2.27 - GNU C Library for basic C functionality. [TESTED]
 * busybox 1.28.3 - Minimal Userland for Linux Kernel [TESTED]
-* starinit GIT - SysV-like Init Scripts for BusyBox [TESTED]
-* (T) starinit 1.3.2 - SysV-like Init Scripts for BusyBox [READY]
+* starinit 1.3.3 - SysV-like Init Scripts for BusyBox [TESTED]
