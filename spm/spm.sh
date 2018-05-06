@@ -128,15 +128,15 @@ function qemu() {
 		echo -e "${RD}ERROR: ${NC}Invalid File Format or Not an Archived Package."
 		exit 1
 	fi
-	rm -rf $REPO_DIR
-	mkdir -p $REPO_DIR
-	tar -xvf $ARCHIVE $QEMU_DIR
-	if [ -f $REPO_DIR/StarLinux-*.tar.gz ]; then
+	rm -rf $QEMU_DIR
+	mkdir -p $QEMU_DIR
+	tar -xvf $ARCHIVE -C $QEMU_DIR
+	if [ -f $QEMU_DIR/StarLinux-*.img ]; then
 		echo -e "{RD}ERROR: ${NC}No StarLinux Filesystem Image was found! Maybe wasn't built with SPM?"
-		rm -rf $REPO_DIR
+		rm -rf $QEMU_DIR
 		exit 1
 	fi
-	qemu-system-x86_64 -m 128 -kernel $REPO_DIR/kernel-*.xz -initrd initramfs-*.xz -hda StarLinux-*.img -append "root=/dev/sda"
+	qemu-system-x86_64 -m 128 -kernel $QEMU_DIR/kernel-*.xz -initrd $QEMU_DIR/initramfs-*.xz -hda $QEMU_DIR/StarLinux-*.img -append "root=/dev/sda"
 	exit 0
 	
 }
