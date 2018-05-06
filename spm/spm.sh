@@ -130,7 +130,7 @@ function qemu() {
 	fi
 	rm -rf $REPO_DIR
 	mkdir -p $REPO_DIR
-	tar -xvf $ARCHIVE $REPO_DIR
+	tar -xvf $ARCHIVE $QEMU_DIR
 	if [ -f $REPO_DIR/StarLinux-*.tar.gz ]; then
 		echo -e "{RD}ERROR: ${NC}No StarLinux Filesystem Image was found! Maybe wasn't built with SPM?"
 		rm -rf $REPO_DIR
