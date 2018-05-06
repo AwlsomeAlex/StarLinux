@@ -10,7 +10,7 @@
 . ../common.lib
 
 #---- Build Info ----#
-# Version Number: vGIT
+# Version Number: vGI
 # Last Build: 5/6/18 3:56pm EST
 # Build Status: TESTING....
 # Identifier: AwlsomeAlex
@@ -32,12 +32,13 @@ message .... "Formatting Image...."
 message warning "THIS REQUIRES SUPERUSER PERMISSION!"
 echo -e "n\np\n\n\n\nw" | fdisk $WORK_DIR/image/StarLinux-$KERN_VER.img 
 LOOP=$(sudo losetup --partscan --show --find $WORK_DIR/image/StarLinux-$KERN_VER.img)
-sudo mkfs -t ext4 -L StarLinux /dev/$LOOPp1
+LOOPP1="${LOOP}p1"
+sudo mkfs -t ext4 -L StarLinux $LOOPP1
 message done "Formatted Image."
 message .... "Populating Image...."
 message warning "THIS REQUIRES SUPERUSER PERMISSION!"
 mkdir -p $MNT_DIR
-sudo mount $LOOPp1 $MNT_DIR
+sudo mount $LOOPP1 $MNT_DIR
 sudo cp -r $FINAL_DIR/filesystem/* $MNT_DIR
 sudo sync
 sudo umount $MNT
