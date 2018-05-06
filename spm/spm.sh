@@ -131,12 +131,12 @@ function qemu() {
 	rm -rf $QEMU_DIR
 	mkdir -p $QEMU_DIR
 	tar -xvf $ARCHIVE -C $QEMU_DIR
-	if [ -f $QEMU_DIR/StarLinux-*.img ]; then
+	if [ ! -f $QEMU_DIR/StarLinux-*.img ]; then
 		echo -e "{RD}ERROR: ${NC}No StarLinux Filesystem Image was found! Maybe wasn't built with SPM?"
 		rm -rf $QEMU_DIR
 		exit 1
 	fi
-	qemu-system-x86_64 -m 128 -kernel $QEMU_DIR/kernel-*.xz -initrd $QEMU_DIR/initramfs-*.xz -hda $QEMU_DIR/StarLinux-*.img -append "root=/dev/sda"
+	qemu-system-x86_64 -m 128 -kernel $QEMU_DIR/kernel-*.xz -initrd $QEMU_DIR/initramfs-*.xz -hda $QEMU_DIR/StarLinux-*.img -nographic -device sga -append "root=/dev/sda console=ttyS0"
 	exit 0
 	
 }

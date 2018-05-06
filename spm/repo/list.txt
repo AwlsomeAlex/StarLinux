@@ -1,10 +1,11 @@
-Updated: 5/6/18 - 11:51am EST
+Updated: 5/6/18 - 3:56pm EST
 
 ----- SPM Tools -----
 * nebula vGIT - Minimal Framework for SPM to build packages. [TESTED]
 * initramfs vGIT - Bare Minimum packages for StarLinux to boot. [TESTED] 
-* image vGIT - Creates a raw image of Filesystem to be booted by QEMU. [TESTING....]
-* archive vGIT - Creates Experimental Archive of StarLinux. [TESTING....]
+* image vGIT - Creates a raw image of Filesystem to be booted by QEMU. [TESTED]
+* image-2 vGIT - Creates ext4 image of Filesystem to be booted by QEMU. [TESTING....]
+* archive vGIT - Creates Experimental Archive of StarLinux. [TESTED]
 
 ----- System Essentials -----
 * linux 4.14.39 - Linux Kernel LTS to power StarLinux. [TESTED]

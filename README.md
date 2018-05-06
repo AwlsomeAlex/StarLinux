@@ -15,10 +15,10 @@ Execute the `make.sh` in the `spm` folder.
 
 ## Required Packages for SPM:
 Resolve the following Ubuntu Dependencies:
-`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo`
+`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo sgabios qemu-system-x86`
 
 Ubuntu 18.04 Dependencies:
-`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo libelf-dev`
+`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo libelf-dev sgabios qemu-system-x86`
 
 Resolve the following Archlinux Dependencies:
 `sudo pacman -S base-devel bison wget make gawk gcc bc syslinux texinfo`
