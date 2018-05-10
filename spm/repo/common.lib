@@ -78,6 +78,24 @@ function depends() {
 	fi
 }
 
+# check_for: Checks for a Package [unpack.sh]
+function check_for() {
+	PACKAGE=$1
+	if [ -d $WORK_DIR/$PACKAGE ]; then
+		message warning "The Package '$PACKAGE' already exists. Would you like to remove it (Y or N)?
+		read CHOICE
+		if [[ $CHOICE == "Y" ]]; then
+			rm -rf $WORK_DIR/$PACKAGE
+		elif [[ $CHOICE == "N" ]]; then
+			echo -e "${RD}Package '$PACKAGE' will not be removed. This may cause problems. ${NC}"
+		elif [[ $CHOICE == "" ]]; then
+			message error "No Option Defined."
+		else
+			message error "Invalid Option
+		fi
+	fi
+}
+
 # download: Downloads a file
 function download() {
 	## Created by AwlsomeAlex [GNU GPLv3]
@@ -101,4 +119,11 @@ function extract() {
 	fi
 	mkdir -p $WORK_DIR/$NAME
 	tar -xvf $FILE -C $WORK_DIR/$NAME
+}
+
+# pack: Packages a precompiled package
+function pack() {
+	NAME=$1
+	VER=$2
+	tar -cJvf $NAME-$VER.tar.xz $WORK_DIR/$NAME/package/*
 }

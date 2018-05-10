@@ -105,6 +105,52 @@ function build() {
 	cd $STAR_DIR
 }
 
+# package: Packages an already built to be SPM-ready
+function package() {
+	if [ ! -d $REPO_DIR ]; then
+		update
+	fi
+	if [[ $PACKAGE == "" ]]; then
+		echo -e "${RD}ERROR: ${NC}No Package Defined."
+		exit 1
+	fi
+	if [ ! -d $REPO_DIR/$PACKAGE ]; then
+		echo -e "${RD}ERROR: ${NC}Invalid Package '$PACKAGE'."
+		exit 1
+	fi
+	if [ ! -f $REPO_DIR/$PACKAGE/package.sh ]; then
+		echo -e "${RD}ERROR: ${NC}This Package can't be packed!"
+		exit 1
+	cd $REPO_DIR/$PACKAGE
+	echo -e "${GN}StarLinux Package Manager - Packaging $PACKAGE ${NC}"
+	./package.sh
+	cd $STAR_DIR
+	
+}
+
+# download_package: Downloads a SPM-ready package from StarLinux Repositories
+function download_package() {
+	if [ ! -d $REPO_DIR ]; then
+		update
+	fi
+	if [[ $PACKAGE == "" ]]; then
+		echo -e "${RD}ERROR: ${NC}No Package Defined."
+		exit 1
+	fi
+	if [ ! -d $REPO_DIR/$PACKAGE ]; then
+		echo -e "${RD}ERROR: ${NC}Invalid Package '$PACKAGE'."
+		exit 1
+	fi
+	if [ ! -f $REPO_DIR/$PACKAGE/unpack.sh ]; then
+		echo -e "${RD}ERROR: ${NC}This Package can't be packed!"
+		exit 1
+	cd $REPO_DIR/$PACKAGE
+	echo -e "${GN}StarLinux Package Manager - Packaging $PACKAGE ${NC}"
+	./unpack.sh
+	cd $STAR_DIR
+}
+
+
 # list: Lists all packages available to be built from SPM
 function list() {
 	echo -e "${GN}StarLinux Package Manager - List Packages ${NC}"
@@ -150,6 +196,9 @@ function main() {
 		build)
 			build
 			;;
+		package)
+			package
+			;;
 		list)
 			list
 			;;
@@ -157,11 +206,12 @@ function main() {
 			qemu
 			;;
 		*)
-			echo -e "${RD}Usage $0 [list, update, build]"
+			echo -e "${RD}Usage $0 [list, update, build, qemu]"
 			echo -e "Commands:"
 			echo -e "	list:			List packages available for SPM"
 			echo -e "	update:			Update SPM Repository"
 			echo -e "	build:			Build Package for StarLinux"
+			echo -e "	package:		Packages a Built Package for SPM"
 			echo -e "	qemu:			Runs a Virtual Machine of StarLinux${NC}"
 	esac
 		
