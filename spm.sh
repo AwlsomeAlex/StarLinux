@@ -20,7 +20,7 @@ NC='\033[0m'
 # Child Function #
 ##################
 function download_repo() {
-	if [ -d $REPO_DIR ];
+	if [ -d $REPO_DIR ]; then
 		message WARN "The Repository is already downloaded! Continuing..."
 	else
 		echo -e "${GN}StarLinux Package Manager - Downloading Repository ${NC}"
