@@ -6,16 +6,7 @@
 # Created by AwlsomeAlex [GNU GPLv3]
 # Protostar Branch
 
-#############
-# Variables #
-#############
-RD='\033[1;31m'
-GN='\033[1;32m'
-YW='\033[1;33m'
-BL='\033[1;34m'
-NC='\033[0m'
-SPM_VER=`read_config SPM_VER`
-CONFIG_FILE="$REPO_DIR/starlinux.config"
+
 
 ###################
 # Child Functions #
@@ -69,7 +60,16 @@ function message() {
 	fi
 }
 
-
+#############
+# Variables #
+#############
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+BL='\033[1;34m'
+NC='\033[0m'
+CONFIG_FILE="$REPO_DIR/starlinux.config"
+SPM_VER=`read_config SPM_VER`
 
 
 #####################
