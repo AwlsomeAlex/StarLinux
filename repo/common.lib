@@ -60,6 +60,17 @@ function message() {
 	fi
 }
 
+# download: Downloads a file
+function download() {
+	link=$1
+	file=$2
+	if [ "$link" = "" ]; then
+		echo -e "${RD}Usage: download [link] [file] ${NC}"
+	else
+		wget -P $file $link -q --show-progress
+	fi
+}
+
 #############
 # Variables #
 #############

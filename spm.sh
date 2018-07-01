@@ -15,6 +15,9 @@ REPO_DIR="/tmp/spm/repo" # ONLY VARIABLE NOT DEFINED BY CONFIG!
 RD='\033[1;31m'
 GN='\033[1;32m'
 NC='\033[0m'
+COMMAND="$1"
+PACKAGE="$2"
+
 
 ##################
 # Child Function #
