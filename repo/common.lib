@@ -6,6 +6,15 @@
 # Created by AwlsomeAlex [GNU GPLv3]
 # Protostar Branch
 
+#############
+# Variables #
+#############
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+BL='\033[1;34m'
+NC='\033[0m'
+SPM_VER=`read_config SPM_VER`
 CONFIG_FILE="$REPO_DIR/starlinux.config"
 
 ###################
@@ -24,6 +33,7 @@ function read_config() {
 	if [ "$variable_value" = "" ]; then
 		message ERROR "Variable $variable_name Returned NOTHING!"
 	fi
+	echo "$variable_value"
 }
 
 # message: Displays a custom color-coded message for User Output
@@ -59,15 +69,7 @@ function message() {
 	fi
 }
 
-#############
-# Variables #
-#############
-RD='\033[1;31m'
-GN='\033[1;32m'
-YW='\033[1;33m'
-BL='\033[1;34m'
-NC='\033[0m'
-SPM_VER=`read_config SPM_VER`
+
 
 
 #####################
