@@ -95,7 +95,7 @@ function update() {
 	fi
 	mkdir -p $REPO_DIR
 	cd $REPO_DIR/..
-	download StarLinux
+	download `read_config STARLINUX`
 	unzip -q protostar
 	rm -rf protostar.zip
 	cp -r StarLinux-protostar/spm/repo/* repo/
