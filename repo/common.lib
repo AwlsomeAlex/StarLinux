@@ -114,7 +114,7 @@ function run_lib() {
 		update)
 			update
 			;;
-		*
+		*)
 			echo -e "${RD}Usage $0 [update]"
 			echo -e "	update:		Update SPM Repository${NC}"
 	esac
