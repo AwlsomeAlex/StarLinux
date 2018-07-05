@@ -87,7 +87,28 @@ SPM_VER=`read_config SPM_VER`
 # Primary Functions #
 #####################
 
+# update: Update SPM Repository [LINUX]
+function update() {
+	echo -e "${GN}StarLinux Package Manager - Updating Repository ${NC}"
+	if [ -d $REPO_DIR ]; then
+		rm -rf $REPO_DIR
+	fi
+	mkdir -p $REPO_DIR
+	cd $REPO_DIR/..
+	download StarLinux
+	unzip -q protostar
+	rm -rf protostar.zip
+	cp -r StarLinux-protostar/spm/repo/* repo/
+	rm -rf StarLinux-protostar
+	echo -e "${GN}Updated SPM Repo to `read_config SPM_VER` ${NC}"
+}
+
+
 # run_lib: Function call which transfers execution power from Script to Library
 function run_lib() {
 	echo -e "${GN}StarLinux Package Manager $SPM_VER has been loaded!"
+	if [ `read_config CUSTOM_CONFIG` = "Y" ]; then
+		CUSTOM_CONFIG="Y"
+	fi
+	
 }
