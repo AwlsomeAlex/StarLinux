@@ -110,5 +110,12 @@ function run_lib() {
 	if [ `read_config CUSTOM_CONFIG` = "Y" ]; then
 		CUSTOM_CONFIG="Y"
 	fi
-	
+	case "$COMMAND" in
+		update)
+			update
+			;;
+		*
+			echo -e "${RD}Usage $0 [update]"
+			echo -e "	update:		Update SPM Repository${NC}"
+	esac
 }
