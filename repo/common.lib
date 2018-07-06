@@ -95,8 +95,8 @@ function download_source() (
 # Variables #
 #############
 export REPO_LINK="https://github.com/AwlsomeAlex/StarLinux/archive/protostar.zip" # Allows for Custom Repositories
-export CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another file for Custom Configuration Files
 export REPO_DIR="/tmp/spm/repo" # Only Directory NOT configured in Main Configuration
+export CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another file for Custom Configuration Files
 export MAIN_DIR="`read_config MAIN_DIR`"
 export WORK_DIR="`read_config WORK_DIR`"
 export SRC_DIR="`read_config SRC_DIR`"
