@@ -91,9 +91,9 @@ function download() (
 # read_config: Reads the Master Configuration File included with the Downloaded Repository
 function read_config() (
 	VAR_NAME=$1
-	VAR_VALUE=$2
+	VAR_VALUE=
 	if [ ! "VAR_NAME" = "" ]; then
-		VAR_VALUE="`grep -i ^${variable_name}= $CONFIG_FILE | cut -f2- -d'=' | xargs`"
+		VAR_VALUE="`grep -i ^${VAR_NAME}= $CONFIG_FILE | cut -f2- -d'=' | xargs`"
 	else
 		message ERROR "read_config: Variable Name Not Defined!"
 	fi
@@ -105,7 +105,7 @@ function read_config() (
 
 # test: Dynamic Function to test experimental functionality
 function test() (
-	message DONE "Hello World!"
+	read_config TEST
 )
 
 
@@ -136,6 +136,9 @@ function main() {
 	case "$COMMAND" in
 		update)
 			update
+			;;
+		test)
+			test
 			;;
 		*)
 			echo -e "${RD}Usage $0 [update]"
