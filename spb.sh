@@ -105,7 +105,47 @@ function read_config() (
 
 # test: Dynamic Function to test experimental functionality
 function test() (
-	message done "Hello World!"
+	message DONE "Hello World!"
 )
 
-test
+
+#####################
+# Primary Functions #
+#####################
+# Functions which SPB is designed
+# to execute, like Package Building
+
+# update: Updates the Repository
+function update() {
+	echo -e "${GN}StarLinux Package Builder - Updating Repository... ${NC}"
+	if [ -d $REPO_DIR ]; then
+		rm -rf $REPO_DIR
+	fi
+	mkdir -p $REPO_DIR
+	cd $REPO_DIR/..
+	download Repo
+	unzip -q protostar
+	#rm -rf protostar.zip
+	cp -r StarLinux-protostar/repo/* repo/
+	rm -rf StarLinux-protostar
+	message DONE "Updated Repository to ${GN}`read_config REPO_DATE`${NC}"
+}
+
+# main: Main function ran at program's execution
+function main() {
+	case "$COMMAND" in
+		update)
+			update
+			;;
+		*)
+			echo -e "${RD}Usage $0 [update]"
+			echo -e "		update:		Update SPB Repository${NC}"
+	esac
+}
+
+
+#####################
+# Primary Execution #
+#####################
+# Main Function Execution
+main
