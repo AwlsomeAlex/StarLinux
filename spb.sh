@@ -102,3 +102,10 @@ function read_config() (
 	fi
 	echo "$VAR_VALUE"
 )
+
+# test: Dynamic Function to test experimental functionality
+function test() (
+	message done "Hello World!"
+)
+
+test
