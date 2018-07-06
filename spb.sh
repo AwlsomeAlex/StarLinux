@@ -13,6 +13,7 @@
 REPO_DIR="/tmp/spm/repo" # Only Directory NOT configured in Main Configuration
 REPO_LINK="https://github.com/AwlsomeAlex/StarLinux/archive/protostar.zip" # Allows for Custom Repositories
 CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another file for Custom Configuration Files
+START_DIR=$(pwd)
 
 EXECUTE="$0"
 COMMAND="$1"
@@ -108,6 +109,18 @@ function test() (
 	read_config TEST
 )
 
+# check: Checks for Repository and Protostar Directories
+function check() (
+	if [ ! -d $REPO_DIR ]; then
+		update
+	fi
+	if [ "$PACKAGE" = "" ]; then
+		message ERROR "No Package Defined!"
+	fi
+	if [ ! -d $REPO_DIR/$PACKAGE ]; then
+		message ERROR "Invalid Package - $PACKAGE"
+	fi
+)
 
 #####################
 # Primary Functions #
@@ -129,6 +142,14 @@ function update() {
 	cp -r StarLinux-protostar/repo/* repo/
 	rm -rf StarLinux-protostar
 	message DONE "Updated Repository to ${GN}`read_config REPO_DATE`${NC}"
+}
+
+function build() {
+	check
+	cd $REPO_DIR/$PACKAGE
+	echo -e "${GN}Star Package Builder - Building $PACKAGE ${NC}"
+	./build.sh
+	cd $START_DIR
 }
 
 # main: Main function ran at program's execution
