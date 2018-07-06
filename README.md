@@ -1,5 +1,6 @@
 # StarLinux (Protostar Branch)
 A small, easy to use Linux Distribution made for ease of use, both to the user and the developer.
+[![Build Status](https://travis-ci.com/AwlsomeAlex/StarLinux.svg?branch=protostar)](https://travis-ci.com/AwlsomeAlex/StarLinux)
 
 ## WARNING:
 **THIS BRANCH IS HIGHLY UNSTABLE AND NOT RECOMMENDED TO USE!**
