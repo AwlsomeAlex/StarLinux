@@ -1,0 +1,11 @@
+---
+
+language: generic
+dist: trusty
+sudo: required
+
+script:
+- sudo apt-get update
+- sudo apt-get install wget bc build-essential gawk xorriso
+- ./spb.sh update
+- ./spb.sh build protostar
