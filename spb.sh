@@ -158,12 +158,16 @@ function main() {
 		update)
 			update
 			;;
+		build)
+			build
+			;;
 		test)
 			test
 			;;
 		*)
 			echo -e "${RD}Usage $0 [update]"
-			echo -e "		update:		Update SPB Repository${NC}"
+			echo -e "		update:		Update SPB Repository"
+			echo -e "		build:		Builds a SPB Package${NC}"
 	esac
 }
 
