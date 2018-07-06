@@ -12,7 +12,7 @@
 #############
 REPO_DIR="/tmp/spm/repo" # Only Directory NOT configured in Main Configuration
 REPO_LINK="https://github.com/AwlsomeAlex/StarLinux/archive/protostar.zip" # Allows for Custom Repositories
-CONFIG_FILE="$REPO_DIR/StarLinux.config" # Can change StarLinux to another file for Custom Configuration Files
+CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another file for Custom Configuration Files
 
 EXECUTE="$0"
 COMMAND="$1"
@@ -125,7 +125,7 @@ function update() {
 	cd $REPO_DIR/..
 	download Repo
 	unzip -q protostar
-	#rm -rf protostar.zip
+	rm -rf protostar.zip
 	cp -r StarLinux-protostar/repo/* repo/
 	rm -rf StarLinux-protostar
 	message DONE "Updated Repository to ${GN}`read_config REPO_DATE`${NC}"
