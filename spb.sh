@@ -58,7 +58,7 @@ function message() (
 	elif [ "$option" = "...." ]; then
 		echo -e "${BL}(****) ${NC} $message"
 	elif [ "$option" = "DONE" ]; then
-		echo -e "${BL}(DONE) ${NC} $message"
+		echo -e "${GN}(DONE) ${NC} $message"
 	else
 		echo -e "${RC}Usage: message [option] [message]"
 		echo -e "Option: WARN, ERROR, ...., DONE"
