@@ -122,6 +122,29 @@ function check() (
   fi
 )
 
+# title: Displays a title
+function title() (
+  clear
+  echo -e "${GN}========================"
+  echo -e "| Star Package Builder |"
+  echo -e "========================${NC}"
+  echo -e "${BL}Created by AwlsomeAlex [GNU GPLv3]${NC}"
+  echo ""
+  if [ ! -d $REPO_DIR ]; then
+    echo -e "${RD} - Repository Not Downloaded!${NC}"
+  else
+    echo -e "${BL} - Repsoitory Version `read_config REPO_DATE`${NC}"
+  fi
+  if [ -d $REPO_DIR ]; then
+    if [ -d $ `read_config MAIN_DIR` ]; then
+      echo -e "${BL} - Work Directory Located at: `read_config MAIN_DIR`${NC}"
+    fi
+  else
+    echo -e "${RD} - Work Directory Not Found! ${NC}"
+  fi
+  echo ""
+)
+
 #####################
 # Primary Functions #
 #####################
@@ -166,6 +189,7 @@ function main() {
       test
       ;;
     *)
+      title
       echo -e "${RD}Usage: $0 [update,build]"
       echo -e "   update:   Updates the SPB Repository"
       echo -e "   build:    Builds a SPB Package${NC}"
