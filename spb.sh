@@ -169,6 +169,7 @@ function main() {
       echo -e "${RD}Usage: $0 [update,build]"
       echo -e "   update:   Updates the SPB Repository"
       echo -e "   build:    Builds a SPB Package${NC}"
+  esac
 }
 
 #####################
