@@ -5,14 +5,14 @@
 #----------------------#
 ########################
 # Created by AwlsomeAlex [GNU GPLv3]
-# Version: Protostar
+# Version: Protostar-GIT
 
 #############
 # Variables #
 #############
-REPO_DIR="/tmp/spm/repo" # Only Directory NOT configured in Main Configuration
+REPO_DIR="/tmp/spb/repo" # Only Directory NOT DEFINED in the Main Configuration
 REPO_LINK="https://github.com/AwlsomeAlex/StarLinux/archive/protostar.zip" # Allows for Custom Repositories
-CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another file for Custom Configuration Files
+CONFIG_FILE="$REPO_DIR/starlinux.config" # Can change StarLinux to another Configuration File for custom StarLinux Distributions
 START_DIR=$(pwd)
 
 EXECUTE="$0"
@@ -33,15 +33,19 @@ NC='\033[0m'
 # Set of Secondary Functions
 # To assist Primary Functions
 
-# message: Displays a custom color-coded message for User Output
+# message: Display a custom color-coded message for User Output and Debugging
 function message() (
-	option=$1
-	message=$2
-	if [ "$option" = "" ]; then
-		echo -e "${RC}Usage: message [option] [message]"
-		echo -e "Option: WARN, ERROR, ...., DONE"
-		echo -e "Message: Displays Text for Certain Messages${NC}"
-	elif [ "$option" = "WARN" ]; then
+  option=$1
+  message=$2
+  if [ "$option" = "" ]; then
+    echo -e "${RC}Usage: message [option] [message]"
+    echo -e "Option: ...., DONE, WARN, ERROR"
+    echo -e "Message: Display Text for Certain Messages${NC}"
+  elif [ "$option" = "...." ]; then
+    echo -e "${BL}(****) ${NC} $message"
+  elif [ "$option" = "DONE" ]; then
+    echo -e "${GN}(DONE) ${NC} $message"
+  elif [ "$option" = "WARN" ]; then
 		echo ""
 		echo "==============="
 		echo -e "| ${RD} !!! WARNING !!! ${NC} |"
@@ -55,71 +59,67 @@ function message() (
 		echo $message
 		echo ""
 		exit 72
-	elif [ "$option" = "...." ]; then
-		echo -e "${BL}(****) ${NC} $message"
-	elif [ "$option" = "DONE" ]; then
-		echo -e "${GN}(DONE) ${NC} $message"
-	else
-		echo -e "${RC}Usage: message [option] [message]"
-		echo -e "Option: WARN, ERROR, ...., DONE"
-		echo -e "Message: Displays Text for Certain Messages${NC}"
-	fi
+  else
+    echo -e "${RC}Usage: message [option] [message]"
+    echo -e "Option: ...., DONE, WARN, ERROR"
+    echo -e "Message: Display Text for Certain Messages${NC}"
+  fi
 )
-
 
 # download: Downloads a file from the SPM Repository
 function download() (
-	## Created by AwlsomeAlex [GNU GPLv3]
-	## User-Friendly and Noise-Free Downloader powered by wget
-	## NOTE: Modified for easy download of Repository
-	FILE=$1
-	TICKER=$2
-	if [ "$FILE" = "Repo" ]; then
-		wget $REPO_LINK -q --show-progress
-	elif [ "$FILE" = "" ]; then
-		echo -e "${RD} Usage: download [file] [option]"
-		echo -e "Options: -s (Silent Downloader Option)"
-		echo -e "File: Repo | Download Link${NC}"
-	else
-		if [ "$TICKER" = "-s" ]; then
-			wget $FILE -q
-		else
-			wget $FILE -q --show-progress
-		fi
-	fi
+  ## Created by AwlsomeAlex [GNU GPLv3]
+  ## User-Friendly and Noise-Free Downloader powered by wget
+  ## NOTE: Modified for easy download of SPM Repository
+  file=$1
+  ticker=$2
+  if [ "$file" = "REPO" ]; then
+    wget $REPO_DIR -q --show-progress
+  elif [ "$file" = "" ]; then
+    echo -e "${RD} Usage: download [file] [option]"
+    echo -e "Options: -s (Silent Downloa Option) [REQUIRES WGET >= 1.18]"
+    echo -e "File: REPO | Download Link${NC}"
+  else
+    if [ "$ticker" = "-s" ]; then
+      wget $file -q
+    else
+      wget $file -q --show-progress
+    fi
+  fi
 )
 
-# read_config: Reads the Master Configuration File included with the Downloaded Repository
+# read_config: Reads the Master Configuration File included with the Downloaded SPB Repository
 function read_config() (
-	VAR_NAME=$1
-	VAR_VALUE=
-	if [ ! "VAR_NAME" = "" ]; then
-		VAR_VALUE="`grep -i ^${VAR_NAME}= $CONFIG_FILE | cut -f2- -d'=' | xargs`"
-	else
-		message ERROR "read_config: Variable Name Not Defined!"
-	fi
-	if [ "VAR_VALUE" = "" ]; then
-		message ERROR "read_config: Variable $VAR_NAME returned no value!"
-	fi
-	echo "$VAR_VALUE"
+  var_name=$1
+  var_value=
+  if [ ! "$var_name" = "" ]; then
+    var_value="`grep -i ^${var_name}= $CONFIG_FILE | cut -f2- -d'=' | xargs`"
+  else
+    message ERROR "read_config: Variable Name not defined!"
+  fi
+  if [ "$var_value" = "" ]; then
+    message ERROR "read_config: Variable $var_name returned no value!"
+  fi
+  echo "$var_value"
 )
 
 # test: Dynamic Function to test experimental functionality
+# Current Task: Read Configuration File Variable "TEST"
 function test() (
-	read_config TEST
+  read_config TEST
 )
 
 # check: Checks for Repository and Protostar Directories
 function check() (
-	if [ ! -d $REPO_DIR ]; then
-		update
-	fi
-	if [ "$PACKAGE" = "" ]; then
-		message ERROR "No Package Defined!"
-	fi
-	if [ ! -d $REPO_DIR/$PACKAGE ]; then
-		message ERROR "Invalid Package - $PACKAGE"
-	fi
+  if [ ! -d $REPO_DIR ]; then
+    update
+  fi
+  if [ "$PACKAGE" = "" ]; then
+    message ERROR "$EXECUTE: No Package Defined!"
+  fi
+  if [ ! -d $REPO_DIR/$PACKAGE ]; then
+    message ERROR "$EXECUTE: Package $PACKAGE not found!"
+  fi
 )
 
 #####################
@@ -130,47 +130,46 @@ function check() (
 
 # update: Updates the Repository
 function update() {
-	echo -e "${GN}StarLinux Package Builder - Updating Repository... ${NC}"
-	if [ -d $REPO_DIR ]; then
-		rm -rf $REPO_DIR
-	fi
-	mkdir -p $REPO_DIR
-	cd $REPO_DIR/..
-	download Repo
-	unzip -q protostar
-	rm -rf protostar.zip
-	cp -r StarLinux-protostar/repo/* repo/
-	rm -rf StarLinux-protostar
-	message DONE "Updated Repository to ${GN}`read_config REPO_DATE`${NC}"
+  echo -e "${GN}Star Package Builder - Updating Repository.... ${NC}"
+  if [ -d $REPO_DIR ]; then
+    rm -rf $REPO_DIR
+  fi
+  mkdir -p $REPO_DIR
+  cd $REPO_DIR/..
+  download REPO
+  unzip -q protostar
+  rm -rf protostar.zip
+  cp -r StarLinux-protostar/repo/* repo/
+  rm -rf StarLinux-protostar
+  message DONE "Updated Repository to ${GN}`read_config REPO_DATE`${NC}"
 }
 
+# build: Builds a Package from the Repository
 function build() {
-	check
-	cd $REPO_DIR/$PACKAGE
-	echo -e "${GN}Star Package Builder - Building $PACKAGE ${NC}"
-	./build.sh
-	cd $START_DIR
+  check
+  cd $REPO_DIR/$PACKAGE
+  echo -e "${GN}Star Package Builder - Building $PACKAGE ${NC}"
+  ./build.sh
+  cd $START_DIR
 }
 
-# main: Main function ran at program's execution
+# main: The main function executed at load
 function main() {
-	case "$COMMAND" in
-		update)
-			update
-			;;
-		build)
-			build
-			;;
-		test)
-			test
-			;;
-		*)
-			echo -e "${RD}Usage $0 [update]"
-			echo -e "		update:		Update SPB Repository"
-			echo -e "		build:		Builds a SPB Package${NC}"
-	esac
+  case "$COMMAND" in
+    update)
+      update
+      ;;
+    build)
+      build
+      ;;
+    test)
+      test
+      ;;
+    *)
+      echo -e "${RD}Usage: $0 [update,build]"
+      echo -e "   update:   Updates the SPB Repository"
+      echo -e "   build:    Builds a SPB Package${NC}"
 }
-
 
 #####################
 # Primary Execution #
