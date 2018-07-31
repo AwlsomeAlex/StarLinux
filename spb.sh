@@ -70,6 +70,8 @@ function print() (
                 echo -e "${RD}!ERROR! ${BL}print: ${NC}Invalid Color!"
                 print_usage
             fi
+        elif [ $2 = "-e" ]; then
+            echo -e "${RD}!ERROR! ${BL}$3: ${NC}$1"
         else
             echo -e "${RD}!ERROR! ${BL}print: ${NC}Invalid Option!"
             print_usage
@@ -82,12 +84,36 @@ function print() (
     fi
 )
 
+# download: Downloads a file off the internet
+function download() (
+    function download_usage() (
+        print "Usage: download [file] [option]" -c Red
+        print "Options: -s (Silent Download) [REQUIRES WGET >= 1.18]" -c Red
+        print "File: Download Link" -c Red
+    )
+    if [ "$1" = "" ]; then
+        print "No Download Link Defined!" -e "download"
+        download_usage
+        exit 71
+    fi
+    if [ "$2" = "-s" ]; then
+        wget $1 -q
+    elif [ "$2" = "" ]; then
+        wget $1 -q --show-progress
+    else 
+        print "Invalid Option!" -e "download"
+    fi
+)
+
 # test: Tests a certain functionality of the program (Debugging)
 function test() {
     print "Hello World"
     print "Loading File" -s ....
     print "Blue!" -c Blue
-    print hello word jhe
+    #print hello word jhe
+    download
+    download google.com
+    download yahoo.com -s
 }
 
 test
