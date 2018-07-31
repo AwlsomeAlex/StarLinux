@@ -1,9 +1,8 @@
 # StarLinux (Star Package Builder Branch)
 A small, easy to use Linux Distribution made for ease of use, both to the user and the developer.
-[![Build Status](https://travis-ci.com/AwlsomeAlex/StarLinux.svg?branch=protostar)](https://travis-ci.com/AwlsomeAlex/StarLinux)
 
 ## WARNING:
-**THIS BRANCH IS HIGHLY UNSTABLE AND NOT RECOMMENDED TO USE!**
+**THIS BRANCH IjS HIGHLY UNSTABLE AND NOT RECOMMENDED TO USE!**
 
 ## What is StarLinux?
 StarLinux is a dream of mine, a Linux Distribution that can be compliled by the user in a specific way to their liking, in the form of my package manager called SPM (Star Package Manager). I originally started playing around with Custom Linux Distributions in the form of Ubuntu Remixes, but found myself uncontent, even with ArchLinux and Gentoo, so I decided to go to the drawing board and create a way for someone to have **FULL CONTROL** of the software on their computers and be a distribution in itself, for curious people like me. This all started with Starbuntu, then Starch, to AwlsomeLinux (which was slopply written and scratched) to StarLinux and SPM, which work hand-and-hand to this dream. StarLinux is the final outcome but SPM is the tool which brings it all together.
