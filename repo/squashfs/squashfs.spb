@@ -1,0 +1,35 @@
+###################################
+# ------------------------------- #
+# Star Package Builder - SquashFS #
+# ------------------------------- #
+###################################
+# SquashFS Generation
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=('new_syslinux')
+SQUASHFS_DIR="$WORK_DIR/squashfs/fs"
+
+# ----- Build Info ----- #
+# Version Number: vGIT
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- build() ----- #
+function build_squashfs() {
+	common_task "-start" "Prepare SquashFS"
+	common_check
+	common_preparedir
+	common_print "Preparing SquashFS...." -s ....
+	mkdir -p $SQUASHFS_DIR
+	cp -r $FINAL_DIR/filesystem/* $SQUASHFS_DIR
+	common_print "Prepared SquashFS" -s DONE
+	common_print "Squashing Filesystem...." -s ....
+	mksquashfs $SQUASHFS_DIR $WORK_DIR/squashfs/starsquash.sqsh
+	common_print "SquashFS Created." -s DONE
+	common_task "-stop" "Prepare SquashFS"
+}

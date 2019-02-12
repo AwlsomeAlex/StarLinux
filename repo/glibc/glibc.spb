@@ -1,0 +1,66 @@
+#######################################
+# ----------------------------------- #
+# Star Package Builder - Glibc - Mini #
+# ----------------------------------- #
+#######################################
+# Glibc-mini Package 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("linux")
+GLIBC_SRC="$WORK_DIR/glibc/glibc-$glibc_version"
+GLIBC_INSTALLED="$WORK_DIR/glibc/glibc"
+ARCHIVE_FILE=${glibc_downloadlink##*/}
+
+# ----- Build Info ----- #
+# Version Number: 2.28
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- build() ----- #
+function build_glibc() {
+	common_task "-start" "Download and Extract Glibc"
+	common_check
+	common_preparedir
+	mkdir -p $WORK_DIR/glibc/{glibc,glibc_objects,glibc_final}
+	common_print "Downloading and Extracting Glibc...." -s ....
+	common_download $glibc_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	common_extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE || common_panic "Failed to Extract $PACKAGE"
+	common_print "Downloaded and Extracted Glibc" -s DONE
+	common_task "-stop" "Download and Extract Glibc"
+	common_task "-start" "Build Glibc"
+	common_print "Configuring Glibc...." -s ....
+	cd $WORK_DIR/glibc/glibc_objects
+	$GLIBC_SRC/configure \
+		--prefix= \
+		--with-headers=$HEADER_DIR \
+		--without-gd \
+		--without-selinux \
+		--disable-werror \
+		CFLAGS="$CFLAGS"
+	common_print "Configured Glibc." -s DONE
+	common_print "Building Glibc...." -s ....
+	make -j $NUM_JOBS
+	make install \
+		DESTDIR=$GLIBC_INSTALLED \
+		-j $NUM_JOBS
+	common_print "Built Glibc." -s DONE
+	common_print "Preparing Glibc...." -s ....
+	cp -r $GLIBC_INSTALLED/* $WORK_DIR/glibc/glibc_final
+	cd $WORK_DIR/glibc/glibc_final
+	mkdir -p usr
+	cd usr
+	ln -s ../include include
+	ln -s ../lib lib
+	cd ../include
+	ln -s $HEADER_DIR/linux linux
+	ln -s $HEADER_DIR/asm asm
+	ln -s $HEADER_DIR/asm-generic asm-generic
+	ln -s $HEADER_DIR/mtd mtd
+	common_print "Prepared Glibc." -s DONE
+	common_task "-stop" "Build Glibc" 
+}

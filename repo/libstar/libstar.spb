@@ -1,0 +1,36 @@
+##################################
+# ------------------------------ #
+# Star Package Builder - starlib #
+# ------------------------------ #
+##################################
+# StarLinux Library
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("")
+
+# ----- Build Info ----- #
+# Identifier: AwlsomeAlex
+# Last Build: 12/29/18 02:36 EST
+# Version: vGIT
+# Status: PASS
+
+# ----- build() ----- #
+build_libstar() {
+	common_task "-start" "Prepare libstar"
+	common_check
+	common_preparedir
+	common_print "Preparing libstar...." -s ....
+	mkdir -p $WORK_DIR/libstar/lib
+	common_download $commonlib_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	cd $WORK_DIR/libstar/lib
+	cp -r $REPO_DIR/libstar/sys.lib .
+	cp $SRC_DIR/common.lib .
+	sed -i "14s/.*/STARLINUX_BUILD=$(echo $STARLINUX_BUILD)/" sys.lib
+	sed -i "15s/.*/CODENAME=$(echo $CODENAME)/" sys.lib
+	common_print "Prepared libstar." -s DONE
+	common_task "-stop" "Prepare libstar"
+}

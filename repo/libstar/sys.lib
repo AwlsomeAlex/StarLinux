@@ -1,0 +1,16 @@
+#########################################
+# ------------------------------------- #
+# StarLinux - StarLinux System Library  #
+# ------------------------------------- #
+#########################################
+# Small Library containing system variables
+# used within StarLinux Itself 
+#######################################
+# Created by AwlsomeAlex
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+#######################################
+
+STARLINUX_BUILD=""
+CODENAME=""
+XIONGNU_VER="1.0.0-git"

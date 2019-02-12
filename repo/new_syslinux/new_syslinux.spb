@@ -1,0 +1,42 @@
+###################################
+# ------------------------------- #
+# Star Package Builder - syslinux #
+# ------------------------------- #
+###################################
+# Syslinux Bootloader (NEW DEVELOPMENT BUILD)
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("initramfs")
+ARCHIVE_FILE=${syslinux_downloadlink##*/}
+SYSLINUX_DIR="$WORK_DIR/new_syslinux/syslinux-$syslinux_version"
+IMAGE_DIR="$WORK_DIR/new_syslinux/image"
+
+# ----- Build Info ----- #
+# Identifier: AwlsomeAlex
+# Last Build: 12/29/18 02:36 EST
+# Version: vGIT
+# Status: PASS
+
+# ----- build() ----- #
+build_new_syslinux() {
+	common_task "-start" "Prepare Syslinux"
+	common_print "Downloading and Extracting Syslinux...." -s ....
+	common_check
+	common_preparedir
+	common_download $syslinux_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	common_extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE || common_panic "Failed to Extract $PACKAGE"
+	common_print "Downloaded and Extracted Syslinux." -s DONE 
+	common_print "Preparing Syslinux...." -s ....
+	mkdir -p $IMAGE_DIR/isolinux
+	cp -r $REPO_DIR/new_syslinux/syslinux.cfg $IMAGE_DIR/syslinux.cfg
+	cp -r $REPO_DIR/new_syslinux/isolinux.cfg $IMAGE_DIR/isolinux/isolinux.cfg
+	cp -r $SYSLINUX_DIR/bios/core/isolinux.bin $IMAGE_DIR/isolinux/isolinux.bin
+	cp -r $SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 $IMAGE_DIR/isolinux/ldlinux.c32
+	common_print "Prepared Syslinux." -s DONE
+	common_task "-stop" "Prepare Syslinux"
+	
+}

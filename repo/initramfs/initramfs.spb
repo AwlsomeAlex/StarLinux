@@ -1,0 +1,74 @@
+####################################
+# -------------------------------- #
+# Star Package Builder - initramfs #
+# -------------------------------- #
+####################################
+# InitramFS Creation 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=('linux' 'glibc' 'busybox' 'xiongnu' 'libstar')
+LIBRARY=('libm.so.6' 'libc.so.6' 'libresolv.so.2' 'libnss_dns.so.2')
+
+# ----- File Systems ----- #
+BUSYBOX_FS="$WORK_DIR/busybox/fs"
+LIBSTAR_LIB="$WORK_DIR/libstar/lib"
+XIONGNU_FS="$WORK_DIR/xiongnu/fs"
+GLIBC_FS="$WORK_DIR/glibc/glibc_final"
+ARCHIVE_DIR="$FINAL_DIR/archive"
+INITRAMFS_DIR="$WORK_DIR/initramfs/initramfs"
+
+# ----- Build Info ----- #
+# Version Number: vGit
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- build() ----- #
+function build_initramfs() {
+	common_task "-start" "Prepare InitramFS"
+	common_check
+	common_preparedir
+	common_print "Preparing InitramFS...." -s ....
+	mkdir -p $INITRAMFS_DIR
+	cp -r $BUSYBOX_FS/* $INITRAMFS_DIR
+	cp -r $XIONGNU_FS/* $INITRAMFS_DIR
+	mkdir -p $INITRAMFS_DIR/lib/libstar
+	cp -r $LIBSTAR_LIB/* $INITRAMFS_DIR/lib/libstar/
+	cd $INITRAMFS_DIR
+	rm -f linuxrc
+	BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
+	if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
+		mkdir -p lib64
+		cp $GLIBC_FS/lib/ld-linux* lib64
+		common_print "Configured for 64-bit Libraries" -c Green
+	else
+		rm -rf lib64
+		cp $GLIBC_FS/lib/ld-linux* lib
+		common_print "Configured for 32-bit Libraries" -c Green
+	fi
+	for i in "${LIBRARY[@]}"; do
+		cp $GLIBC_FS/lib/$i lib
+	done
+	cp -r $WORK_DIR/linux/linux_extra/lib/* lib
+	cp -r $WORK_DIR/linux/linux_extra/include/* usr/share/include
+	strip -g \
+		$INITRAMFS_DIR/bin/* \
+		$INITRAMFS_DIR/sbin/* \
+		$INITRAMFS_DIR/lib/* \
+		2>/dev/null
+	common_print "Prepared InitramFS." -s DONE
+	common_task "-stop" "Prepare InitramFS"
+	common_task "-start" "Pack InitramFS"
+	common_print "Packing InitramFS...." -s ....
+	cd $INITRAMFS_DIR
+	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../initramfs-$linux_version.cpio.xz
+	cp ../initramfs-$linux_version.cpio.xz $FINAL_DIR/initramfs-$linux_version.xz
+	mkdir -p $FINAL_DIR/filesystem
+	cp -r $INITRAMFS_DIR/* $FINAL_DIR/filesystem
+	common_print "Packed InitramFS." -s DONE
+	common_task "-stop" "Pack InitramFS"
+}

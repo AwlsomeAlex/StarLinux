@@ -1,28 +1,38 @@
-# StarLinux and Star Package Manager (SPM)
-A Minimal Linux Live-Based Distribution, written for simplicity, automation, and ease-of-use.
+# StarLinux (Nebula Branch)
+StarLinux Nebula is the current codename for the StarLinux Core which will power other StarLinux Projects like StarLinux Server and USBlinux. StarLinux itself is a MLL-like distribution with a different filesystem and its own package manager SPM (Star Package Manager). This repository will contain the scripts used to make StarLinux Core Images and Update Scripts along with other ported software.
 
-## WARNING:
-**THIS PROJECT IS IN EARLY DEVELOPMENT, MEANING IT IS BOTH UNSTABLE AND INCOMPLETE.**
+## Nebula (StarLinux Core) Packages:
+* Linux Kernel 4.19.x
+* GNU C Library 2.28 (Minimal) or musl C Library 1.1.20 (Experimental)
+* BusyBox Userland 1.29.3 (Stable) or Toybox Userland 0.7.8 (Experimental)
+* Xiongnu 0.1a [INIT] (In-Development)
 
-## What is StarLinux?
-StarLinux is a dream of mine, a Linux Distribution that can be compliled by the user in a specific way to their liking, in the form of my package manager called SPM (Star Package Manager). I originally started playing around with Custom Linux Distributions in the form of Ubuntu Remixes, but found myself uncontent, even with ArchLinux and Gentoo, so I decided to go to the drawing board and create a way for someone to have **FULL CONTROL** of the software on their computers and be a distribution in itself, for curious people like me. This all started with Starbuntu, then Starch, to AwlsomeLinux (which was slopply written and scratched) to StarLinux and SPM, which work hand-and-hand to this dream. StarLinux is the final outcome but SPM is the tool which brings it all together.
+## How to Build:
+### Dependencies (Debian/Ubuntu - Untested):
+`sudo apt install wget make gawk gcc bc bison flex xorriso libelf-dev libssl-dev`
 
-## License:
-GNU GLPv3 (of course)
+### Dependencies (Fedora - What I use)
+`sudo dnf install @development-tools gcc xorriso make bison flex automake gcc-c++ m4 openssl-devel texinfo squashfs-tools`
 
-## How to Build Star Package Manager:
-Execute the `make.sh` in the `spm` folder.
+### Compile (Linux):
+* `./spb.sh build prepare`
+* `./spb.sh build linux`
+* `./spb.sh build glibc`
+* `./spb.sh build busybox`
+* `./spb.sh build libstar`
+* `./spb.sh build xiongnu`
+* `./spb.sh build syslinux`
+* `./spb.sh build image`
 
-## Required Packages for SPM:
-Resolve the following Ubuntu Dependencies:
-`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo sgabios qemu-system-x86`
+StarLinux itself is built with the Star Package Builder which also compiles and packages the software needed for StarLinux to work.
 
-Ubuntu 18.04 Dependencies:
-`sudo apt install build-essential wget bison make gawk gcc bc syslinux genisoimage texinfo libelf-dev sgabios qemu-system-x86`
+### Install (Using ArchLinux):
+TO BE ADDED!
 
-Resolve the following Archlinux Dependencies:
-`sudo pacman -S base-devel bison wget make gawk gcc bc syslinux texinfo`
+### Install (Built-in Install Script):
+TO BE DEVELOPED!
 
-## Credits:
-* AwlsomeAlex (Created of StarLinux and SPM)
-* Ivandavidov (Creator of MLL and Inspiration)
+## Contributors:
+* AwlsomeAlex (Project Manager)
+* Ivandavidov (Layed down the foundation for a Minimal Linux Distribution)
+

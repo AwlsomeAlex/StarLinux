@@ -1,0 +1,204 @@
+#######################################
+# ----------------------------------- #
+# StarLinux - Common Function Library #
+# ----------------------------------- #
+#######################################
+# A large library containing functions
+# which can be used with various 
+# StarLinux Projects like the SPB, SPM
+# and Repository Compile Projects
+#######################################
+# Created by AwlsomeAlex
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+#######################################
+
+# ----- Color Codes -----#
+NC='\033[0m'
+RD='\033[1;31m'
+GN='\033[1;32m'
+YW='\033[1;33m'
+BL='\033[1;34m'
+
+COMMONLIB_VER="1.0.0a"
+
+###################
+# Child Functions #
+###################
+# Set of helper functions
+# which are defined as 'common_'
+
+# common_print [message] [option] [option/message]: Outputs text to the terminal
+function common_print() {
+	if [ $# = 3 ]; then
+		if [ $2 = "-s" ]; then
+			case "$3" in
+				....)
+					echo -e "${BL}(****) ${NC}$1"
+					;;
+				DONE)
+					echo -e "${GN}(PASS) ${NC}$1"
+					;;
+				WARN)
+					echo -e "${YW}(WARN) ${NC}$1"
+					;;
+				FAIL)
+					echo -e "${RD}(FAIL) ${NC}$1" 
+					;;
+				*)
+					echo -e "${RD}!!!ERROR!!! ${BL}print: ${NC}Invaid Special Marker!"
+			esac
+		elif [ $2 = "-c" ]; then
+			case "$3" in
+				Red)
+					echo -e "${RD}$1 ${NC}"
+					;;
+				Green)
+					echo -e "${GN}$1 ${NC}"
+					;;
+				Yellow)
+					echo -e "${YW}$1 ${NC}"
+					;;
+				Blue)
+					echo -e "${BL}$1 ${NC}"
+					;;
+				*)
+					echo -e "${RD}!!!ERROR!!! ${BL}print: ${NC}Invalid Color!"
+			esac	
+		elif [ $2 = "-e" ]; then
+			echo -e "${RD}!!!ERROR!!! ${BL}$3: ${NC}$1"
+		else
+			echo -e "${RD}!!!ERROR!!! ${BL}print: ${NC}Invalid Option"
+		fi
+	elif [ $# = 1 ]; then
+		echo -e $1
+	else
+		echo -e "${RD}!!!ERROR!!! ${BL}print: ${NC}Invalid Argument!"
+	fi
+}
+
+# common_download [source] [location] [option]: Downloads a file using wget
+function common_download() {
+	if [ "$1" = "" ]; then
+		common_print "No Download Link Provided!" -e "download"
+		exit
+	fi
+	CURRENT_DIR=$(pwd)
+	cd $2
+	if [ -f "${1##*/}" ]; then
+		common_print "File already downloaded! Skipping...." -s DONE
+		cd $CURRENT_DIR
+	else
+		if [ "$3" = "-s" ]; then
+			wget -P $2 $1 -q
+		elif [ "$3" = "" ]; then
+			wget -P $2 $1 -q --show-progress
+		else
+			common_print "Invalid Option!" -e "download"
+			exit
+		fi
+	fi
+	cd $CURRENT_DIR
+}
+
+# common_extract [source] [location]: Uses tar to extract a package archive
+function common_extract() {
+	if [ "$1" = "" ]; then
+		common_print "No Archive File/Extraction Destination Specified!" -e "extract"
+		exit
+	fi
+	tar -xvf "$1" -C "$2"
+}
+
+# common_archive: Uses tar to archive a folder [DISABLED]
+#function common_archive() {
+#	tar -cJf $1 $2 2>&1 |
+#	while read line; do
+#		x=$((x+1))
+#		echo -en "Archiving: $x Files Archived\r"
+#	done
+#}
+
+# common_title [title]: Displays title of program
+function common_title() {
+	if [ "$1" = "" ]; then
+		common_print "No Title Provided!" -e "title"
+		exit
+	fi
+	common_print "----- $PACKAGE_NAME | Version $PACKAGE_VERSION | $1 -----" -c Green
+}
+
+# common_task [-start/-stop] [task]: Displays the task the script is currently doing
+function common_task() {
+	if [ "$DEBUG" = "True" ]; then
+		if [ "$2" = "" ]; then
+			common_print "No Task Defined!" -e "task"
+		fi
+		if [ "$1" = "-start" ]; then
+			common_print " ---------- START: $2 ---------- " -c Yellow
+		elif [ "$1" = "-stop" ]; then
+			common_print " ---------- STOP: $2 ----------- " -c Yellow
+		elif [ "$1" = "" ]; then
+			common_print "No Option Defined!" -e "task"
+			exit
+		else
+			common_print "Invalid Option!" -e "task"
+			exit
+		fi
+	fi
+}
+
+# common_check: Checks for Dependencies
+function common_check() {
+	if [ ! -d $BASE_DIR ]; then
+		common_print "Base Directories Not Found! Please prepare them with '$0 build prepare'!" -s FAIL
+		exit
+	fi
+	for i in "${DEPENDS[@]}"; do
+		if [ ! -d $WORK_DIR/$i ]; then
+			common_print "Depenency $i is unmet! Please build with '$0 build $i'!" -s FAIL
+			exit
+		fi
+	done	
+}
+
+# common_preparedir: Prepares and Checks Directories in Work Directory
+function common_preparedir() {
+	if [ -d $WORK_DIR/$PACKAGE ]; then
+		common_print "The $PACKAGE Directories are already created! Would you like to remove them? (Y/n)"
+		read -p "Enter Option: " input
+		if [ "$input" == "Y" ]; then
+			rm -rf $WORK_DIR/$PACKAGE
+			common_print "Directories Deleted!" -s DONE
+		elif [ "$input" == "n" ]; then
+			common_print "Exited by user!" -s FAIL
+			exit
+		else
+			common_print "Invalid Option!" -s FAIL
+			exit
+		fi
+	fi
+	common_print "Creating $PACKAGE Directories...." -s ....
+	mkdir -p $WORK_DIR/$PACKAGE
+	common_print "Created $PACKAGE Directories." -s DONE
+}
+
+# common_panic [message]: Displays an error code and exits the program when an essential command is missed
+function common_panic() {
+	if [ "$1" = "" ]; then
+		common_print "No Options Defined!" -e "panic"
+		exit
+	fi
+	common_print "$1" -s FAIL
+	exit
+}
+
+
+# common_test: Tests functionality of library
+function common_test() {
+	common_print "Hello World!"
+	common_print "This worked!" -s DONE
+	common_print "This is Blue!" -c Blue
+	common_print "This is an error..." -e "error"
+	common_title "IDK"
+}

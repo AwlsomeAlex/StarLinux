@@ -1,0 +1,62 @@
+################################
+# ---------------------------- #
+# Star Package Builder - Image #
+# ---------------------------- #
+################################
+# Image StarLinux into Bootable Image (NEW TEST BUILDS)
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Build Info ----- #
+# Version Number: vGIT
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- Local Variables ----- #
+DEPENDS=('new_syslinux' 'initramfs' 'squashfs')
+
+# ----- build() ----- #
+function build_new_image() {
+	common_task "-start" "Image StarLinux"
+	common_check
+	common_preparedir
+	common_print "Imaging StarLinux...." -s ....
+	mkdir $FINAL_DIR/image
+	cp -r $WORK_DIR/new_syslinux/image/* $FINAL_DIR/image/
+	cp -r $WORK_DIR/linux/linux-$linux_version/arch/x86/boot/bzImage $FINAL_DIR/image/isolinux/vmlinuz
+	cp -r $FINAL_DIR/initramfs-$linux_version.xz $FINAL_DIR/image/isolinux/initramfs.xz
+	mkdir -p $FINAL_DIR/image/LiveOS
+	cp -r $WORK_DIR/squashfs/starsquash.sqsh $FINAL_DIR/image/LiveOS/squashfs.sqsh
+	cp $REPO_DIR/LICENSE $FINAL_DIR/image/LICENSE
+	cd $FINAL_DIR/image
+	xorriso -as mkisofs \
+		-isohybrid-mbr $REPO_DIR/new_syslinux/isohdpfx.bin \
+		-c isolinux/boot.cat \
+		-b isolinux/isolinux.bin \
+		-no-emul-boot \
+		-boot-load-size 4 \
+		-boot-info-table \
+		-o $SPB_DIR/StarLinux-live-build_$STARLINUX_BUILD.iso \
+		$FINAL_DIR/image
+	common_print "StarLinux has been Imaged" -s DONE
+	common_task "-stop" "Image StarLinux"
+	: '
+	cd $FINAL_DIR/filesystem
+	cp ../kernel-*.xz boot/kernel.xz
+	cp ../initramfs-*.xz boot/initramfs.xz
+	xorriso -as mkisofs \
+		-isohybrid-mbr $REPO_DIR/syslinux/isohdpfx.bin \
+		-c boot/syslinux/boot.cat \
+		-b boot/syslinux/isolinux.bin \
+		-no-emul-boot \
+		-boot-load-size 4 \
+		-boot-info-table \
+		-o $SPB_DIR/StarLinux-live-build_$STARLINUX_BUILD.iso \
+		$FINAL_DIR/filesystem
+	common_print "StarLinux has been Imaged" -s DONE
+	common_task "-stop" "Image StarLinux"
+	'
+}

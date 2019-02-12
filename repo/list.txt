@@ -1,0 +1,14 @@
+Updated: 12/30/18 - 15:31 EST
+
+----- SPB Tools -----
+* prepare vGit - Prepares directories needed for SPB to run [TESTED]
+* libstar vGit - Essential Libraries for StarLinux to Execute! [TESTED]
+* initramfs vGit - Core InitramFS to boot into StarLinux [TESTED]
+* image vGit - Creates a Bootable ISO Image of StarLinux [TESTED]
+
+----- Core Packages -----
+* linux 4.20 - Linux Kernel Stable to power StarLinux [TESTED]
+* glibc 2.28 - GNU C Library for basic C functionality [TESTED]
+* busybox 1.29.3 - Minimal Userland for Linux Kernel [TESTED]
+* Xiongnu 1.2.3a - SysV-like Init Scripts for BusyBox [TESTED]
+* Syslinux 6.03 - Minimal Bootloader for a Linux Live Environment [TESTED]

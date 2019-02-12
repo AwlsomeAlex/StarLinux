@@ -1,0 +1,34 @@
+###################################
+# ------------------------------- #
+# Star Package Builder - syslinux #
+# ------------------------------- #
+###################################
+# Syslinux Bootloader
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("initramfs")
+
+# ----- Build Info ----- #
+# Identifier: AwlsomeAlex
+# Last Build: 12/29/18 02:36 EST
+# Version: vGIT
+# Status: PASS
+
+# ----- build() ----- #
+build_syslinux() {
+	common_task "-start" "Prepare Syslinux"
+	common_check
+	common_preparedir
+	common_print "Preparing Syslinux...." -s ....
+	mkdir -p $FINAL_DIR/filesystem/boot/syslinux
+	cp -r $REPO_DIR/syslinux/isolinux.bin $FINAL_DIR/filesystem/boot/syslinux
+	cp -r $REPO_DIR/syslinux/ldlinux.c32 $FINAL_DIR/filesystem/boot/syslinux
+	cp -r $REPO_DIR/syslinux/syslinux.cfg $FINAL_DIR/filesystem/boot/syslinux
+	common_print "Prepared Syslinux." -s DONE
+	common_task "-stop" "Prepare Syslinux"
+	
+}

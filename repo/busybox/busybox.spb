@@ -1,0 +1,51 @@
+##################################
+# ------------------------------ #
+# Star Package Builder - BusyBox #
+# ------------------------------ #
+##################################
+# BusyBox Package 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("")
+ARCHIVE_FILE=${busybox_downloadlink##*/}
+
+# ----- Build Info ----- #
+# Version Number: 1.29.3
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- build() ----- #
+function build_busybox() {
+	common_task "-start" "Download and Extract BusyBox"
+	common_check
+	common_preparedir
+	mkdir -p $WORK_DIR/busybox/fs
+	common_print "Downloading and Extracting BusyBox...." -s ....
+	common_download $busybox_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	common_extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE || common_panic "Failed to Extract $PACKAGE"
+	common_print "Downloaded and Extracted BusyBox." -s DONE
+	common_task "-stop" "Download and Extract BusyBox"
+	common_task "-start" "Build BusyBox"
+	common_print "Configuring BusyBox...." -s ....
+	cd $WORK_DIR/busybox/busybox-*
+	make distclean -j $NUM_JOBS
+	make defconfig -j $NUM_JOBS
+	sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config
+	common_print "Configured BusyBox." -s DONE
+	common_print "Building BusyBox...." -s ....
+	make \
+		EXTRA_CFLAGS="$CLAGS" \
+		busybox -j $NUM_JOBS
+	common_print "Built BusyBox." -s DONE
+	common_print "Preparing BusyBox...." -s ....
+	make \
+		CONFIG_PREFIX="$WORK_DIR/busybox/fs" \
+		install -j $NUM_JOBS
+	common_print "Prepared BusyBox" -s DONE
+	common_task "-stop" "Build BusyBox"
+}

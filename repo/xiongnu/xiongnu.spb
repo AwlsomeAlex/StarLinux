@@ -1,0 +1,39 @@
+##################################
+# ------------------------------ #
+# Star Package Builder - Xiongnu #
+# ------------------------------ #
+##################################
+# Xiongnu Init Package 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("libstar")
+ARCHIVE_FILE=${xiongnu_downloadlink##*/}
+
+# ----- Build Info ----- #
+# Version Number: 1.2.0a
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- build() ----- #
+function build_xiongnu() {
+	common_task "-start" "Download and Extract Xiongnu"
+	common_check
+	common_preparedir
+	mkdir -p $WORK_DIR/xiongnu/fs
+	common_print "Downloading and Extracting Xiongnu...." -s ....
+	common_download $xiongnu_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	common_extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE || common_panic "Failed to Extract $PACKAGE"
+	common_print "Downloaded and Extracted Xiongnu." -s DONE
+	common_task "-stop" "Download and Extract Xiongu"
+	common_task "-start" "Prepare Xiongnu"
+	common_print "Preparing Xiongnu...." -s ....
+	cp -r $WORK_DIR/xiongnu/Xiongnu-*/src/* $WORK_DIR/xiongnu/fs
+	cp -r $REPO_DIR/xiongnu/fstab_cd $WORK_DIR/xiongnu/fs/etc/fstab
+	common_print "Prepared Xiongnu." -s DONE
+	common_task "-stop" "Prepare Xiongnu"
+}

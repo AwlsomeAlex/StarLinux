@@ -1,0 +1,73 @@
+################################
+# ---------------------------- #
+# Star Package Builder - Linux #
+# ---------------------------- #
+################################
+# Linux Kernel Package 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Local Variables ----- #
+DEPENDS=("")
+HOST_ARCH=$(uname -m)
+ARCHIVE_FILE=${linux_downloadlink##*/}
+
+# ----- Build Info ----- #
+# Identifier: AwlsomeAlex
+# Last Build: 12/29/18 02:36 EST
+# Version: 4.20
+# Status: PASS
+
+# ----- build() ----- #
+build_linux() {
+	common_task "-start" "Download and Extract Linux"
+	common_check
+	common_preparedir
+	common_print "Downloading and Extracting Linux Kernel...." -s ....
+	common_download $linux_downloadlink $SRC_DIR || common_panic "Failed to Download $PACKAGE"
+	common_extract $SRC_DIR/$ARCHIVE_FILE $WORK_DIR/$PACKAGE || common_panic "Failed to Extract $PACKAGE"
+	common_print "Downloaded and Extracted Linux Kernel." -s DONE
+	cd $WORK_DIR/linux/linux-*
+	common_print "Configuring Linux Kernel...." -s ....
+	if [[ $HOST_ARCH == "x86_64" ]]; then
+		common_print "64-bit Host Detected!" -c Green
+		cp $REPO_DIR/linux/$CONFIG-x86_64.config $WORK_DIR/linux/linux-$linux_version/.config
+	elif [[ $HOST_ARCH == "i686" ]]; then
+		common_print "32-bit Host Detected! Unfortunately this isn't supported as of yet! :(" -s FAIL
+		exit
+	elif [[ $HOST_ARCH == "i386" ]]; then
+		common_print "Old 32-bit Host Detected! Unfortunately this isn't supported as of yet! :(" -s FAIL
+		exit
+	else
+		common_print "The Host System's Architecture is unsupported! (I'm looking at you ARM) :(" -s FAIL
+		exit
+	fi
+	common_print "Configured Linux Kernel for $HOST_ARCH" -s DONE
+	common_task "-stop" "Download and Extract Linux"
+	common_task "-start" "Build Linux"
+	common_print "Building Linux Kernel...." -s ....
+	make \
+		CFLAGS="$CFLAGS" \
+		bzImage -j $NUM_JOBS
+	cp arch/x86/boot/bzImage $FINAL_DIR/kernel-$linux_version.xz
+	common_print "Linux Kernel have been built." -s DONE
+	common_print "Building Linux Kernel Headers...." -s ....
+	make \
+		INSTALL_HDR_PATH=$WORK_DIR/linux/linux_extra \
+		headers_install -j $NUM_JOBS
+	common_print "Linux Kernel Headers have been built." -s DONE
+	common_print "Building and Configuring Linux Kernel Modules...." -s ....
+	make \
+		modules -j $NUM_JOBS
+	make \
+		INSTALL_MOD_PATH=$WORK_DIR/linux/linux_extra \
+		modules_install -j $NUM_JOBS
+	cd $WORK_DIR/linux/linux_extra/lib/modules
+	cd $(ls)
+	unlink build
+	unlink source
+	common_print "Linux Kernel Modules have been built and configured." -s DONE
+	common_task "-stop" "Build Linux"
+}

@@ -1,0 +1,43 @@
+##################################
+# ------------------------------ #
+# Star Package Builder - Prepare #
+# ------------------------------ #
+##################################
+# Prepare Directory Package 
+################################
+# Copyright (C) 2018 Alex Barris - All Rights Reserved
+# Awlsome Public License v1.0
+# vGIT
+
+# ----- Build Info ----- #
+# Version Number: vGIT
+# Last Build: 12/29/18 02:36 EST
+# Build Status: PASS
+# Identifier: AwlsomeAlex
+
+# ----- Local Variables ----- #
+
+# ----- build() ----- #
+function build_prepare() {
+	common_task "-start" "Prepare Diectory"
+	common_print "Creating Directories...." -s ....
+	if [ -d $WORK_DIR ] && [ -d $SRC_DIR ] && [ -d $FINAL_DIR ]; then
+		common_print "The Source/Work/Final Directories already exist. Would you like to delete? (Y/n)" -s WARN
+		read -p "Enter Option: " input
+		if [ "$input" == "Y" ]; then
+			rm -rf $BASE_DIR
+			common_print "Directories Deleted!" -s DONE
+		elif [ "$input" == "n" ]; then
+			common_print "Exited by user!" -s FAIL
+			exit
+		else
+			common_print "Invalid Option!" -s FAIL
+			exit
+		fi
+	fi
+	mkdir -p $WORK_DIR
+	mkdir -p $SRC_DIR
+	mkdir -p $FINAL_DIR
+	common_print "Created Directories." -s DONE
+	common_task "-stop" "Prepare Directory"
+}
