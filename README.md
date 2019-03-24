@@ -2,16 +2,16 @@
 StarLinux Nebula is the current codename for the StarLinux Core which will power other StarLinux Projects like StarLinux Server and USBlinux. StarLinux itself is a MLL-like distribution with a different filesystem and its own package manager SPM (Star Package Manager). This repository will contain the scripts used to make StarLinux Core Images and Update Scripts along with other ported software.
 
 ## Nebula (StarLinux Core) Packages:
-* Linux Kernel 4.19.x
-* GNU C Library 2.28 (Minimal) or musl C Library 1.1.20 (Experimental)
-* BusyBox Userland 1.29.3 (Stable) or Toybox Userland 0.7.8 (Experimental)
-* Xiongnu 0.1a [INIT] (In-Development)
+* Linux Kernel 5.0.x
+* GNU C Library 2.28 (Minimal) 
+* BusyBox Userland 1.30.1 (Stable)
+* Xiongnu 1.2.4a [INIT] (In-Development)
 
 ## How to Build:
-### Dependencies (Debian/Ubuntu - Untested):
+### Dependencies (Debian/Ubuntu - What I use):
 `sudo apt install wget make gawk gcc bc bison flex xorriso libelf-dev libssl-dev`
 
-### Dependencies (Fedora - What I use)
+### Dependencies (Fedora - Untested)
 `sudo dnf install @development-tools gcc xorriso make bison flex automake gcc-c++ m4 openssl-devel texinfo squashfs-tools`
 
 ### Compile (Linux):
