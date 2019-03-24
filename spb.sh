@@ -39,8 +39,8 @@ function spb_update() {
 	common_download $REPO_LINK $REPO_DIR/..
 	common_print "Repository Downloaded!" -s DONE
 	common_print "Extracting Repository...." -s ....
-	tar -xvf StarLinux-master.tar.gz >> /dev/null
-	rm -rf StarLinux-master.tar.gz*
+	unzip StarLinux-master.zip >> /dev/null
+	rm -rf StarLinux-master.zip*
 	mv $SPB_DIR/StarLinux-master/repo/* $REPO_DIR/
 	rm -rf StarLinux-master
 	common_print "Repository Extracted!" -s DONE
